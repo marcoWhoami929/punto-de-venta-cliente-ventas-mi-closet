@@ -10,10 +10,20 @@
                     <h6 class="font-weight-light">Registra tus datos y forma parte de esta gran familia.</h6>
                     <form class="pt-3">
                         <div class="form-group">
-                            <input type="text" class="form-control form-control-lg" id="exampleInputUsername1" placeholder="Username">
+                            <input type="text" class="form-control form-control-lg" id="usuarioFacebook" placeholder="Nombre de Usuario en facebook" required>
                         </div>
                         <div class="form-group">
-                            <input type="email" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Email">
+
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <input type="text" class="form-control form-control-lg" id="nombre" placeholder="Ingresar nombre(s)" required>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <input type="text" class="form-control form-control-lg" id="apellidos" placeholder="Ingresar apellidos" required>
+                                </div>
+
+                            </div>
+
                         </div>
                         <div class="form-group">
                             <select class="form-select form-select-lg" id="exampleFormControlSelect2">
