@@ -1,4 +1,5 @@
 <?php
+session_start();
 class ControllerUser
 {
     static public function ctrPasswordEncrypt($pwd, $accion)
@@ -22,6 +23,7 @@ class ControllerUser
 
 
             $encriptar = $this->ctrPasswordEncrypt($_POST["password"], 'encrypt');
+
 
             $tabla = "cliente";
             $item = "usuario";

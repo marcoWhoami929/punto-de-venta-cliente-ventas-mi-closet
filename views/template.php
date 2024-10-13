@@ -39,8 +39,6 @@
 		echo '<div class="container-scroller">';
 		include "moduls/header.php";
 		echo '<div class="container-fluid page-body-wrapper">';
-
-
 		include "moduls/sidebar.php";
 
 		if (isset($_GET["ruta"])) {
@@ -55,10 +53,6 @@
 
 				include $class;
 			}
-		} else {
-
-
-			include "moduls/inicio.php";
 		}
 		echo '</div>';
 	} else {
