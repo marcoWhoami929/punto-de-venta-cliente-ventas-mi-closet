@@ -8,27 +8,38 @@
                     </div>
                     <h4>Bienvenido(a)</h4>
                     <h6 class="font-weight-light">Ingresa tus datos para continuar.</h6>
-                    <form class="pt-3">
+                    <form class="pt-3" method="POST">
                         <div class="form-group">
-                            <input type="text" class="form-control form-control-lg" id="usuario" placeholder="Username">
+                            <input type="text" class="form-control form-control-lg" id="username" name="username" placeholder="Nombre de usuario">
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-control form-control-lg" id="password" placeholder="Password">
+                            <input type="password" class="form-control form-control-lg" id="password" name="password" placeholder="Contraseña">
                         </div>
                         <div class="mt-3 d-grid gap-2">
-                            <a class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" href="../../index.html">Acceder</a>
+                            <button type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">Acceder</button>
                         </div>
                         <div class="my-2 d-flex justify-content-between align-items-center">
                             <div class="form-check">
-                                <label class="form-check-label text-muted">
-                                    <input type="checkbox" class="form-check-input"> Keep me signed in </label>
+
                             </div>
                             <a href="#" class="auth-link text-black">Olvidaste tu contraseña?</a>
                         </div>
 
                         <div class="text-center mt-4 font-weight-light"> No tienes una cuenta? <a href="registro" class="text-primary">Registrarme</a>
                         </div>
+                        <?php
+
+                        $login = new ControllerUser();
+                        $login->ctrAccesoUser();
+
+                        ?>
                     </form>
                 </div>
             </div>
         </div>
+
+        <script type="text/javascript">
+            if (window.history.replaceState) {
+                window.history.replaceState(null, null, window.location.href);
+            }
+        </script>

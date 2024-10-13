@@ -14,8 +14,8 @@
 	<link rel="stylesheet" href="views/vendors/mdi/css/materialdesignicons.min.css">
 	<!-- endinject -->
 	<!-- Plugin css for this page -->
-	<!-- <link rel="stylesheet" href="views/vendors/datatables.net-bs4/dataTables.bootstrap4.css"> -->
-	<link rel="stylesheet" href="views/vendors/datatables.net-bs5/dataTables.bootstrap5.css">
+	<!-- <link rel="stylesheet" href="views/vendors/datatables.net-bs4/dataTables.bootstrap4.css"> 
+	<link rel="stylesheet" href="views/vendors/datatables.net-bs5/dataTables.bootstrap5.css">-->
 	<link rel="stylesheet" href="views/vendors/ti-icons/css/themify-icons.css">
 	<link rel="stylesheet" type="text/css" href="views/js/select.dataTables.min.css">
 	<!-- End plugin css for this page -->
@@ -23,6 +23,13 @@
 	<link rel="stylesheet" href="views/css/style.css">
 	<!-- endinject -->
 	<link rel="shortcut icon" href="views/images/logo.png" />
+
+
+	<!-- Required Jquery -->
+	<script type="text/javascript" src="views/js/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="views/js/jquery-ui/jquery-ui.min.js"></script>
+	<!-- Sweet Alert -->
+	<script src="views/vendors/sweet-alert/sweetalert.js"></script>
 </head>
 
 <body>
@@ -75,13 +82,14 @@
 
 	?>
 	<!-- plugins:js -->
+
 	<script src="views/vendors/js/vendor.bundle.base.js"></script>
 	<!-- endinject -->
 	<!-- Plugin js for this page -->
 	<script src="views/vendors/chart.js/chart.umd.js"></script>
-	<script src="views/vendors/datatables.net/jquery.dataTables.js"></script>
-	<!-- <script src="views/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script> -->
-	<script src="views/vendors/datatables.net-bs5/dataTables.bootstrap5.js"></script>
+	<!--<script src="views/vendors/datatables.net/jquery.dataTables.js"></script>-->
+	<!-- <script src="views/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+	<script src="views/vendors/datatables.net-bs5/dataTables.bootstrap5.js"></script> -->
 	<script src="views/js/dataTables.select.min.js"></script>
 	<!-- End plugin js for this page -->
 	<!-- inject:js -->
@@ -93,7 +101,7 @@
 	<!-- Custom js for this page-->
 	<script src="views/js/jquery.cookie.js" type="text/javascript"></script>
 	<script src="views/js/dashboard.js"></script>
-	<!-- <script src="views/js/Chart.roundedBarCharts.js"></script> -->
+
 	<!-- End custom js for this page-->
 </body>
 
