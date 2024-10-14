@@ -30,11 +30,12 @@
 	<script type="text/javascript" src="views/js/jquery-ui/jquery-ui.min.js"></script>
 	<!-- Sweet Alert -->
 	<script src="views/vendors/sweet-alert/sweetalert.js"></script>
+
 </head>
 
 <body>
 	<?php
-
+	session_start();
 	if (isset($_SESSION["validarSesionBackend"]) && $_SESSION["validarSesionBackend"] === "ok") {
 		echo '<div class="container-scroller">';
 		include "moduls/header.php";
@@ -56,17 +57,17 @@
 		}
 		echo '</div>';
 	} else {
+
 		if (isset($_GET["ruta"])) {
 
 			if ($_GET["ruta"] == "registro") {
 				include "moduls/registro.php";
-			}
-			if ($_GET["ruta"] == "acceso") {
+			} else if ($_GET["ruta"] == "acceso") {
+				include "moduls/acceso.php";
+			} else {
 				include "moduls/acceso.php";
 			}
 		} else {
-
-
 			include "moduls/acceso.php";
 		}
 	}
@@ -78,6 +79,9 @@
 	<!-- plugins:js -->
 
 	<script src="views/vendors/js/vendor.bundle.base.js"></script>
+	<!--Maps-->
+
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyCaZc8iFkQW_BPnkGUOt9M6ja_Zfkl427M"></script>
 	<!-- endinject -->
 	<!-- Plugin js for this page -->
 	<script src="views/vendors/chart.js/chart.umd.js"></script>
@@ -95,6 +99,7 @@
 	<!-- Custom js for this page-->
 	<script src="views/js/jquery.cookie.js" type="text/javascript"></script>
 	<script src="views/js/dashboard.js"></script>
+	<script src="views/js/maps.js"></script>
 
 	<!-- End custom js for this page-->
 </body>

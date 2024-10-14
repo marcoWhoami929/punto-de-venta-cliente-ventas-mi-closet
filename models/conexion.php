@@ -7,7 +7,7 @@ class ConexionsBd
     {
 
         $link =  new PDO(
-            "mysql:host=localhost;dbname=pos",
+            "mysql:host=localhost;dbname=sistemapos",
             "root",
             "",
             array(

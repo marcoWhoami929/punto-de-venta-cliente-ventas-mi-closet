@@ -22058,7 +22058,7 @@ code {
 
 /* Footer */
 .footer {
-  background: #f5f7ff;
+  background: #b99654;
   color: color(dark);
   padding: 30px 2.45rem;
   transition: all 0.25s ease;
@@ -22337,7 +22337,7 @@ code {
   padding-top: 16px;
   padding-bottom: 16px;
   z-index: 10;
-  background: #f5f7ff;
+  background: #b99654;
 }
 
 .doc-content {
@@ -25612,7 +25612,7 @@ table.dataTable tbody td.select-checkbox:after {
 }
 
 .content-wrapper {
-  background: #f5f7ff;
+  background: #f2f2f2;
   padding: 2.375rem 2.375rem;
   width: 100%;
   -webkit-flex-grow: 1;
