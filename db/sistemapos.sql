@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 15-10-2024 a las 01:35:09
+-- Tiempo de generación: 16-10-2024 a las 02:12:44
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 7.4.33
 
@@ -81,8 +81,9 @@ CREATE TABLE `categoria` (
 --
 
 INSERT INTO `categoria` (`id_categoria`, `nombre`, `ubicacion`, `descripcion`, `fecha_registro`) VALUES
-(1, 'Categoria1', 'Piso 101', '', '2024-10-08 16:43:16'),
-(2, 'Categoria 2', 'Piso 2', '', '2024-10-08 19:16:34');
+(1, 'Sueteres', 'Pb', '', '2024-10-08 16:43:16'),
+(3, 'Pantalones', 'Pb', '', '2024-10-15 22:55:44'),
+(4, 'Joggers', 'Pa', '', '2024-10-15 22:55:59');
 
 -- --------------------------------------------------------
 
@@ -138,6 +139,20 @@ CREATE TABLE `detalleventa` (
   `cantidad` int(11) NOT NULL,
   `subtotal` decimal(10,2) NOT NULL,
   `total` decimal(30,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `detalle_notas`
+--
+
+CREATE TABLE `detalle_notas` (
+  `id_detalle_nota` int(11) NOT NULL,
+  `id_nota` int(11) NOT NULL,
+  `id_producto` int(11) NOT NULL,
+  `estatus` int(11) NOT NULL,
+  `fecha` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
@@ -236,6 +251,23 @@ CREATE TABLE `movimientoinventario` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `notas`
+--
+
+CREATE TABLE `notas` (
+  `id_nota` int(11) NOT NULL,
+  `codigo` text NOT NULL,
+  `titulo_nota` text NOT NULL,
+  `fecha` timestamp NOT NULL DEFAULT current_timestamp(),
+  `fecha_publicacion` datetime DEFAULT NULL,
+  `fecha_expiracion` datetime DEFAULT NULL,
+  `qr` text NOT NULL,
+  `estado` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `pago`
 --
 
@@ -266,6 +298,8 @@ CREATE TABLE `producto` (
   `precio_venta` decimal(30,2) NOT NULL,
   `marca` varchar(35) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `modelo` varchar(35) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `colores` text NOT NULL,
+  `tallas` text NOT NULL,
   `estado` int(11) NOT NULL,
   `foto` varchar(500) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `fecha_ceacion` timestamp NOT NULL DEFAULT current_timestamp(),
@@ -276,10 +310,9 @@ CREATE TABLE `producto` (
 -- Volcado de datos para la tabla `producto`
 --
 
-INSERT INTO `producto` (`id_producto`, `id_categoria`, `id_proveedor`, `codigo`, `nombre`, `descripcion`, `stock_total`, `tipo_unidad`, `precio_compra`, `precio_venta`, `marca`, `modelo`, `estado`, `foto`, `fecha_ceacion`, `fecha_actualizacion`) VALUES
-(1, 1, 0, '121452112', 'Carcasa Disco Duro', '', '2.000', 'Pieza', '50.00', '120.00', 'OTG', 'Type-c', 1, '0000121452112_38.png', '2024-10-08 16:58:22', '2024-10-08 19:20:07'),
-(2, 2, 0, '12345678', 'Adaptador Vga', '', '9.000', 'Pieza', '35.00', '100.00', '', '', 1, '12345678_64.png', '2024-10-08 19:18:02', '2024-10-08 19:20:07'),
-(3, 1, 0, '12365498', 'Rasuradora Inalambrica', '', '2.000', 'Pieza', '50.00', '110.00', '', '', 1, '12365498_4.png', '2024-10-08 19:18:59', '2024-10-08 19:20:07');
+INSERT INTO `producto` (`id_producto`, `id_categoria`, `id_proveedor`, `codigo`, `nombre`, `descripcion`, `stock_total`, `tipo_unidad`, `precio_compra`, `precio_venta`, `marca`, `modelo`, `colores`, `tallas`, `estado`, `foto`, `fecha_ceacion`, `fecha_actualizacion`) VALUES
+(4, 1, 0, '1010110101', 'Sueter Mio Mio', '', '10.000', 'Pieza', '0.00', '250.00', '', '', 'azul,gris', '20,22,24,30,32,38', 1, '', '2024-10-15 22:36:23', '2024-10-15 22:50:27'),
+(5, 3, 0, '123456789', 'Pantalon Mezclilla', '', '10.000', 'Pieza', '0.00', '250.00', '', '', 'Gris,azul', '14,16,18,20,22', 1, '', '2024-10-15 22:56:47', '2024-10-15 22:56:47');
 
 -- --------------------------------------------------------
 
@@ -330,6 +363,7 @@ INSERT INTO `usuario` (`id_usuario`, `nombre`, `email`, `usuario`, `password`, `
 
 CREATE TABLE `venta` (
   `id_venta` int(30) NOT NULL,
+  `tipo_venta` enum('directa','nota') NOT NULL,
   `codigo` varchar(200) NOT NULL,
   `fecha_venta` date NOT NULL,
   `hora_venta` time NOT NULL,
@@ -403,6 +437,14 @@ ALTER TABLE `detalleventa`
   ADD KEY `id_producto` (`id_producto`);
 
 --
+-- Indices de la tabla `detalle_notas`
+--
+ALTER TABLE `detalle_notas`
+  ADD PRIMARY KEY (`id_detalle_nota`),
+  ADD KEY `id_producto` (`id_producto`),
+  ADD KEY `id_nota` (`id_nota`);
+
+--
 -- Indices de la tabla `empleado`
 --
 ALTER TABLE `empleado`
@@ -440,6 +482,12 @@ ALTER TABLE `moviimientocaja`
 ALTER TABLE `movimientoinventario`
   ADD PRIMARY KEY (`id_movimiento_inventario`),
   ADD KEY `id_producto` (`id_producto`);
+
+--
+-- Indices de la tabla `notas`
+--
+ALTER TABLE `notas`
+  ADD PRIMARY KEY (`id_nota`);
 
 --
 -- Indices de la tabla `pago`
@@ -505,7 +553,7 @@ ALTER TABLE `cajaempleado`
 -- AUTO_INCREMENT de la tabla `categoria`
 --
 ALTER TABLE `categoria`
-  MODIFY `id_categoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_categoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `cliente`
@@ -518,6 +566,12 @@ ALTER TABLE `cliente`
 --
 ALTER TABLE `detalleventa`
   MODIFY `id_detalle_venta` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `detalle_notas`
+--
+ALTER TABLE `detalle_notas`
+  MODIFY `id_detalle_nota` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `empleado`
@@ -556,6 +610,12 @@ ALTER TABLE `movimientoinventario`
   MODIFY `id_movimiento_inventario` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de la tabla `notas`
+--
+ALTER TABLE `notas`
+  MODIFY `id_nota` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `pago`
 --
 ALTER TABLE `pago`
@@ -565,7 +625,7 @@ ALTER TABLE `pago`
 -- AUTO_INCREMENT de la tabla `producto`
 --
 ALTER TABLE `producto`
-  MODIFY `id_producto` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_producto` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `proveedor`
@@ -608,6 +668,13 @@ ALTER TABLE `cajaempleado`
 ALTER TABLE `detalleventa`
   ADD CONSTRAINT `detalleventa_ibfk_1` FOREIGN KEY (`id_venta`) REFERENCES `venta` (`id_venta`),
   ADD CONSTRAINT `detalleventa_ibfk_2` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id_producto`);
+
+--
+-- Filtros para la tabla `detalle_notas`
+--
+ALTER TABLE `detalle_notas`
+  ADD CONSTRAINT `detalle_notas_ibfk_2` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id_producto`),
+  ADD CONSTRAINT `detalle_notas_ibfk_3` FOREIGN KEY (`id_nota`) REFERENCES `notas` (`id_nota`);
 
 --
 -- Filtros para la tabla `inventario`
