@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-10-2024 a las 02:12:44
+-- Tiempo de generación: 17-10-2024 a las 02:09:29
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 7.4.33
 
@@ -46,7 +46,7 @@ CREATE TABLE `caja` (
 --
 
 INSERT INTO `caja` (`id_caja`, `numero`, `nombre`, `fecha_apertura`, `saldo_inicial`, `efectivo`, `tarjeta_debito`, `tarjeta_credito`, `saldo_final`, `fecha_cierre`, `estado`) VALUES
-(1, 1, 'Caja Principal', '2024-10-04 20:04:59', '100.00', '930.00', '0.00', '0.00', '0.00', '2024-10-04 20:04:59', 'abierta'),
+(1, 1, 'Caja Principal', '2024-10-04 20:04:59', '100.00', '2215.00', '0.00', '0.00', '0.00', '2024-10-04 20:04:59', 'abierta'),
 (2, 2, 'Caja Piso 1', '2024-10-05 17:17:24', '100.00', '0.00', '0.00', '0.00', '0.00', '2024-10-05 17:17:24', 'abierta');
 
 -- --------------------------------------------------------
@@ -121,6 +121,7 @@ CREATE TABLE `cliente` (
 --
 
 INSERT INTO `cliente` (`id_cliente`, `tipo_cliente`, `nombre`, `apellidos`, `usuario`, `email`, `password`, `telefono`, `celular`, `domicilio`, `calle`, `numero`, `ciudad`, `estado`, `cp`, `pais`, `facebook`, `credito`, `pagado`, `pendiente`, `fecha_registro`, `estatus`) VALUES
+(1, 'General', 'Publico', 'General', 'PublicoGeneral', '', '$2y$10$L1GE2DSXHLGz5HprNIWKpeZPklQwphKRFcGL2ljziQQFPZSYtB.1W', '', '22222222', 'Dalias 6124', '', '', '', '', '', '', '', '0.000', '0.000', '0.000', '2024-10-16 23:38:01', 0),
 (7, 'Facebook', 'Marco Antonio', 'Lopez Perez', 'MALP-WEOC9YBH', '', 'ZnBiTUQzL3JoS090cnoyc0pUemdOQT09', '', '2211636228', 'Dalias 6124, Bugambilias, Heroica Puebla de Zaragoza, Pue., México', 'Dalias', '6124', 'Heroica Puebla de Zaragoza', 'Puebla', '72580', 'México', 'marcWhoami', '0.000', '0.000', '0.000', '2024-10-14 23:08:44', 1);
 
 -- --------------------------------------------------------
@@ -311,8 +312,8 @@ CREATE TABLE `producto` (
 --
 
 INSERT INTO `producto` (`id_producto`, `id_categoria`, `id_proveedor`, `codigo`, `nombre`, `descripcion`, `stock_total`, `tipo_unidad`, `precio_compra`, `precio_venta`, `marca`, `modelo`, `colores`, `tallas`, `estado`, `foto`, `fecha_ceacion`, `fecha_actualizacion`) VALUES
-(4, 1, 0, '1010110101', 'Sueter Mio Mio', '', '10.000', 'Pieza', '0.00', '250.00', '', '', 'azul,gris', '20,22,24,30,32,38', 1, '', '2024-10-15 22:36:23', '2024-10-15 22:50:27'),
-(5, 3, 0, '123456789', 'Pantalon Mezclilla', '', '10.000', 'Pieza', '0.00', '250.00', '', '', 'Gris,azul', '14,16,18,20,22', 1, '', '2024-10-15 22:56:47', '2024-10-15 22:56:47');
+(4, 1, 0, '1010110101', 'Sueter Mio Mio', '', '7.000', 'Pieza', '0.00', '300.00', '', '', 'azul,gris', '20,22,24,30,32,38', 1, '', '2024-10-15 22:36:23', '2024-10-16 23:51:58'),
+(5, 3, 0, '123456789', 'Pantalon Mezclilla', '', '8.000', 'Pieza', '0.00', '250.00', '', '', 'Gris,azul', '14,16,18,20,22', 1, '', '2024-10-15 22:56:47', '2024-10-16 23:53:18');
 
 -- --------------------------------------------------------
 
@@ -367,15 +368,26 @@ CREATE TABLE `venta` (
   `codigo` varchar(200) NOT NULL,
   `fecha_venta` date NOT NULL,
   `hora_venta` time NOT NULL,
+  `subtotal` decimal(30,2) NOT NULL,
+  `porc_descuento` decimal(30,2) NOT NULL,
+  `descuento` decimal(10,3) NOT NULL,
   `total` decimal(30,2) NOT NULL,
   `pagado` decimal(30,2) NOT NULL,
   `cambio` decimal(30,2) NOT NULL,
-  `descuento` decimal(10,3) NOT NULL,
   `id_usuario` int(11) NOT NULL,
   `id_cliente` int(11) NOT NULL,
   `id_caja` int(11) NOT NULL,
   `fecha_registro` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+
+--
+-- Volcado de datos para la tabla `venta`
+--
+
+INSERT INTO `venta` (`id_venta`, `tipo_venta`, `codigo`, `fecha_venta`, `hora_venta`, `subtotal`, `porc_descuento`, `descuento`, `total`, `pagado`, `cambio`, `id_usuario`, `id_cliente`, `id_caja`, `fecha_registro`) VALUES
+(4, 'directa', 'S6L2K3T9Y0-1', '2024-10-16', '06:39:00', '850.00', '10.00', '85.000', '765.00', '800.00', '35.00', 1, 1, 1, '2024-10-16 23:39:32'),
+(5, 'directa', 'Q7X8H3C3G1-2', '2024-10-16', '06:51:00', '300.00', '10.00', '30.000', '270.00', '500.00', '230.00', 1, 1, 1, '2024-10-16 23:51:58'),
+(6, 'directa', 'N0N0B4L3P0-3', '2024-10-16', '06:53:00', '250.00', '0.00', '0.000', '250.00', '300.00', '50.00', 1, 1, 1, '2024-10-16 23:53:18');
 
 -- --------------------------------------------------------
 
@@ -397,6 +409,16 @@ CREATE TABLE `venta_detalle` (
   `total` decimal(30,2) NOT NULL,
   `fecha_movimiento` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+
+--
+-- Volcado de datos para la tabla `venta_detalle`
+--
+
+INSERT INTO `venta_detalle` (`id_detalle`, `id_producto`, `descripcion`, `codigo`, `cantidad`, `precio_compra`, `precio_venta`, `porc_descuento`, `descuento`, `subtotal`, `total`, `fecha_movimiento`) VALUES
+(6, 4, 'Sueter Mio Mio', 'S6L2K3T9Y0-1', 2, '0.00', '300.00', '0.00', '0.00', '0.00', '540.00', '2024-10-16 23:39:32'),
+(7, 5, 'Pantalon Mezclilla', 'S6L2K3T9Y0-1', 1, '0.00', '250.00', '0.00', '0.00', '0.00', '225.00', '2024-10-16 23:39:32'),
+(8, 4, 'Sueter Mio Mio', 'Q7X8H3C3G1-2', 1, '0.00', '300.00', '10.00', '30.00', '300.00', '270.00', '2024-10-16 23:51:58'),
+(9, 5, 'Pantalon Mezclilla', 'N0N0B4L3P0-3', 1, '0.00', '250.00', '0.00', '0.00', '250.00', '250.00', '2024-10-16 23:53:18');
 
 --
 -- Índices para tablas volcadas
@@ -559,7 +581,7 @@ ALTER TABLE `categoria`
 -- AUTO_INCREMENT de la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `detalleventa`
@@ -643,13 +665,13 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `venta`
 --
 ALTER TABLE `venta`
-  MODIFY `id_venta` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_venta` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `venta_detalle`
 --
 ALTER TABLE `venta_detalle`
-  MODIFY `id_detalle` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_detalle` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Restricciones para tablas volcadas
