@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 17-10-2024 a las 02:09:29
+-- Tiempo de generación: 18-10-2024 a las 02:18:11
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 7.4.33
 
@@ -140,20 +140,6 @@ CREATE TABLE `detalleventa` (
   `cantidad` int(11) NOT NULL,
   `subtotal` decimal(10,2) NOT NULL,
   `total` decimal(30,2) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `detalle_notas`
---
-
-CREATE TABLE `detalle_notas` (
-  `id_detalle_nota` int(11) NOT NULL,
-  `id_nota` int(11) NOT NULL,
-  `id_producto` int(11) NOT NULL,
-  `estatus` int(11) NOT NULL,
-  `fecha` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
@@ -318,6 +304,26 @@ INSERT INTO `producto` (`id_producto`, `id_categoria`, `id_proveedor`, `codigo`,
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `productos_notas`
+--
+
+CREATE TABLE `productos_notas` (
+  `id_detalle_nota` int(11) NOT NULL,
+  `id_nota` int(11) NOT NULL,
+  `id_producto` int(11) NOT NULL,
+  `codigo` text NOT NULL,
+  `descripcion` text NOT NULL,
+  `precio_venta` decimal(30,2) NOT NULL,
+  `limite_nota` int(11) NOT NULL,
+  `colores` text NOT NULL,
+  `tallas` text NOT NULL,
+  `estatus` int(11) NOT NULL,
+  `fecha` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `proveedor`
 --
 
@@ -459,14 +465,6 @@ ALTER TABLE `detalleventa`
   ADD KEY `id_producto` (`id_producto`);
 
 --
--- Indices de la tabla `detalle_notas`
---
-ALTER TABLE `detalle_notas`
-  ADD PRIMARY KEY (`id_detalle_nota`),
-  ADD KEY `id_producto` (`id_producto`),
-  ADD KEY `id_nota` (`id_nota`);
-
---
 -- Indices de la tabla `empleado`
 --
 ALTER TABLE `empleado`
@@ -525,6 +523,14 @@ ALTER TABLE `pago`
 ALTER TABLE `producto`
   ADD PRIMARY KEY (`id_producto`),
   ADD KEY `categoria_id` (`id_categoria`);
+
+--
+-- Indices de la tabla `productos_notas`
+--
+ALTER TABLE `productos_notas`
+  ADD PRIMARY KEY (`id_detalle_nota`),
+  ADD KEY `id_producto` (`id_producto`),
+  ADD KEY `id_nota` (`id_nota`);
 
 --
 -- Indices de la tabla `proveedor`
@@ -590,12 +596,6 @@ ALTER TABLE `detalleventa`
   MODIFY `id_detalle_venta` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `detalle_notas`
---
-ALTER TABLE `detalle_notas`
-  MODIFY `id_detalle_nota` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT de la tabla `empleado`
 --
 ALTER TABLE `empleado`
@@ -650,6 +650,12 @@ ALTER TABLE `producto`
   MODIFY `id_producto` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
+-- AUTO_INCREMENT de la tabla `productos_notas`
+--
+ALTER TABLE `productos_notas`
+  MODIFY `id_detalle_nota` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `proveedor`
 --
 ALTER TABLE `proveedor`
@@ -692,13 +698,6 @@ ALTER TABLE `detalleventa`
   ADD CONSTRAINT `detalleventa_ibfk_2` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id_producto`);
 
 --
--- Filtros para la tabla `detalle_notas`
---
-ALTER TABLE `detalle_notas`
-  ADD CONSTRAINT `detalle_notas_ibfk_2` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id_producto`),
-  ADD CONSTRAINT `detalle_notas_ibfk_3` FOREIGN KEY (`id_nota`) REFERENCES `notas` (`id_nota`);
-
---
 -- Filtros para la tabla `inventario`
 --
 ALTER TABLE `inventario`
@@ -728,6 +727,13 @@ ALTER TABLE `pago`
 --
 ALTER TABLE `producto`
   ADD CONSTRAINT `product_ibfk_1` FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id_categoria`);
+
+--
+-- Filtros para la tabla `productos_notas`
+--
+ALTER TABLE `productos_notas`
+  ADD CONSTRAINT `productos_notas_ibfk_2` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id_producto`),
+  ADD CONSTRAINT `productos_notas_ibfk_3` FOREIGN KEY (`id_nota`) REFERENCES `notas` (`id_nota`);
 
 --
 -- Filtros para la tabla `usuario`
