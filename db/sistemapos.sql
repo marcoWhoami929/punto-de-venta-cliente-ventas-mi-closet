@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 19-10-2024 a las 02:12:36
+-- Tiempo de generación: 23-10-2024 a las 01:51:04
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 7.4.33
 
@@ -258,10 +258,7 @@ CREATE TABLE `notas` (
 --
 
 INSERT INTO `notas` (`id_nota`, `codigo`, `titulo_nota`, `fecha_publicacion`, `fecha_expiracion`, `porc_descuento`, `qr`, `estatus`, `fecha`) VALUES
-(1, 'NOT-U12NKPDKYIRMVDOTOCG7XL', 'LIVE MIO MIO', '2024-10-18 18:00:00', '2024-10-19 11:00:00', '10.00', 'http://localhost/pos2/notas/NOT-U12NKPDKYIRMVDOTOCG7XL', 1, '2024-10-18 19:02:03'),
-(2, 'NOT-9PHNAIKKQDAWJSBLB0WXDR', 'asdsad', '2024-10-18 13:06:00', '2024-10-18 13:06:00', '0.00', 'http://localhost/pos2/notas/NOT-9PHNAIKKQDAWJSBLB0WXDR', 1, '2024-10-18 19:19:32'),
-(3, 'NOT-HFVANJWM7R3UEZURW4YKSA', 'Prueba', '2024-10-18 17:58:00', '2024-10-18 17:58:00', '0.00', 'http://localhost/pos2/notas/NOT-HFVANJWM7R3UEZURW4YKSA', 1, '2024-10-19 00:00:18'),
-(4, 'NOT-MIXKBX8YCHE9Y6FDF7A3QL', 'dsda', '2024-10-18 18:05:00', '2024-10-18 18:05:00', '0.00', 'http://localhost/pos2/notas/NOT-MIXKBX8YCHE9Y6FDF7A3QL', 1, '2024-10-19 00:05:20');
+(1, 'NOT-CHSKUFP7DZIOX9ZBLPWRYC', 'Mio Mio 2', '2024-10-23 10:00:00', '2024-10-24 10:00:00', '10.00', 'http://localhost/pos2/notas/NOT-CHSKUFP7DZIOX9ZBLPWRYC', 1, '2024-10-22 16:33:08');
 
 -- --------------------------------------------------------
 
@@ -309,7 +306,7 @@ CREATE TABLE `producto` (
 --
 
 INSERT INTO `producto` (`id_producto`, `id_categoria`, `id_proveedor`, `codigo`, `nombre`, `descripcion`, `stock_total`, `tipo_unidad`, `precio_compra`, `precio_venta`, `marca`, `modelo`, `colores`, `tallas`, `estado`, `foto`, `fecha_ceacion`, `fecha_actualizacion`) VALUES
-(4, 1, 0, '1010110101', 'Sueter Mio Mio', '', '7.000', 'Pieza', '0.00', '300.00', '', '', 'azul,gris', '20,22,24,30,32,38', 1, '', '2024-10-15 22:36:23', '2024-10-16 23:51:58'),
+(4, 1, 0, '1010110101', 'Sueter Mio Mio', '', '7.000', 'Pieza', '0.00', '300.00', '', '', 'azul,gris', '20,22,24,30,32,38', 1, '1010110101_54.jpg', '2024-10-15 22:36:23', '2024-10-22 23:23:56'),
 (5, 3, 0, '123456789', 'Pantalon Mezclilla', '', '7.000', 'Pieza', '0.00', '250.00', '', '', 'Gris,azul', '14,16,18,20,22', 1, '', '2024-10-15 22:56:47', '2024-10-18 19:26:39');
 
 -- --------------------------------------------------------
@@ -337,11 +334,8 @@ CREATE TABLE `productos_notas` (
 --
 
 INSERT INTO `productos_notas` (`id_detalle_nota`, `codigo_nota`, `id_producto`, `codigo`, `descripcion`, `precio_venta`, `limite_nota`, `colores`, `tallas`, `estatus`, `fecha`) VALUES
-(1, 'NOT-U12NKPDKYIRMVDOTOCG7XL', 5, '123456789', 'Pantalon Mezclilla', '250.00', 8, 'Gris,azul', '14,16,18,20,22', 1, '2024-10-18 19:02:03'),
-(2, 'NOT-U12NKPDKYIRMVDOTOCG7XL', 4, '1010110101', 'Sueter Mio Mio', '300.00', 7, 'azul,gris', '20,22,24,30,32,38', 1, '2024-10-18 19:02:03'),
-(3, 'NOT-9PHNAIKKQDAWJSBLB0WXDR', 5, '123456789', 'Pantalon Mezclilla', '250.00', 8, 'Gris,azul', '14,16,18,20,22', 1, '2024-10-18 19:19:32'),
-(4, 'NOT-HFVANJWM7R3UEZURW4YKSA', 5, '123456789', 'Pantalon Mezclilla', '250.00', 7, 'Gris,azul', '14,16,18,20,22', 1, '2024-10-19 00:00:18'),
-(5, 'NOT-MIXKBX8YCHE9Y6FDF7A3QL', 5, '123456789', 'Pantalon Mezclilla', '250.00', 7, 'Gris,azul', '14,16,18,20,22', 1, '2024-10-19 00:05:20');
+(1, 'NOT-CHSKUFP7DZIOX9ZBLPWRYC', 5, '123456789', 'Pantalon Mezclilla', '250.00', 7, 'Gris,azul', '14,16,18,20,22', 1, '2024-10-22 16:33:08'),
+(2, 'NOT-CHSKUFP7DZIOX9ZBLPWRYC', 4, '1010110101', 'Sueter Mio Mio', '300.00', 7, 'azul,gris', '20,22,24,30,32,38', 1, '2024-10-22 16:33:08');
 
 -- --------------------------------------------------------
 
@@ -660,7 +654,7 @@ ALTER TABLE `movimientoinventario`
 -- AUTO_INCREMENT de la tabla `notas`
 --
 ALTER TABLE `notas`
-  MODIFY `id_nota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_nota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `pago`
@@ -678,7 +672,7 @@ ALTER TABLE `producto`
 -- AUTO_INCREMENT de la tabla `productos_notas`
 --
 ALTER TABLE `productos_notas`
-  MODIFY `id_detalle_nota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_detalle_nota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `proveedor`
