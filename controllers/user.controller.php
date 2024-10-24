@@ -50,6 +50,7 @@ class ControllerUser
                         $_SESSION["id"] = $respuesta["id_cliente"];
                         $_SESSION["nombre"] = $respuesta["nombre"];
                         $_SESSION["usuario"] = $respuesta["usuario"];
+                        $_SESSION["apellidos"] = $respuesta["apellidos"];
 
 
                         echo '<script>
