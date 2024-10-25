@@ -12,7 +12,7 @@ class Pagination
         $this->adjacents   = $adjacents;
     }
 
-    public    function paginate()
+    public  function paginate($vista)
     {
 
         $page = $this->page;
@@ -27,13 +27,13 @@ class Pagination
         if ($page == 1) {
             $out .= "<li class='page-item disabled'><a class='page-link'>$prevlabel</a></li>";
         } else if ($page == 2) {
-            $out .= "<li class='page-item'><a class='page-link' href='javascript:void(0);' onclick='cargarConceptosPinturas(1)'>$prevlabel</a></li>";
+            $out .= "<li class='page-item'><a class='page-link' href='javascript:void(0);' onclick='$vista(1)'>$prevlabel</a></li>";
         } else {
-            $out .= "<li class='page-item'><a class='page-link' href='javascript:void(0);' onclick='cargarConceptosPinturas(" . ($page - 1) . ")'>$prevlabel</a></li>";
+            $out .= "<li class='page-item'><a class='page-link' href='javascript:void(0);' onclick='$vista(" . ($page - 1) . ")'>$prevlabel</a></li>";
         }
         // first label
         if ($page > ($adjacents + 1)) {
-            $out .= "<li class='page-item'><a class='page-link' href='javascript:void(0);' onclick='cargarConceptosPinturas(1)'>1</a></li>";
+            $out .= "<li class='page-item'><a class='page-link' href='javascript:void(0);' onclick='$vista(1)'>1</a></li>";
         }
         // interval
         if ($page > ($adjacents + 2)) {
@@ -48,9 +48,9 @@ class Pagination
             if ($i == $page) {
                 $out .= "<li class='active page-item'><a class='page-link'>$i</a></li>";
             } else if ($i == 1) {
-                $out .= "<li class='page-item'><a class='page-link' href='javascript:void(0);' onclick='cargarConceptosPinturas(1)'>$i</a></li>";
+                $out .= "<li class='page-item'><a class='page-link' href='javascript:void(0);' onclick='$vista(1)'>$i</a></li>";
             } else {
-                $out .= "<li class='page-item'><a class='page-link' href='javascript:void(0);' onclick='cargarConceptosPinturas(" . $i . ")'>$i</a></li>";
+                $out .= "<li class='page-item'><a class='page-link' href='javascript:void(0);' onclick='$vista(" . $i . ")'>$i</a></li>";
             }
         }
 
@@ -63,13 +63,13 @@ class Pagination
         // last
 
         if ($page < ($tpages - $adjacents)) {
-            $out .= "<li class='page-item'><a class='page-link' href='javascript:void(0);' onclick='cargarConceptosPinturas($tpages)'>$tpages</a></li>";
+            $out .= "<li class='page-item'><a class='page-link' href='javascript:void(0);' onclick='$vista($tpages)'>$tpages</a></li>";
         }
 
         // next
 
         if ($page < $tpages) {
-            $out .= "<li class='page-item'><a class='page-link' href='javascript:void(0);' onclick='cargarConceptosPinturas(" . ($page + 1) . ")'>$nextlabel</a></li>";
+            $out .= "<li class='page-item'><a class='page-link' href='javascript:void(0);' onclick='$vista(" . ($page + 1) . ")'>$nextlabel</a></li>";
         } else {
             $out .= "<li class='disabled page-item'><a class='page-link'>$nextlabel</a></li>";
         }

@@ -1,5 +1,6 @@
 <?php
-include("../models/db_conexion.php");
+error_reporting(0);
+include("../models/conexion.php");
 class notas extends ConexionsBd
 {
     public $mysqli;
@@ -12,35 +13,37 @@ class notas extends ConexionsBd
 
     public function countAll($sql)
     {
-        $query = $this->mysqli->query($sql);
-        $query = $query->fetchAll();
-        return count($query);
-    }
-    public function countAllBitacora($sql)
-    {
         $query = ConexionsBd::conectar()->prepare($sql);
         $query->execute();
         $query = $query->fetchAll();
         return count($query);
     }
 
-    public function getDetalleBoxLayot($search)
+    public function getListaNotas($search)
     {
         $offset = $search['offset'];
         $per_page = $search['per_page'];
 
+        if ($search["busqueda"] != "") {
 
-        $sql = "SELECT CONCAT(fila,'-', marca,'-',seccion) as 'ubicacion',modelo,paleta,noModelo,color,codigo FROM `colorbox` LIMIT $per_page OFFSET $offset";
+            $sWhere = "WHERE titulo_nota LIKE '%" . $search['busqueda'] . "%' OR codigo LIKE '%" . $search['busqueda'] . "%'";
+        } else {
+            $sWhere = "";
+        }
+
+
+        $sql = "SELECT * FROM notas $sWhere LIMIT $per_page OFFSET $offset";
 
         $query = ConexionsBd::conectar()->prepare($sql);
+
 
         $query->execute();
 
         $query = $query->fetchAll();
 
-        $sql1 = "SELECT  CONCAT(fila,'-', marca,'-',seccion) as 'ubicacion',modelo,paleta,noModelo,color,codigo FROM  colorbox ";
+        $sql1 = "SELECT  * FROM notas";
 
-        $nums_row = $this->countAllBitacora($sql1);
+        $nums_row = $this->countAll($sql1);
 
         //Set counter
         $this->setCounter($nums_row);

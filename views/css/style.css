@@ -30135,3 +30135,12 @@ table.dataTable tbody td.select-checkbox:after {
   }
 }
 /*# sourceMappingURL=maps/style.css.map */
+/**Estilos**/
+.card-color {
+  background: #b99654;
+  color: #ffffff;
+}
+.card-red {
+  background: #ff645d;
+  color: #ffffff;
+}

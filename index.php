@@ -1,5 +1,6 @@
 <?php
 
+
 /*
 	CONTROLLERS
  */
@@ -18,6 +19,8 @@ require_once "models/notas.model.php";
 /*
 OTHERS
  */
+require_once "clases/notas.php";
+
 require_once "models/rutas.php";
 
 $plantilla = new ControladorPlantilla();
