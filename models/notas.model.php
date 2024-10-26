@@ -13,4 +13,14 @@ class ModelNotas
 
         $stmt = null;
     }
+    static public function mdlDetalleNota($codigo)
+    {
+        $stmt = ConexionsBd::conectar()->prepare("SELECT * FROM productos_notas WHERE codigo_nota = '$codigo'");
+
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+
+        $stmt = null;
+    }
 }

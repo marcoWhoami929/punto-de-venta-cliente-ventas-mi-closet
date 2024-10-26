@@ -15,25 +15,25 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="listaNotas">
+            <a class="nav-link" href="<?= APP_URL_CLIENT ?>listaNotas">
                 <i class="mdi mdi-book-open menu-icon"></i>
                 <span class="menu-title">Todas las Notas</span>
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="notasAdquiridas">
+            <a class="nav-link" href="<?= APP_URL_CLIENT ?>notasAdquiridas">
                 <i class="mdi mdi-cart-outline menu-icon"></i>
                 <span class="menu-title">Notas Adquiridas</span>
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="notasPendientes">
+            <a class="nav-link" href="<?= APP_URL_CLIENT ?>notasPendientes">
                 <i class="mdi mdi-currency-usd menu-icon"></i>
                 <span class="menu-title">Notas Por Pagar</span>
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="estatusNotas">
+            <a class="nav-link" href="<?= APP_URL_CLIENT ?>estatusNotas">
                 <i class="mdi mdi-flag-checkered menu-icon"></i>
                 <span class="menu-title">Estatus</span>
             </a>

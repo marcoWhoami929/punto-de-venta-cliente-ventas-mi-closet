@@ -1,11 +1,12 @@
 <?php
-
+error_reporting(E_ALL);
 require_once "controllers/notas.controller.php";
 $url = explode("/", $_GET['ruta']);
 $url = $url[1];
 
 $notas = new ControllerNotas();
 $notas = $notas->ctrListarNotas($url);
+$codigoNota = $notas["codigo"];
 
 if ($notas != false) {
 
@@ -13,6 +14,41 @@ if ($notas != false) {
     $ahora = date("Y-m-d H:i:s");
     $fecha_publicacion =  date("Y-m-d H:i:s", strtotime($notas["fecha_publicacion"]));
     $fecha_expiracion =  date("Y-m-d H:i:s", strtotime($notas["fecha_expiracion"]));
+
+    if (isset($_SESSION["datos_producto_venta"])) {
+        unset($_SESSION["datos_producto_venta"]);
+    } else {
+        /*
+        $detalle = new ControllerNotas();
+        $detalle = $detalle->ctrDetalleNota($codigoNota);
+        foreach ($detalle as $key => $value) {
+            $porc_descuento = $notas["porc_descuento"];
+            $cantidad = 1;
+
+            $descuento = (($value['precio_venta'] * $cantidad) * $porc_descuento) / 100;
+            $subtotal = ($cantidad * $value['precio_venta']);
+            $subtotal = number_format($subtotal, MONEDA_DECIMALES, '.', '');
+            $total = ($subtotal - $descuento);
+            $total = number_format($total, MONEDA_DECIMALES, '.', '');
+
+            $_SESSION['datos_producto_venta'][$value['codigo']] = [
+                "id_producto" => $value['id_producto'],
+                "codigo" => $value['codigo'],
+                "precio_compra" => '0.00',
+                "precio_venta" => $value['precio_venta'],
+                "porc_descuento" => $porc_descuento,
+                "descuento" => $descuento,
+                "cantidad" => $cantidad,
+                "subtotal" => $subtotal,
+                "colores" => $value["colores"],
+                "tallas" => $value["tallas"],
+                "total" => $total,
+                "descripcion" => $value['descripcion']
+            ];
+        }
+        */
+    }
+
 
     if ($fecha_publicacion > $ahora) {
         var_dump("sin iniciar");
@@ -75,126 +111,185 @@ if ($notas != false) {
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-md-12 col-lg-12 col-sm-12 grid-margin stretch-card">
+                                <div class="card">
 
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalProductos">
+                                        Ver Productos Nota
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-lg-12 col-sm-12 grid-margin stretch-card">
+                                <div class="card">
+                                    <div class="card-body productos-nota">
+                                    </div>
+
+                                </div>
+                            </div>
                             <div class="col-md-12 col-lg-12 col-sm-12 grid-margin stretch-card">
                                 <div class="card">
                                     <div class="card-body">
-                                        <div class="table-container">
-                                            <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
-                                                <thead style="background:#B99654;color:#ffffff;">
-                                                    <tr>
-                                                        <th class="has-text-centered" style="color:#ffffff">#</th>
-                                                        <th class="has-text-centered" style="color:#ffffff">Código de barras</th>
-                                                        <th class="has-text-centered" style="color:#ffffff">Producto</th>
-                                                        <th class="has-text-centered" style="color:#ffffff">Cant.</th>
-                                                        <th class="has-text-centered" style="color:#ffffff">Precio</th>
-                                                        <th class="has-text-centered" style="color:#ffffff">% Desc</th>
-                                                        <th class="has-text-centered" style="color:#ffffff">Desc</th>
-                                                        <th class="has-text-centered" style="color:#ffffff">Subtotal</th>
-                                                        <th class="has-text-centered" style="color:#ffffff">Total</th>
-                                                        <th class="has-text-centered" style="color:#ffffff">Actualizar</th>
-                                                        <th class="has-text-centered" style="color:#ffffff">Remover</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <?php
-                                                    if (isset($_SESSION['datos_producto_venta']) && count($_SESSION['datos_producto_venta']) >= 1) {
 
-                                                        $_SESSION['total'] = 0;
-                                                        $_SESSION['subtotal'] = 0;
-                                                        $_SESSION['descuento'] = 0;
-                                                        $cc = 1;
 
-                                                        foreach ($_SESSION['datos_producto_venta'] as $productos) {
-                                                    ?>
-                                                            <tr class="has-text-centered">
-                                                                <td><?php echo $cc; ?></td>
-                                                                <td><?php echo $productos['codigo']; ?></td>
-                                                                <td><?php echo $productos['descripcion']; ?></td>
-                                                                <td>
-                                                                    <div class="control">
-                                                                        <input class="input sale_input-cant has-text-centered" value="<?php echo $productos['cantidad']; ?>" id="sale_input_<?php echo str_replace(" ", "_", $productos['codigo']); ?>" onchange="actualizar_cantidad('#sale_input_<?php echo str_replace(" ", "_", $productos['codigo']); ?>','<?php echo $productos['codigo']; ?>')" type="number" style="max-width: 80px;">
-                                                                    </div>
-                                                                </td>
-                                                                <td><?php echo MONEDA_SIMBOLO . number_format($productos['precio_venta'], MONEDA_DECIMALES, MONEDA_SEPARADOR_DECIMAL, MONEDA_SEPARADOR_MILLAR) . " " . MONEDA_NOMBRE; ?></td>
-                                                                <td>
-                                                                    <div class="control">
-                                                                        <input class="input sale_input-cant has-text-centered" value="<?php echo $productos['porc_descuento']; ?>" id="porc_descuento<?php echo str_replace(" ", "_", $productos['codigo']); ?>" type="number" style="max-width: 80px;" readonly>
-                                                                    </div>
-                                                                </td>
-                                                                <td><?php echo MONEDA_SIMBOLO . number_format($productos['descuento'], MONEDA_DECIMALES, MONEDA_SEPARADOR_DECIMAL, MONEDA_SEPARADOR_MILLAR) . " " . MONEDA_NOMBRE; ?></td>
-                                                                <td><?php echo MONEDA_SIMBOLO . number_format($productos['subtotal'], MONEDA_DECIMALES, MONEDA_SEPARADOR_DECIMAL, MONEDA_SEPARADOR_MILLAR) . " " . MONEDA_NOMBRE; ?></td>
-                                                                <td><?php echo MONEDA_SIMBOLO . number_format($productos['total'], MONEDA_DECIMALES, MONEDA_SEPARADOR_DECIMAL, MONEDA_SEPARADOR_MILLAR) . " " . MONEDA_NOMBRE; ?></td>
+                                        <?php
+                                        if (isset($_SESSION['datos_producto_venta']) && count($_SESSION['datos_producto_venta']) >= 1) {
 
-                                                                <td>
-                                                                    <button type="button" class="button is-success is-rounded is-small" onclick="actualizar_cantidad('#sale_input_<?php echo str_replace(" ", "_", $productos['codigo']); ?>','<?php echo $productos['codigo']; ?>')">
-                                                                        <i class="fas fa-redo-alt fa-fw"></i>
+                                            $_SESSION['total'] = 0;
+                                            $_SESSION['subtotal'] = 0;
+                                            $_SESSION['descuento'] = 0;
+                                            $cc = 1;
+
+                                            foreach ($_SESSION['datos_producto_venta'] as $productos) {
+
+                                        ?>
+                                                <div class="card card-gray mb-2">
+                                                    <div class="card-body">
+                                                        <div class="container">
+                                                            <div class="row">
+                                                                <div class="col-md-1 col-sm-1 col-lg-1">
+                                                                    <button class="btn btn-md btn-info mt-4" type="button" onclick="clonarProducto('<?= $productos["codigo"] ?>','<?= $notas["codigo"] ?>')">
+                                                                        <i class="ti-files"></i>
                                                                     </button>
-                                                                </td>
-                                                                <td>
-                                                                    <form class="FormularioAjax" action="<?php echo APP_URL; ?>app/ajax/ventaAjax.php" method="POST" autocomplete="off">
+                                                                </div>
+                                                                <div class="col-md-2 col-sm-2 col-lg-2">
+                                                                    <h6 class="card-subtitle"><?= $productos["descripcion"] ?></h6>
+                                                                    <h5 class="card-subtitle-2"><?= $productos["codigo"] ?></h5>
+                                                                </div>
+                                                                <div class="col-md-2 col-sm-2 col-lg-2">
+                                                                    <div class="form-group">
+                                                                        <div class="input-group d-flex align-items-center">
+                                                                            <div class="input-group-append">
+                                                                                <button class="btn btn-sm btn-info me-2" type="button">
+                                                                                    <i class="ti-minus"></i>
+                                                                                </button>
+                                                                            </div>
+                                                                            <input type="number" class="form-control" value="<?php echo $productos['cantidad']; ?>">
+                                                                            <div class="input-group-append">
+                                                                                <button class="btn btn-sm btn-info ms-2" type="button">
+                                                                                    <i class="ti-plus"></i>
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-1 col-sm-1 col-lg-1">
+                                                                    <div class="form-group">
+                                                                        <label>Color</label>
+                                                                        <select class="form-select" id="exampleSelectGender">
+                                                                            <?php
 
-                                                                        <input type="hidden" name="codigo" value="<?php echo $productos['codigo']; ?>">
-                                                                        <input type="hidden" name="modulo_venta" value="remover_producto">
+                                                                            $colores = explode(",", $productos['colores']);
 
-                                                                        <button type="submit" class="button is-danger is-rounded is-small" title="Remover producto">
-                                                                            <i class="fas fa-trash-restore fa-fw"></i>
-                                                                        </button>
-                                                                    </form>
-                                                                </td>
-                                                            </tr>
-                                                        <?php
-                                                            $cc++;
+                                                                            foreach ($colores as $key => $value) {
+                                                                                echo '<option value="' . $value . '">' . $value . '</option>';
+                                                                            }
+                                                                            ?>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-1 col-sm-1 col-lg-1">
+                                                                    <div class="form-group">
+                                                                        <label>Talla</label>
+                                                                        <select class="form-select" id="exampleSelectGender">
+                                                                            <?php
 
-                                                            $_SESSION['subtotal'] += $productos['subtotal'];
-                                                            $_SESSION['descuento'] += $productos['descuento'];
-                                                            $_SESSION['total'] += $productos['total'];
-                                                        }
-                                                        ?>
+                                                                            $tallas = explode(",", $productos['tallas']);
+
+                                                                            foreach ($tallas as $key => $value) {
+                                                                                echo '<option value="' . $value . '">' . $value . '</option>';
+                                                                            }
+                                                                            ?>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-2 col-sm-2 col-lg-2">
+                                                                    <label>Precio</label>
+                                                                    <h5 class="card-subtitle"><?php echo MONEDA_SIMBOLO . number_format($productos['precio_venta'], MONEDA_DECIMALES, MONEDA_SEPARADOR_DECIMAL, MONEDA_SEPARADOR_MILLAR) . " " . MONEDA_NOMBRE; ?></h5>
+                                                                </div>
+                                                                <div class="col-md-2 col-sm-2 col-lg-2">
+                                                                    <label>Total</label>
+                                                                    <h5 class="card-subtitle"><?php echo MONEDA_SIMBOLO . number_format($productos['total'], MONEDA_DECIMALES, MONEDA_SEPARADOR_DECIMAL, MONEDA_SEPARADOR_MILLAR) . " " . MONEDA_NOMBRE; ?></h5>
+                                                                </div>
+                                                                <div class="col-md-1 col-sm-1 col-lg-1">
+                                                                    <button class="btn btn-md btn-danger mt-4" type="button">
+                                                                        <i class="ti-trash" style="color:#ffffff"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            <?php
+                                                $cc++;
+
+                                                $_SESSION['subtotal'] += $productos['subtotal'];
+                                                $_SESSION['descuento'] += $productos['descuento'];
+                                                $_SESSION['total'] += $productos['total'];
+                                            }
+                                            ?>
+
+                                        <?php
+                                        } else {
+                                            $_SESSION['total'] = 0;
+                                            $_SESSION['subtotal'] = 0;
+                                            $_SESSION['descuento'] = 0;
+                                        ?>
+                                            <tr class="has-text-centered">
+                                                <td colspan="13">
+                                                    No hay productos agregados
+                                                </td>
+                                            </tr>
+                                        <?php } ?>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-3 col-lg-3 col-sm-3 grid-margin stretch-card">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <table>
+                                                    <tbody>
+
                                                         <tr class="has-text-centered">
                                                             <td colspan="4"></td>
                                                             <td class="has-text-weight-bold">
-                                                                SUBTOTAL
+                                                                <h4>SUBTOTAL</h4>
                                                             </td>
                                                             <td class="has-text-weight-bold">
-                                                                <?php echo MONEDA_SIMBOLO . number_format($_SESSION['subtotal'], MONEDA_DECIMALES, MONEDA_SEPARADOR_DECIMAL, MONEDA_SEPARADOR_MILLAR) . " " . MONEDA_NOMBRE; ?>
+                                                                <h4><?php echo MONEDA_SIMBOLO . number_format($_SESSION['subtotal'], MONEDA_DECIMALES, MONEDA_SEPARADOR_DECIMAL, MONEDA_SEPARADOR_MILLAR) . " " . MONEDA_NOMBRE; ?></h4>
                                                             </td>
                                                             <td colspan="5"></td>
                                                         </tr>
                                                         <tr class="has-text-centered">
                                                             <td colspan="4"></td>
                                                             <td class="has-text-weight-bold">
-                                                                DESCUENTO
+                                                                <h4>DESCUENTO</h4>
                                                             </td>
                                                             <td class="has-text-weight-bold">
-                                                                <?php echo MONEDA_SIMBOLO . number_format($_SESSION['descuento'], MONEDA_DECIMALES, MONEDA_SEPARADOR_DECIMAL, MONEDA_SEPARADOR_MILLAR) . " " . MONEDA_NOMBRE; ?>
+                                                                <h4><?php echo MONEDA_SIMBOLO . number_format($_SESSION['descuento'], MONEDA_DECIMALES, MONEDA_SEPARADOR_DECIMAL, MONEDA_SEPARADOR_MILLAR) . " " . MONEDA_NOMBRE; ?></h4>
                                                             </td>
                                                             <td colspan="5"></td>
                                                         </tr>
                                                         <tr class="has-text-centered">
                                                             <td colspan="4"></td>
                                                             <td class="has-text-weight-bold">
-                                                                TOTAL
+                                                                <h3>TOTAL</h3>
                                                             </td>
                                                             <td class="has-text-weight-bold">
-                                                                <?php echo MONEDA_SIMBOLO . number_format($_SESSION['total'], MONEDA_DECIMALES, MONEDA_SEPARADOR_DECIMAL, MONEDA_SEPARADOR_MILLAR) . " " . MONEDA_NOMBRE; ?>
+                                                                <h3><?php echo MONEDA_SIMBOLO . number_format($_SESSION['total'], MONEDA_DECIMALES, MONEDA_SEPARADOR_DECIMAL, MONEDA_SEPARADOR_MILLAR) . " " . MONEDA_NOMBRE; ?></h3>
                                                             </td>
                                                             <td colspan="5"></td>
                                                         </tr>
-                                                    <?php
-                                                    } else {
-                                                        $_SESSION['total'] = 0;
-                                                    ?>
-                                                        <tr class="has-text-centered">
-                                                            <td colspan="13">
-                                                                No hay productos agregados
-                                                            </td>
-                                                        </tr>
-                                                    <?php } ?>
-                                                </tbody>
-                                            </table>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
 
@@ -211,6 +306,31 @@ if ($notas != false) {
 }
 
 ?>
+<!-- Modal -->
+<div class="modal fade" id="modalProductos" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header card-color">
+                <h5 class="modal-title" id="exampleModalLabel">Productos</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12 col-lg-12 col-sm-12 grid-margin stretch-card">
+                    <div class="card">
+
+                        <div class="card-body detalle-notas">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info" data-bs-dismiss="modal">Cerrar</button>
+
+            </div>
+        </div>
+    </div>
+</div>
 <style>
     .countdown {
         width: 300px;

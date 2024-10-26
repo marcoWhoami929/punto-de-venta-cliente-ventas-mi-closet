@@ -51,6 +51,26 @@ class notas extends ConexionsBd
         $this->setCounter($nums_row);
         return $query;
     }
+    public function getDetalleNota($search)
+    {
+        $codigo = $search['codigoNota'];
+
+        $sql = "SELECT prod.*,notas.porc_descuento FROM productos_notas as prod INNER JOIN notas on prod.codigo_nota = notas.codigo WHERE prod.codigo_nota = '$codigo'";
+
+        $query = ConexionsBd::conectar()->prepare($sql);
+
+        $query->execute();
+
+        $query = $query->fetchAll();
+
+        $sql1 = "SELECT prod.*,notas.porc_descuento FROM productos_notas as prod INNER JOIN notas on prod.codigo_nota = notas.codigo WHERE prod.codigo_nota = '$codigo'";
+
+        $nums_row = $this->countAll($sql1);
+
+        //Set counter
+        $this->setCounter($nums_row);
+        return $query;
+    }
     function setCounter($counter)
     {
         $this->counter = $counter;

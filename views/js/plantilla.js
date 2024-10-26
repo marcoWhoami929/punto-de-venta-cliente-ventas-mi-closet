@@ -5,8 +5,11 @@ $(function () {
   switch (ruta[2]) {
     case "listaNotas":
       listadoNotas(1);
-
       break;
+  }
+  if (ruta[3] != undefined) {
+    var codigoNota = ruta[3];
+    detalleProductosNota(codigoNota);
   }
 });
 function listadoNotas(page) {
@@ -89,7 +92,7 @@ function countDown(fechaPublicacion, fechaExpiracion, id, estado) {
     timer = setInterval(showRemaining, 1000);
   }
 }
-function cargarNota(fechaActual, fechaPublicacion, fechaExpiracion) {
+function cargarNota(codigo, fechaActual, fechaPublicacion, fechaExpiracion) {
   var fechaActual = new Date(fechaActual);
   var fechaPublicacion = new Date(fechaPublicacion);
   var fechaExpiracion = new Date(fechaExpiracion);
@@ -124,7 +127,7 @@ function cargarNota(fechaActual, fechaPublicacion, fechaExpiracion) {
           cancelButtonText: "Cancelar",
         }).then((result) => {
           if (result.isConfirmed) {
-            alert("adquirido");
+            window.location.href = "detalleNota/" + codigo;
           } else {
             alert("cancelado");
           }
@@ -132,4 +135,85 @@ function cargarNota(fechaActual, fechaPublicacion, fechaExpiracion) {
       }
     }
   }
+}
+/***
+ * FUNCIONES INCREMENT DECREMENT
+ */
+function decrementar(idProducto) {
+  var actual = $("#cantidad" + idProducto).val();
+  var cantidad = Number.parseInt(actual) - 1;
+  if (cantidad == 0) {
+  } else {
+    $("#cantidad" + idProducto).val(cantidad);
+  }
+}
+function incrementar(idProducto) {
+  var actual = $("#cantidad" + idProducto).val();
+  var cantidad = Number.parseInt(actual) + 1;
+  if (cantidad == 0) {
+  } else {
+    $("#cantidad" + idProducto).val(cantidad);
+  }
+}
+function detalleProductosNota(codigoNota) {
+  var codigoNota = codigoNota;
+
+  var parametros = {
+    action: "detalle_nota",
+    codigoNota: codigoNota,
+  };
+
+  $.ajax({
+    url: "../ajax/notas.ajax.php",
+    data: parametros,
+    beforeSend: function (objeto) {},
+    success: function (data) {
+      $(".detalle-notas").html(data).fadeIn("slow");
+    },
+  });
+}
+
+function agregarProducto(
+  idProducto,
+  codigo,
+  descripcion,
+  porc_descuento,
+  precio_venta
+) {
+  var cantidad = $("#cantidad" + idProducto).val();
+  var color = $("#color" + idProducto).val();
+  var talla = $("#talla" + idProducto).val();
+
+  var descuento =
+    (Number.parseFloat(precio_venta) *
+      Number.parseFloat(cantidad) *
+      Number.parseFloat(porc_descuento)) /
+    100;
+
+  var subtotal = Number.parseFloat(cantidad) * Number.parseFloat(precio_venta);
+  var total = Number.parseFloat(subtotal) - Number.parseFloat(descuento);
+
+  var parametros = {
+    action: "agregar_producto",
+    idProducto: idProducto,
+    codigo: codigo,
+    precio_venta: precio_venta,
+    porc_descuento: porc_descuento,
+    descuento: descuento,
+    cantidad: cantidad,
+    subtotal: subtotal,
+    color: color,
+    talla: talla,
+    total: total,
+    descripcion: descripcion,
+  };
+
+  $.ajax({
+    url: "../ajax/notas.ajax.php",
+    data: parametros,
+    beforeSend: function (objeto) {},
+    success: function (data) {
+      $(".productos-nota").html(data).fadeIn("slow");
+    },
+  });
 }

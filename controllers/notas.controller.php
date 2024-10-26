@@ -10,4 +10,12 @@ class ControllerNotas
 
         return $respuesta;
     }
+
+    static public function ctrDetalleNota($codigo)
+    {
+
+        $respuesta =  ModelNotas::mdlDetalleNota($codigo);
+
+        return $respuesta;
+    }
 }
