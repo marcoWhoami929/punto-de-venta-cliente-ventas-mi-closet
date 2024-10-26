@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 25-10-2024 a las 02:32:01
+-- Tiempo de generación: 26-10-2024 a las 02:15:06
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 7.4.33
 
@@ -259,7 +259,8 @@ CREATE TABLE `notas` (
 
 INSERT INTO `notas` (`id_nota`, `codigo`, `titulo_nota`, `fecha_publicacion`, `fecha_expiracion`, `porc_descuento`, `qr`, `estatus`, `fecha`) VALUES
 (1, 'NOT-CHSKUFP7DZIOX9ZBLPWRYC', 'Mio Mio 2', '2024-10-24 10:00:00', '2024-10-25 10:00:00', '10.00', 'http://localhost/pos2/notas/NOT-CHSKUFP7DZIOX9ZBLPWRYC', 1, '2024-10-22 16:33:08'),
-(2, 'NOT-U7MKR1JIAWRE2HPSWMKXOT', 'Prueba 2', '2024-10-25 09:00:00', '2024-10-26 10:00:00', '10.00', 'http://localhost/pos2/notas/NOT-U7MKR1JIAWRE2HPSWMKXOT', 1, '2024-10-24 19:53:10');
+(2, 'NOT-U7MKR1JIAWRE2HPSWMKXOT', 'Prueba 2', '2024-10-25 09:00:00', '2024-10-26 10:00:00', '10.00', 'http://localhost/pos2/notas/NOT-U7MKR1JIAWRE2HPSWMKXOT', 1, '2024-10-24 19:53:10'),
+(3, 'NOT-FWRVZUFKQMSGJABLGYDOI6', 'Prueba nota', '2024-10-28 10:00:00', '2024-10-29 10:00:00', '0.00', 'http://localhost/pos2/notas/NOT-FWRVZUFKQMSGJABLGYDOI6', 1, '2024-10-25 17:20:29');
 
 -- --------------------------------------------------------
 
@@ -337,7 +338,8 @@ CREATE TABLE `productos_notas` (
 INSERT INTO `productos_notas` (`id_detalle_nota`, `codigo_nota`, `id_producto`, `codigo`, `descripcion`, `precio_venta`, `limite_nota`, `colores`, `tallas`, `estatus`, `fecha`) VALUES
 (1, 'NOT-CHSKUFP7DZIOX9ZBLPWRYC', 5, '123456789', 'Pantalon Mezclilla', '250.00', 7, 'Gris,azul', '14,16,18,20,22', 1, '2024-10-22 16:33:08'),
 (2, 'NOT-CHSKUFP7DZIOX9ZBLPWRYC', 4, '1010110101', 'Sueter Mio Mio', '300.00', 7, 'azul,gris', '20,22,24,30,32,38', 1, '2024-10-22 16:33:08'),
-(3, 'NOT-U7MKR1JIAWRE2HPSWMKXOT', 4, '1010110101', 'Sueter Mio Mio', '300.00', 7, 'azul,gris', '20,22,24,30,32,38', 1, '2024-10-24 19:53:10');
+(3, 'NOT-U7MKR1JIAWRE2HPSWMKXOT', 4, '1010110101', 'Sueter Mio Mio', '300.00', 7, 'azul,gris', '20,22,24,30,32,38', 1, '2024-10-24 19:53:10'),
+(4, 'NOT-FWRVZUFKQMSGJABLGYDOI6', 5, '123456789', 'Pantalon Mezclilla', '250.00', 7, 'Gris,azul', '14,16,18,20,22', 1, '2024-10-25 17:20:29');
 
 -- --------------------------------------------------------
 
@@ -656,7 +658,7 @@ ALTER TABLE `movimientoinventario`
 -- AUTO_INCREMENT de la tabla `notas`
 --
 ALTER TABLE `notas`
-  MODIFY `id_nota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_nota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `pago`
@@ -674,7 +676,7 @@ ALTER TABLE `producto`
 -- AUTO_INCREMENT de la tabla `productos_notas`
 --
 ALTER TABLE `productos_notas`
-  MODIFY `id_detalle_nota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_detalle_nota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `proveedor`
