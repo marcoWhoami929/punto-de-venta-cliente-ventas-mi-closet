@@ -1,3 +1,6 @@
+<?php
+require_once "config/app.php";
+?>
 <!DOCTYPE html>
 <html>
 
@@ -7,31 +10,31 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<title>Ventas Mi Closet | Notas</title>
 	<!-- plugins:css -->
-	<link rel="stylesheet" href="views/vendors/feather/feather.css">
-	<link rel="stylesheet" href="views/vendors/ti-icons/css/themify-icons.css">
-	<link rel="stylesheet" href="views/vendors/css/vendor.bundle.base.css">
-	<link rel="stylesheet" href="views/vendors/font-awesome/css/font-awesome.min.css">
-	<link rel="stylesheet" href="views/vendors/mdi/css/materialdesignicons.min.css">
+	<link rel="stylesheet" href="<?php echo APP_URL_CLIENT; ?>views/vendors/feather/feather.css">
+	<link rel="stylesheet" href="<?php echo APP_URL_CLIENT; ?>views/vendors/ti-icons/css/themify-icons.css">
+	<link rel="stylesheet" href="<?php echo APP_URL_CLIENT; ?>views/vendors/css/vendor.bundle.base.css">
+	<link rel="stylesheet" href="<?php echo APP_URL_CLIENT; ?>views/vendors/font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" href="<?php echo APP_URL_CLIENT; ?>views/vendors/mdi/css/materialdesignicons.min.css">
 	<!-- endinject -->
 	<!-- Plugin css for this page -->
-	<link rel="stylesheet" href="views/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
-	<!--<link rel="stylesheet" href="views/vendors/datatables.net-bs5/dataTables.bootstrap5.css">-->
-	<link rel="stylesheet" href="views/vendors/ti-icons/css/themify-icons.css">
-	<link rel="stylesheet" type="text/css" href="views/js/select.dataTables.min.css">
+	<link rel="stylesheet" href="<?php echo APP_URL_CLIENT; ?>views/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
+	<!--<link rel="stylesheet" href="<?php echo APP_URL_CLIENT; ?>views/vendors/datatables.net-bs5/dataTables.bootstrap5.css">-->
+	<link rel="stylesheet" href="<?php echo APP_URL_CLIENT; ?>views/vendors/ti-icons/css/themify-icons.css">
+	<link rel="stylesheet" type="text/css" href="<?php echo APP_URL_CLIENT; ?>views/js/select.dataTables.min.css">
 	<!-- End plugin css for this page -->
 	<!-- inject:css -->
-	<link rel="stylesheet" href="views/css/style.css">
+	<link rel="stylesheet" href="<?php echo APP_URL_CLIENT; ?>views/css/style.css">
 	<!-- endinject -->
-	<link rel="shortcut icon" href="views/images/logo.png" />
+	<link rel="shortcut icon" href="<?php echo APP_URL_CLIENT; ?>views/images/logo.png" />
 
 
 
 	<!-- Required Jquery -->
-	<script type="text/javascript" src="views/js/jquery/jquery.min.js"></script>
-	<script type="text/javascript" src="views/js/jquery-ui/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="<?php echo APP_URL_CLIENT; ?>views/js/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="<?php echo APP_URL_CLIENT; ?>views/js/jquery-ui/jquery-ui.min.js"></script>
 	<!-- Sweet Alert -->
-	<script src="views/vendors/sweet-alert/sweetalert.js"></script>
-	<script type="text/javascript" src="views/js/plantilla.js"></script>
+	<script src="<?php echo APP_URL_CLIENT; ?>views/vendors/sweet-alert/sweetalert.js"></script>
+	<script type="text/javascript" src="<?php echo APP_URL_CLIENT; ?>views/js/plantilla.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>
@@ -47,12 +50,20 @@
 
 		if (isset($_GET["ruta"])) {
 
+
 			$carpeta = "views/moduls/";
 			$class = $carpeta . $_GET["ruta"] . '.php';
 
 			if (!file_exists($class)) {
+				$url2 = $_GET["ruta"];
+				$url2 = $url2[1];
+				if (isset($url2)) {
 
-				include "moduls/404.php";
+					include "moduls/detalleNota.php";
+				} else {
+
+					include "moduls/404.php";
+				}
 			} else {
 
 				include $class;
@@ -81,28 +92,28 @@
 	?>
 	<!-- plugins:js -->
 
-	<script src="views/vendors/js/vendor.bundle.base.js"></script>
+	<script src="<?php echo APP_URL_CLIENT; ?>views/vendors/js/vendor.bundle.base.js"></script>
 	<!--Maps-->
 
 	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyCaZc8iFkQW_BPnkGUOt9M6ja_Zfkl427M"></script>
 	<!-- endinject -->
 	<!-- Plugin js for this page -->
-	<script src="views/vendors/chart.js/chart.umd.js"></script>
-	<!--<script src="views/vendors/datatables.net/jquery.dataTables.js"></script>-->
-	<script src="views/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
-	<!--<script src="views/vendors/datatables.net-bs5/dataTables.bootstrap5.js"></script>-->
-	<script src="views/js/dataTables.select.min.js"></script>
+	<script src="<?php echo APP_URL_CLIENT; ?>views/vendors/chart.js/chart.umd.js"></script>
+	<!--<script src="<?php echo APP_URL_CLIENT; ?>views/vendors/datatables.net/jquery.dataTables.js"></script>-->
+	<script src="<?php echo APP_URL_CLIENT; ?>views/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+	<!--<script src="<?php echo APP_URL_CLIENT; ?>views/vendors/datatables.net-bs5/dataTables.bootstrap5.js"></script>-->
+	<script src="<?php echo APP_URL_CLIENT; ?>views/js/dataTables.select.min.js"></script>
 	<!-- End plugin js for this page -->
 	<!-- inject:js -->
-	<script src="views/js/off-canvas.js"></script>
-	<script src="views/js/template.js"></script>
-	<script src="views/js/settings.js"></script>
-	<script src="views/js/todolist.js"></script>
+	<script src="<?php echo APP_URL_CLIENT; ?>views/js/off-canvas.js"></script>
+	<script src="<?php echo APP_URL_CLIENT; ?>views/js/template.js"></script>
+	<script src="<?php echo APP_URL_CLIENT; ?>views/js/settings.js"></script>
+	<script src="<?php echo APP_URL_CLIENT; ?>views/js/todolist.js"></script>
 	<!-- endinject -->
 	<!-- Custom js for this page-->
-	<script src="views/js/jquery.cookie.js" type="text/javascript"></script>
-	<script src="views/js/dashboard.js"></script>
-	<script src="views/js/maps.js"></script>
+	<script src="<?php echo APP_URL_CLIENT; ?>views/js/jquery.cookie.js" type="text/javascript"></script>
+	<script src="<?php echo APP_URL_CLIENT; ?>views/js/dashboard.js"></script>
+	<script src="<?php echo APP_URL_CLIENT; ?>views/js/maps.js"></script>
 
 	<!-- End custom js for this page-->
 </body>

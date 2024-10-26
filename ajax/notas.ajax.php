@@ -50,18 +50,21 @@ if ($action == 'lista_notas') {
                 $estado = "Sin Iniciar";
                 $card_color = "card-red";
             } else {
-                if ($fecha_expiracion > $fecha_publicacion) {
-                    $estatus = "Finaliza en";
-                    $estado = "Iniciado";
-                    $card_color = "card-color";
-                } else {
+                if ($ahora > $fecha_expiracion) {
                     $estatus = "";
-                    $estado = "";
+                    $estado = "Finalizada";
+                    $card_color = "card-green";
+                } else {
+                    if ($fecha_expiracion > $fecha_publicacion) {
+                        $estatus = "Finaliza en";
+                        $estado = "Iniciado";
+                        $card_color = "card-color";
+                    }
                 }
             }
 
         ?>
-            <div class="col-lg-4 col-md-4 col-sm-6" onclick="<?= "cargarNota('" . $row["fecha_publicacion"] . "','" . $row["fecha_expiracion"] . "')" ?>" style="cursor:pointer">
+            <div class="col-lg-4 col-md-4 col-sm-6" onclick="<?= "cargarNota('" . $ahora . "','" . $row["fecha_publicacion"] . "','" . $row["fecha_expiracion"] . "')" ?>" style="cursor:pointer">
                 <div class="card mb-3">
                     <div class="card-header <?= $card_color ?>">
                         <h4><?= $estado ?></h4>

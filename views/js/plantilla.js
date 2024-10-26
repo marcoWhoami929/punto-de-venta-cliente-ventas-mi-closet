@@ -53,9 +53,17 @@ function countDown(fechaPublicacion, fechaExpiracion, id, estado) {
     function showRemaining() {
       var now = new Date();
       var distance = publicacion - now;
+      var distance2 = expiracion - now;
 
       if (distance < 0) {
-        var distance = expiracion - now;
+        if (distance2 < 0) {
+          document.getElementById("countdown" + id).innerHTML =
+            "<span class='text-white'>Nota Finalizada</span>";
+          return;
+        } else {
+          var distance = expiracion - now;
+        }
+
         /*
         clearInterval(timer);
         document.getElementById("countdown" + id).innerHTML =
@@ -81,25 +89,47 @@ function countDown(fechaPublicacion, fechaExpiracion, id, estado) {
     timer = setInterval(showRemaining, 1000);
   }
 }
-function cargarNota(fechaPublicacion, fechaExpiracion) {
-  var now = new Date();
-  var distance = fechaPublicacion - now;
-  if (distance < 0) {
-  } else {
+function cargarNota(fechaActual, fechaPublicacion, fechaExpiracion) {
+  var fechaActual = new Date(fechaActual);
+  var fechaPublicacion = new Date(fechaPublicacion);
+  var fechaExpiracion = new Date(fechaExpiracion);
+
+  if (fechaPublicacion > fechaActual) {
     Swal.fire({
-      title: "¿Quieres salir del sistema?",
-      text: "La sesión actual se cerrará y saldrás del sistema",
+      title: "Nota sin iniciar",
+      text: "La nota aun no se encuentra disponible para adquirir, porfavor espere el tiempo restante.",
       icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Si, salir",
-      cancelButtonText: "Cancelar",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        let url = this.getAttribute("href");
-        window.location.href = url;
-      }
+      confirmButtonColor: "#B99654",
+      confirmButtonText: "Entendido",
     });
+  } else {
+    if (fechaActual > fechaExpiracion) {
+      Swal.fire({
+        title: "Nota finalizada",
+        text: "El tiempo de la nota ha expirado, no se puede adquirir la nota",
+        icon: "warning",
+        confirmButtonColor: "#B99654",
+        confirmButtonText: "Entendido",
+      });
+    } else {
+      if (fechaExpiracion > fechaPublicacion) {
+        Swal.fire({
+          title: "Adquirir Nota",
+          text: "Visualizar para poder elegir los productos de la nota.",
+          icon: "info",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Visualizar",
+          cancelButtonText: "Cancelar",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            alert("adquirido");
+          } else {
+            alert("cancelado");
+          }
+        });
+      }
+    }
   }
 }

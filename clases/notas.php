@@ -23,6 +23,8 @@ class notas extends ConexionsBd
     {
         $offset = $search['offset'];
         $per_page = $search['per_page'];
+        $campoOrden =  $search["campoOrden"];
+        $orden = $search['orden'];
 
         if ($search["busqueda"] != "") {
 
@@ -32,7 +34,7 @@ class notas extends ConexionsBd
         }
 
 
-        $sql = "SELECT * FROM notas $sWhere LIMIT $per_page OFFSET $offset";
+        $sql = "SELECT * FROM notas $sWhere order by $campoOrden $orden LIMIT $per_page OFFSET $offset";
 
         $query = ConexionsBd::conectar()->prepare($sql);
 
