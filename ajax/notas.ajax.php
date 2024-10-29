@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 require_once "../config/app.php";
 $action = (isset($_REQUEST['action']) && $_REQUEST['action'] != NULL) ? $_REQUEST['action'] : '';
 if ($action == 'lista_notas') {
@@ -143,6 +143,9 @@ if ($action == 'detalle_nota') {
 
         <?php
         $finales = 0;
+        $_SESSION['total'] = 0;
+        $_SESSION['subtotal'] = 0;
+        $_SESSION['descuento'] = 0;
         foreach ($datos as $key => $row) {
 
         ?>
@@ -219,6 +222,9 @@ if ($action == 'detalle_nota') {
 
         <?php
             $finales++;
+            $_SESSION['subtotal'] += $productos['subtotal'];
+            $_SESSION['descuento'] += $productos['descuento'];
+            $_SESSION['total'] += $productos['total'];
         }
         ?>
 
@@ -242,9 +248,9 @@ if ($action == 'agregar_producto') {
 
 
 
-    if (empty($_SESSION['datos_producto_venta'][$codigo])) {
+    if (empty($_SESSION['datos_producto_nota'][$codigo])) {
 
-        $_SESSION['datos_producto_venta'][$codigo] = [
+        $_SESSION['datos_producto_nota'][$codigo] = [
             "id_producto" => $idProducto,
             "codigo" => $codigo,
             "precio_compra" => '0.00',
@@ -261,12 +267,12 @@ if ($action == 'agregar_producto') {
     }
 
 
-    if (count($_SESSION['datos_producto_venta']) > 0) {
+    if (count($_SESSION['datos_producto_nota']) > 0) {
     ?>
 
         <?php
         $finales = 0;
-        foreach ($_SESSION['datos_producto_venta'] as $producto) {
+        foreach ($_SESSION['datos_producto_nota'] as $key => $producto) {
 
         ?>
             <div class="card card-gray mb-2">
@@ -286,7 +292,7 @@ if ($action == 'agregar_producto') {
                                                 <i class="ti-minus"></i>
                                             </button>
                                         </div>
-                                        <input type="number" class="form-control" value="" id="cantidad<?= $producto['id_producto'] ?>">
+                                        <input type="number" class="form-control" value="<?= $producto['cantidad'] ?>" id="cantidad<?= $producto['id_producto'] ?>">
                                         <div class="input-group-append">
                                             <button class="btn btn-sm btn-info ms-2" type="button" onclick="incrementar(<?= $producto['id_producto'] ?>)">
                                                 <i class="ti-plus"></i>
@@ -298,10 +304,10 @@ if ($action == 'agregar_producto') {
                             <div class="col-md-1 col-sm-1 col-lg-1">
                                 <div class="form-group">
                                     <label>Color</label>
-                                    <select class="form-select" id="color<?= $row['id_producto'] ?>">
+                                    <select class="form-select" id="color<?= $producto['id_producto'] ?>">
                                         <?php
 
-                                        $colores = explode(",", $row['colores']);
+                                        $colores = explode(",", $producto['colores']);
 
                                         foreach ($colores as $key => $value) {
                                             echo '<option value="' . $value . '">' . $value . '</option>';
@@ -313,10 +319,10 @@ if ($action == 'agregar_producto') {
                             <div class="col-md-1 col-sm-1 col-lg-1">
                                 <div class="form-group">
                                     <label>Talla</label>
-                                    <select class="form-select" id="talla<?= $row['id_producto'] ?>">
+                                    <select class="form-select" id="talla<?= $producto['id_producto'] ?>">
                                         <?php
 
-                                        $tallas = explode(",", $row['tallas']);
+                                        $tallas = explode(",", $producto['tallas']);
 
                                         foreach ($tallas as $key => $value) {
                                             echo '<option value="' . $value . '">' . $value . '</option>';
@@ -327,11 +333,11 @@ if ($action == 'agregar_producto') {
                             </div>
                             <div class="col-md-2 col-sm-2 col-lg-2">
                                 <label>Precio</label>
-                                <h5 class="card-subtitle"><?php echo MONEDA_SIMBOLO . number_format($row['precio_venta'], MONEDA_DECIMALES, MONEDA_SEPARADOR_DECIMAL, MONEDA_SEPARADOR_MILLAR) . " " . MONEDA_NOMBRE; ?></h5>
+                                <h5 class="card-subtitle"><?php echo MONEDA_SIMBOLO . number_format($producto['precio_venta'], MONEDA_DECIMALES, MONEDA_SEPARADOR_DECIMAL, MONEDA_SEPARADOR_MILLAR) . " " . MONEDA_NOMBRE; ?></h5>
                             </div>
 
                             <div class="col-md-1 col-sm-1 col-lg-1">
-                                <button class="btn btn-md btn-info mt-4" type="button" onclick="agregarProducto('<?= $row["id_producto"] ?>','<?= $row["codigo"] ?>','<?= $row["descripcion"] ?>','<?= $row["porc_descuento"] ?>','<?= $row["precio_venta"] ?>')">
+                                <button class="btn btn-md btn-info mt-4" type="button" onclick="agregarProducto('<?= $producto["id_producto"] ?>','<?= $producto["codigo"] ?>','<?= $producto["descripcion"] ?>','<?= $producto["porc_descuento"] ?>','<?= $producto["precio_venta"] ?>')">
                                     <i class="ti-shopping-cart" style="color:#ffffff"></i>Agregar
                                 </button>
                             </div>

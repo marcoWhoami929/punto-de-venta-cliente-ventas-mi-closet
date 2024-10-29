@@ -10,6 +10,7 @@ $(function () {
   if (ruta[3] != undefined) {
     var codigoNota = ruta[3];
     detalleProductosNota(codigoNota);
+    carritoNota();
   }
 });
 function listadoNotas(page) {

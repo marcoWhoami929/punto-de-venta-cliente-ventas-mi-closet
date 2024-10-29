@@ -66,7 +66,7 @@
             </li>
 
             <li class="nav-item nav-settings d-none d-lg-flex">
-                <a class="dropdown-item" href="logout">
+                <a class="dropdown-item" href="<?= APP_URL_CLIENT ?>logout">
                     <i class="ti-power-off text-primary"></i> </a>
             </li>
         </ul>

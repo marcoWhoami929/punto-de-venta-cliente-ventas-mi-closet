@@ -10,13 +10,13 @@ $codigoNota = $notas["codigo"];
 
 if ($notas != false) {
 
-    date_default_timezone_set('America/Chihuahua');
+    date_default_timezone_set('America/Mexico_City');
     $ahora = date("Y-m-d H:i:s");
     $fecha_publicacion =  date("Y-m-d H:i:s", strtotime($notas["fecha_publicacion"]));
     $fecha_expiracion =  date("Y-m-d H:i:s", strtotime($notas["fecha_expiracion"]));
 
-    if (isset($_SESSION["datos_producto_venta"])) {
-        unset($_SESSION["datos_producto_venta"]);
+    if (isset($_SESSION["datos_producto_nota"])) {
+        //unset($_SESSION["datos_producto_nota"]);
     } else {
         /*
         $detalle = new ControllerNotas();
@@ -31,7 +31,7 @@ if ($notas != false) {
             $total = ($subtotal - $descuento);
             $total = number_format($total, MONEDA_DECIMALES, '.', '');
 
-            $_SESSION['datos_producto_venta'][$value['codigo']] = [
+            $_SESSION['datos_producto_nota'][$value['codigo']] = [
                 "id_producto" => $value['id_producto'],
                 "codigo" => $value['codigo'],
                 "precio_compra" => '0.00',
@@ -132,14 +132,14 @@ if ($notas != false) {
 
 
                                         <?php
-                                        if (isset($_SESSION['datos_producto_venta']) && count($_SESSION['datos_producto_venta']) >= 1) {
+                                        if (isset($_SESSION['datos_producto_nota']) && count($_SESSION['datos_producto_nota']) >= 1) {
 
                                             $_SESSION['total'] = 0;
                                             $_SESSION['subtotal'] = 0;
                                             $_SESSION['descuento'] = 0;
                                             $cc = 1;
 
-                                            foreach ($_SESSION['datos_producto_venta'] as $productos) {
+                                            foreach ($_SESSION['datos_producto_nota'] as $productos) {
 
                                         ?>
                                                 <div class="card card-gray mb-2">
