@@ -8,9 +8,9 @@ $(function () {
       break;
   }
   if (ruta[3] != undefined) {
-    var codigoNota = ruta[3];
+    codigoNota = ruta[3];
     detalleProductosNota(codigoNota);
-    carritoNota();
+    carritoNota(codigoNota);
   }
 });
 function listadoNotas(page) {
@@ -138,7 +138,7 @@ function cargarNota(codigo, fechaActual, fechaPublicacion, fechaExpiracion) {
   }
 }
 /***
- * FUNCIONES INCREMENT DECREMENT
+ * FUNCIONES INCREMENT DECREMENT LISTADO
  */
 function decrementar(idProducto) {
   var actual = $("#cantidad" + idProducto).val();
@@ -157,8 +157,6 @@ function incrementar(idProducto) {
   }
 }
 function detalleProductosNota(codigoNota) {
-  var codigoNota = codigoNota;
-
   var parametros = {
     action: "detalle_nota",
     codigoNota: codigoNota,
@@ -173,13 +171,28 @@ function detalleProductosNota(codigoNota) {
     },
   });
 }
+function totalesCarrito(codigoNota) {
+  var parametros = {
+    action: "totales_carrito",
+    codigoNota: codigoNota,
+  };
 
-function agregarProducto(
+  $.ajax({
+    url: "../ajax/notas.ajax.php",
+    data: parametros,
+    beforeSend: function (objeto) {},
+    success: function (data) {
+      $(".container-totales").html(data).fadeIn("slow");
+    },
+  });
+}
+function agregarProductoCarrito(
   idProducto,
   codigo,
   descripcion,
   porc_descuento,
-  precio_venta
+  precio_venta,
+  codigoNota
 ) {
   var cantidad = $("#cantidad" + idProducto).val();
   var color = $("#color" + idProducto).val();
@@ -207,6 +220,25 @@ function agregarProducto(
     talla: talla,
     total: total,
     descripcion: descripcion,
+    codigoNota: codigoNota,
+  };
+
+  $.ajax({
+    url: "../ajax/notas.ajax.php",
+    data: parametros,
+    beforeSend: function (objeto) {},
+    success: function (data) {
+      var response = data.replace(/['"]+/g, "");
+      if (response == "agregado") {
+        carritoNota(codigoNota);
+      }
+    },
+  });
+}
+function carritoNota(codigoNota) {
+  var parametros = {
+    action: "carrito_nota",
+    codigoNota: codigoNota,
   };
 
   $.ajax({
@@ -215,6 +247,99 @@ function agregarProducto(
     beforeSend: function (objeto) {},
     success: function (data) {
       $(".productos-nota").html(data).fadeIn("slow");
+    },
+  });
+  totalesCarrito(codigoNota);
+}
+function removerProductoCarrito(tokenProducto, codigoNota) {
+  var parametros = {
+    action: "remover_producto",
+    token: tokenProducto,
+    codigoNota: codigoNota,
+  };
+
+  $.ajax({
+    url: "../ajax/notas.ajax.php",
+    data: parametros,
+    beforeSend: function (objeto) {},
+    success: function (data) {
+      var response = data.replace(/['"]+/g, "");
+      if (response == "eliminado") {
+        carritoNota(codigoNota);
+      } else {
+        alert("Ocurrio un error al eliminar el producto del carrito");
+      }
+    },
+  });
+}
+/***
+ * FUNCIONES INCREMENT DECREMENT CARRITO
+ */
+function decrementarCarrito(token, precio_venta, porc_descuento) {
+  var actual = $("#cantidadCarrito" + token).val();
+  var cantidad = Number.parseInt(actual) - 1;
+  if (cantidad == 0) {
+  } else {
+    actualizarProductoCarrito(
+      cantidad,
+      precio_venta,
+      porc_descuento,
+      token,
+      codigoNota
+    );
+  }
+}
+function incrementarCarrito(token, precio_venta, porc_descuento) {
+  var actual = $("#cantidadCarrito" + token).val();
+
+  var cantidad = Number.parseInt(actual) + 1;
+  if (cantidad == 0) {
+  } else {
+    actualizarProductoCarrito(
+      cantidad,
+      precio_venta,
+      porc_descuento,
+      token,
+      codigoNota
+    );
+  }
+}
+function actualizarProductoCarrito(
+  cantidad,
+  precio_venta,
+  porc_descuento,
+  token,
+  codigoNota
+) {
+  var descuento =
+    (Number.parseFloat(precio_venta) *
+      Number.parseFloat(cantidad) *
+      Number.parseFloat(porc_descuento)) /
+    100;
+
+  var subtotal = Number.parseFloat(cantidad) * Number.parseFloat(precio_venta);
+  var total = Number.parseFloat(subtotal) - Number.parseFloat(descuento);
+  var parametros = {
+    action: "actualizar_producto",
+    token: token,
+    cantidad: cantidad,
+    descuento: descuento,
+    subtotal: subtotal,
+    total: total,
+    codigoNota: codigoNota,
+  };
+
+  $.ajax({
+    url: "../ajax/notas.ajax.php",
+    data: parametros,
+    beforeSend: function (objeto) {},
+    success: function (data) {
+      var response = data.replace(/['"]+/g, "");
+      if (response == "actualizado") {
+        carritoNota(codigoNota);
+      } else {
+        alert("Ocurrio un error al actualizar el producto del carrito");
+      }
     },
   });
 }

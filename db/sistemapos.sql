@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 26-10-2024 a las 21:17:25
+-- Tiempo de generación: 31-10-2024 a las 00:31:22
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 7.4.33
 
@@ -258,10 +258,10 @@ CREATE TABLE `notas` (
 --
 
 INSERT INTO `notas` (`id_nota`, `codigo`, `titulo_nota`, `fecha_publicacion`, `fecha_expiracion`, `porc_descuento`, `qr`, `estatus`, `fecha`) VALUES
-(1, 'NOT-CHSKUFP7DZIOX9ZBLPWRYC', 'Mio Mio 2', '2024-10-24 10:00:00', '2024-10-25 10:00:00', '10.00', 'http://localhost/pos2/notas/NOT-CHSKUFP7DZIOX9ZBLPWRYC', 1, '2024-10-22 16:33:08'),
-(2, 'NOT-U7MKR1JIAWRE2HPSWMKXOT', 'Prueba 2', '2024-10-25 09:00:00', '2024-10-27 10:00:00', '10.00', 'http://localhost/pos2/notas/NOT-U7MKR1JIAWRE2HPSWMKXOT', 1, '2024-10-24 19:53:10'),
+(1, 'NOT-CHSKUFP7DZIOX9ZBLPWRYC', 'Mio Mio 2', '2024-10-30 10:00:00', '2024-11-01 10:00:00', '10.00', 'http://localhost/pos2/notas/NOT-CHSKUFP7DZIOX9ZBLPWRYC', 1, '2024-10-22 16:33:08'),
+(2, 'NOT-U7MKR1JIAWRE2HPSWMKXOT', 'Prueba 2', '2024-10-31 09:00:00', '2024-11-01 10:00:00', '10.00', 'http://localhost/pos2/notas/NOT-U7MKR1JIAWRE2HPSWMKXOT', 1, '2024-10-24 19:53:10'),
 (3, 'NOT-FWRVZUFKQMSGJABLGYDOI6', 'Prueba nota', '2024-10-28 10:00:00', '2024-10-29 10:00:00', '0.00', 'http://localhost/pos2/notas/NOT-FWRVZUFKQMSGJABLGYDOI6', 1, '2024-10-25 17:20:29'),
-(4, 'NOT-TC12R5DBK0C8VBVMO4H6JA', 'Prueba', '2024-10-26 10:30:00', '2024-10-28 10:00:00', '5.00', 'http://localhost/pos2/detalleNota/NOT-TC12R5DBK0C8VBVMO4H6JA', 1, '2024-10-26 16:30:55');
+(4, 'NOT-TC12R5DBK0C8VBVMO4H6JA', 'Prueba', '2024-10-26 10:30:00', '2024-10-31 10:00:00', '5.00', 'http://localhost/pos2/detalleNota/NOT-TC12R5DBK0C8VBVMO4H6JA', 1, '2024-10-26 16:30:55');
 
 -- --------------------------------------------------------
 
@@ -430,9 +430,12 @@ INSERT INTO `venta` (`id_venta`, `tipo_venta`, `codigo`, `codigo_nota`, `fecha_v
 CREATE TABLE `venta_detalle` (
   `id_detalle` int(100) NOT NULL,
   `id_producto` int(20) NOT NULL,
+  `token` text NOT NULL,
   `descripcion` varchar(200) NOT NULL,
   `codigo` varchar(200) NOT NULL,
   `cantidad` int(10) NOT NULL,
+  `color` text NOT NULL,
+  `talla` text NOT NULL,
   `precio_compra` decimal(30,2) NOT NULL,
   `precio_venta` decimal(30,2) NOT NULL,
   `porc_descuento` decimal(30,2) NOT NULL,
@@ -446,12 +449,12 @@ CREATE TABLE `venta_detalle` (
 -- Volcado de datos para la tabla `venta_detalle`
 --
 
-INSERT INTO `venta_detalle` (`id_detalle`, `id_producto`, `descripcion`, `codigo`, `cantidad`, `precio_compra`, `precio_venta`, `porc_descuento`, `descuento`, `subtotal`, `total`, `fecha_movimiento`) VALUES
-(6, 4, 'Sueter Mio Mio', 'S6L2K3T9Y0-1', 2, '0.00', '300.00', '0.00', '0.00', '0.00', '540.00', '2024-10-16 23:39:32'),
-(7, 5, 'Pantalon Mezclilla', 'S6L2K3T9Y0-1', 1, '0.00', '250.00', '0.00', '0.00', '0.00', '225.00', '2024-10-16 23:39:32'),
-(8, 4, 'Sueter Mio Mio', 'Q7X8H3C3G1-2', 1, '0.00', '300.00', '10.00', '30.00', '300.00', '270.00', '2024-10-16 23:51:58'),
-(9, 5, 'Pantalon Mezclilla', 'N0N0B4L3P0-3', 1, '0.00', '250.00', '0.00', '0.00', '250.00', '250.00', '2024-10-16 23:53:18'),
-(10, 5, 'Pantalon Mezclilla', 'F6Z0D1E5R1-4', 1, '0.00', '250.00', '10.00', '25.00', '250.00', '225.00', '2024-10-18 19:26:39');
+INSERT INTO `venta_detalle` (`id_detalle`, `id_producto`, `token`, `descripcion`, `codigo`, `cantidad`, `color`, `talla`, `precio_compra`, `precio_venta`, `porc_descuento`, `descuento`, `subtotal`, `total`, `fecha_movimiento`) VALUES
+(6, 4, '', 'Sueter Mio Mio', 'S6L2K3T9Y0-1', 2, '', '', '0.00', '300.00', '0.00', '0.00', '0.00', '540.00', '2024-10-16 23:39:32'),
+(7, 5, '', 'Pantalon Mezclilla', 'S6L2K3T9Y0-1', 1, '', '', '0.00', '250.00', '0.00', '0.00', '0.00', '225.00', '2024-10-16 23:39:32'),
+(8, 4, '', 'Sueter Mio Mio', 'Q7X8H3C3G1-2', 1, '', '', '0.00', '300.00', '10.00', '30.00', '300.00', '270.00', '2024-10-16 23:51:58'),
+(9, 5, '', 'Pantalon Mezclilla', 'N0N0B4L3P0-3', 1, '', '', '0.00', '250.00', '0.00', '0.00', '250.00', '250.00', '2024-10-16 23:53:18'),
+(10, 5, '', 'Pantalon Mezclilla', 'F6Z0D1E5R1-4', 1, '', '', '0.00', '250.00', '10.00', '25.00', '250.00', '225.00', '2024-10-18 19:26:39');
 
 --
 -- Índices para tablas volcadas
