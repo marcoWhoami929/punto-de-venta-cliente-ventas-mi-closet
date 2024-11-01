@@ -1,6 +1,10 @@
 <?php
 session_start();
+error_reporting(E_ALL);
 require_once "../config/app.php";
+require_once "../controllers/notas.controller.php";
+date_default_timezone_set('America/Mexico_City');
+
 $action = (isset($_REQUEST['action']) && $_REQUEST['action'] != NULL) ? $_REQUEST['action'] : '';
 function generarCodigoAleatorio($longitud)
 {
@@ -19,6 +23,24 @@ function generarCodigoAleatorio($longitud)
         }
     }
     return $codigo;
+}
+function generarCodigoAleatorioNota($longitud, $correlativo)
+{
+    $codigo = "";
+    $caracter = "Letra";
+    for ($i = 1; $i <= $longitud; $i++) {
+        if ($caracter == "Letra") {
+            $letra_aleatoria = chr(rand(ord("a"), ord("z")));
+            $letra_aleatoria = strtoupper($letra_aleatoria);
+            $codigo .= $letra_aleatoria;
+            $caracter = "Numero";
+        } else {
+            $numero_aleatorio = rand(0, 9);
+            $codigo .= $numero_aleatorio;
+            $caracter = "Letra";
+        }
+    }
+    return $codigo . "-" . $correlativo;
 }
 if ($action == 'totales_carrito') {
     $codigoNota = strip_tags($_REQUEST['codigoNota']);
@@ -109,7 +131,7 @@ if ($action == 'lista_notas') {
         <?php
         $finales = 0;
         foreach ($datos as $key => $row) {
-            date_default_timezone_set('America/Chihuahua');
+
             $ahora = date("Y-m-d H:i:s");
             $fecha_publicacion =  date("Y-m-d H:i:s", strtotime($row["fecha_publicacion"]));
             $fecha_expiracion =  date("Y-m-d H:i:s", strtotime($row["fecha_expiracion"]));
@@ -492,6 +514,66 @@ if ($action == 'actualizar_producto') {
         echo json_encode("actualizado");
     } else {
         echo json_encode("error");
+    }
+}
+if ($action == 'guardar_nota') {
+    require_once "../models/notas.model.php";
+    /*== Formateando variables ==*/
+    $codigo_nota = strip_tags($_REQUEST['codigoNota']);
+    $porc_descuento = strip_tags($_REQUEST['porc_descuento']);
+    $tipo_entrega = strip_tags($_REQUEST['tipo_entrega']);
+    $forma_pago = strip_tags($_REQUEST['forma_pago']);
+    $pagado = "0.00";
+
+    $pagado = number_format($pagado, MONEDA_DECIMALES, '.', '');
+    $total = number_format($_SESSION['total' . $codigo_nota], MONEDA_DECIMALES, '.', '');
+    $subtotal = number_format($_SESSION['subtotal' . $codigo_nota], MONEDA_DECIMALES, '.', '');
+    $descuento = number_format($_SESSION['descuento' . $codigo_nota], MONEDA_DECIMALES, '.', '');
+    $porc_descuento = number_format($porc_descuento, MONEDA_DECIMALES, '.', '');
+
+    $fecha_venta = date("Y-m-d");
+    $hora_venta = date("h:i a");
+
+    $total_final = $total;
+    $total_final = number_format($total_final, MONEDA_DECIMALES, '.', '');
+
+    $cambio = $total_final - $total_final;
+    $cambio = number_format($cambio, MONEDA_DECIMALES, '.', '');
+    $tipo_venta = "nota";
+    $id_cliente = $_SESSION["id"];
+
+    /***GENERAR CODIGO VENTA */
+    $controlador = new ControllerNotas();
+
+    $ventas = $controlador->ctrIdVenta();
+    $ventas = count($ventas) + 1;
+
+
+    $codigo_venta = generarCodigoAleatorioNota(10, $ventas);
+
+    $datos_venta = [
+        "tipo_venta" => $tipo_venta,
+        "tipo_entrega" => $tipo_entrega,
+        "forma_pago" => $forma_pago,
+        "codigo" => $codigo_venta,
+        "codigo_nota" => $codigo_nota,
+        "fecha_venta" => $fecha_venta,
+        "hora_venta" => $hora_venta,
+        "subtotal" => $subtotal,
+        "porc_descuento" => $porc_descuento,
+        "descuento" => $descuento,
+        "total" => $total_final,
+        "pagado" => $pagado,
+        "cambio" => $cambio,
+        "id_usuario" => 1,
+        "id_cliente" => $id_cliente,
+        "id_caja" => 1,
+        "estatus" => 1,
+    ];
+
+    $generar_venta = $controlador->ctrGenerarVenta($datos_venta);
+    if ($generar_venta == "ok") {
+        echo json_encode("exito");
     }
 }
 ?>

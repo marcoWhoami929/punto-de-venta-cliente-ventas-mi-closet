@@ -5,8 +5,10 @@ $url = explode("/", $_GET['ruta']);
 $url = $url[1];
 $tokenNota = $url;
 
-$notas = new ControllerNotas();
-$notas = $notas->ctrListarNotas($url);
+$controlador = new ControllerNotas();
+$notas = $controlador->ctrListarNotas($url);
+$formasPago = $controlador->ctrListarFormasPago();
+
 $codigoNota = $notas["codigo"];
 
 if ($notas != false) {
@@ -97,28 +99,68 @@ if ($notas != false) {
                                             </div>
                                             <div class="card-body">
                                                 <h5 class="card-subtitle"><?= $notas["titulo_nota"] ?></h5>
-                                                <form class="forms-sample">
-                                                    <div class="form-group">
-                                                        <label style="color:#B99654">Publicación</label>
-                                                        <h5 class="card-subtitle-2"><?= $notas["fecha_publicacion"] ?></h5>
+                                                <div class="row">
+                                                    <div class="col-md-6 col-lg-6 col-sm-6 grid-margin stretch-card">
+                                                        <div class="form-group">
+                                                            <label style="color:#B99654">Publicación</label>
+                                                            <h5 class="card-subtitle-2"><?= $notas["fecha_publicacion"] ?></h5>
+                                                        </div>
                                                     </div>
-                                                    <div class="form-group">
-                                                        <label style="color:#B99654">Expiración</label>
-                                                        <h5 class="card-subtitle-2"><?= $notas["fecha_expiracion"] ?></h5>
+                                                    <div class="col-md-6 col-lg-6 col-sm-6 grid-margin stretch-card">
+                                                        <div class="form-group">
+                                                            <label style="color:#B99654">Expiración</label>
+                                                            <h5 class="card-subtitle-2"><?= $notas["fecha_expiracion"] ?></h5>
+                                                        </div>
                                                     </div>
+                                                </div>
 
-                                                </form>
+                                                <div class="row">
+                                                    <div class="col-md-6 col-lg-6 col-sm-6 grid-margin stretch-card">
+                                                        <div class="form-group">
+                                                            <label style="color:#B99654">Tipo Entrega</label>
+                                                            <select id="tipo_entrega_nota" class="form-select form-select-lg">
+                                                                <option value="recoleccion">Recolección en tienda</option>
+                                                                <option value="envio">Envio</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-lg-6 col-sm-6 grid-margin stretch-card">
+                                                        <div class="form-group">
+                                                            <label style="color:#B99654">Forma de Pago</label>
+                                                            <select id="forma_pago_nota" class="form-select form-select-lg">
+                                                                <?php
+                                                                foreach ($formasPago as $key => $value) {
+                                                                    echo '<option value="' . $value["id_metodo_pago"] . '">' . $value["metodo"] . '</option>';
+                                                                }
+
+                                                                ?>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-12 col-lg-12 col-sm-12 grid-margin stretch-card">
-                                <div class="card">
+                            <div class="col-md-12 col-lg-12 col-sm-12 grid-margin stretch-card ">
+                                <div class="card ">
+                                    <div class="row mt-3 mb-3">
 
-                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalProductos">
-                                        Ver Productos Nota
-                                    </button>
+                                        <div class="col-lg-6 col-md-6 col-sm-12 " style="display:grid">
+                                            <button type="button" class="btn btn-primary mx-2 mb-2 btn-lg" data-bs-toggle="modal" data-bs-target="#modalProductos" style="justify-content: center;align-items: center;">
+                                                Productos Nota
+                                            </button>
+                                        </div>
+
+                                        <div class="col-lg-6 col-md-6 col-sm-12 " style="display:grid">
+                                            <button type="button" class="btn btn-primary mx-2 mb-3  btn-lg" onclick="guardarNota('<?= $notas['codigo'] ?>','<?= $notas['porc_descuento'] ?>')" style="justify-content: center;align-items: center;">
+                                                Guardar Nota
+                                            </button>
+                                        </div>
+
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-12 col-lg-12 col-sm-12 grid-margin stretch-card">

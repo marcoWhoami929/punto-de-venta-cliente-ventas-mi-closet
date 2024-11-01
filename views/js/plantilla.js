@@ -11,6 +11,7 @@ $(function () {
     codigoNota = ruta[3];
     detalleProductosNota(codigoNota);
     carritoNota(codigoNota);
+    $("#modalProductos").modal("show");
   }
 });
 function listadoNotas(page) {
@@ -341,5 +342,55 @@ function actualizarProductoCarrito(
         alert("Ocurrio un error al actualizar el producto del carrito");
       }
     },
+  });
+}
+function guardarNota(codigoNota, porc_descuento) {
+  Swal.fire({
+    title: "Confirmar!",
+    text: "Desea guardar su nota y solicitarla!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Guardar",
+    cancelButtonText: "Cancelar",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      var tipo_entrega = $("#tipo_entrega_nota").val();
+      var forma_pago = $("#forma_pago_nota").val();
+      var parametros = {
+        action: "guardar_nota",
+        codigoNota: codigoNota,
+        porc_descuento: porc_descuento,
+        forma_pago: forma_pago,
+        tipo_entrega: tipo_entrega,
+      };
+
+      $.ajax({
+        url: "../ajax/notas.ajax.php",
+        data: parametros,
+        beforeSend: function (objeto) {},
+        success: function (data) {
+          if (data != "") {
+          } else {
+            Swal.fire({
+              title: "Error",
+              text: "No se pudo registrar la nota intentalo mas tarde.",
+              icon: "warning",
+              confirmButtonColor: "#B99654",
+              confirmButtonText: "Entendido",
+            });
+          }
+        },
+      });
+    } else {
+      Swal.fire({
+        title: "Acción cancelada",
+        text: "Puede seguir editando la nota.",
+        icon: "info",
+        confirmButtonColor: "#B99654",
+        confirmButtonText: "Entendido",
+      });
+    }
   });
 }

@@ -71,6 +71,7 @@ class notas extends ConexionsBd
         $this->setCounter($nums_row);
         return $query;
     }
+
     function setCounter($counter)
     {
         $this->counter = $counter;
