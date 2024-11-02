@@ -42,6 +42,15 @@ function generarCodigoAleatorioNota($longitud, $correlativo)
     }
     return $codigo . "-" . $correlativo;
 }
+if ($action == 'metodos_pago') {
+    require_once "../models/notas.model.php";
+    $tipo_entrega = strip_tags($_REQUEST['tipo_entrega']);
+
+    $controlador = new ControllerNotas();
+
+    $ventas = $controlador->ctrListarFormasPago($tipo_entrega);
+    echo json_encode($ventas);
+}
 if ($action == 'totales_carrito') {
     $codigoNota = strip_tags($_REQUEST['codigoNota']);
 ?>
@@ -478,7 +487,7 @@ if ($action ==  'carrito_nota') {
     }
     ?>
 
-<?php
+    <?php
 }
 if ($action == 'remover_producto') {
 
@@ -520,60 +529,219 @@ if ($action == 'guardar_nota') {
     require_once "../models/notas.model.php";
     /*== Formateando variables ==*/
     $codigo_nota = strip_tags($_REQUEST['codigoNota']);
-    $porc_descuento = strip_tags($_REQUEST['porc_descuento']);
-    $tipo_entrega = strip_tags($_REQUEST['tipo_entrega']);
-    $forma_pago = strip_tags($_REQUEST['forma_pago']);
-    $pagado = "0.00";
+    if (isset($_SESSION['datos_producto_nota'][$codigo_nota])) {
+        if (empty($_SESSION['datos_producto_nota'][$codigo_nota])) {
+            echo json_encode("not-products");
+        } else {
 
-    $pagado = number_format($pagado, MONEDA_DECIMALES, '.', '');
-    $total = number_format($_SESSION['total' . $codigo_nota], MONEDA_DECIMALES, '.', '');
-    $subtotal = number_format($_SESSION['subtotal' . $codigo_nota], MONEDA_DECIMALES, '.', '');
-    $descuento = number_format($_SESSION['descuento' . $codigo_nota], MONEDA_DECIMALES, '.', '');
-    $porc_descuento = number_format($porc_descuento, MONEDA_DECIMALES, '.', '');
+            $porc_descuento = strip_tags($_REQUEST['porc_descuento']);
+            $tipo_entrega = strip_tags($_REQUEST['tipo_entrega']);
+            $forma_pago = strip_tags($_REQUEST['forma_pago']);
+            $pagado = "0.00";
 
-    $fecha_venta = date("Y-m-d");
-    $hora_venta = date("h:i a");
+            $pagado = number_format($pagado, MONEDA_DECIMALES, '.', '');
+            $total = number_format($_SESSION['total' . $codigo_nota], MONEDA_DECIMALES, '.', '');
+            $subtotal = number_format($_SESSION['subtotal' . $codigo_nota], MONEDA_DECIMALES, '.', '');
+            $descuento = number_format($_SESSION['descuento' . $codigo_nota], MONEDA_DECIMALES, '.', '');
+            $porc_descuento = number_format($porc_descuento, MONEDA_DECIMALES, '.', '');
 
-    $total_final = $total;
-    $total_final = number_format($total_final, MONEDA_DECIMALES, '.', '');
+            $fecha_venta = date("Y-m-d");
+            $hora_venta = date("H:i:s");
 
-    $cambio = $total_final - $total_final;
-    $cambio = number_format($cambio, MONEDA_DECIMALES, '.', '');
-    $tipo_venta = "nota";
-    $id_cliente = $_SESSION["id"];
+            $total_final = $total;
+            $total_final = number_format($total_final, MONEDA_DECIMALES, '.', '');
 
-    /***GENERAR CODIGO VENTA */
-    $controlador = new ControllerNotas();
+            $cambio = $total_final - $total_final;
+            $cambio = number_format($cambio, MONEDA_DECIMALES, '.', '');
+            $tipo_venta = "nota";
+            $id_cliente = $_SESSION["id"];
 
-    $ventas = $controlador->ctrIdVenta();
-    $ventas = count($ventas) + 1;
+            /***GENERAR CODIGO VENTA */
+
+            $controlador = new ControllerNotas();
+
+            $ventas = $controlador->ctrIdVenta();
+            $ventas = count($ventas) + 1;
 
 
-    $codigo_venta = generarCodigoAleatorioNota(10, $ventas);
+            $codigo_venta = generarCodigoAleatorioNota(10, $ventas);
+            if ($forma_pago != 1) {
+                $fecha_pago =  date("Y-m-d H:i:s", strtotime('+1 days'));
+            } else {
+                $fecha_pago =  date("Y-m-d H:i:s");
+            }
 
-    $datos_venta = [
-        "tipo_venta" => $tipo_venta,
-        "tipo_entrega" => $tipo_entrega,
-        "forma_pago" => $forma_pago,
-        "codigo" => $codigo_venta,
-        "codigo_nota" => $codigo_nota,
-        "fecha_venta" => $fecha_venta,
-        "hora_venta" => $hora_venta,
-        "subtotal" => $subtotal,
-        "porc_descuento" => $porc_descuento,
-        "descuento" => $descuento,
-        "total" => $total_final,
-        "pagado" => $pagado,
-        "cambio" => $cambio,
-        "id_usuario" => 1,
-        "id_cliente" => $id_cliente,
-        "id_caja" => 1,
-        "estatus" => 1,
-    ];
+            $datos_venta = [
+                "tipo_venta" => $tipo_venta,
+                "tipo_entrega" => $tipo_entrega,
+                "forma_pago" => $forma_pago,
+                "codigo" => $codigo_venta,
+                "codigo_nota" => $codigo_nota,
+                "fecha_venta" => $fecha_venta,
+                "hora_venta" => $hora_venta,
+                "subtotal" => $subtotal,
+                "porc_descuento" => $porc_descuento,
+                "descuento" => $descuento,
+                "total" => $total_final,
+                "pagado" => $pagado,
+                "cambio" => $cambio,
+                "id_usuario" => 1,
+                "id_cliente" => $id_cliente,
+                "id_caja" => 1,
+                "estatus" => 1,
+                "fecha_pago" => $fecha_pago,
+                "estatus_pago" => 0,
+            ];
 
-    $generar_venta = $controlador->ctrGenerarVenta($datos_venta);
-    if ($generar_venta == "ok") {
-        echo json_encode("exito");
+            $generar_venta = $controlador->ctrGenerarVenta($datos_venta);
+
+            if ($generar_venta == "ok") {
+                foreach ($_SESSION['datos_producto_nota'][$codigo_nota] as $producto) {
+                    $productos_venta = [
+                        "id_producto" => $producto['id_producto'],
+                        "token" => $producto['token'],
+                        "descripcion" => $producto['descripcion'],
+                        "codigo" => $codigo_venta,
+                        "cantidad" => $producto['cantidad'],
+                        "color" => $producto['colores'],
+                        "talla" => $producto['tallas'],
+                        "precio_venta" => $producto['precio_venta'],
+                        "porc_descuento" => $producto['porc_descuento'],
+                        "descuento" => $producto['descuento'],
+                        "subtotal" => $producto['subtotal'],
+                        "total" => $producto['total'],
+                    ];
+
+
+                    $guardarProductoVenta = $controlador->ctrGuardarProductoVenta($productos_venta);
+                }
+                unset($_SESSION["datos_producto_nota"][$codigo_nota]);
+                unset($_SESSION["subtotal" . $codigo_nota]);
+                unset($_SESSION["descuento" . $codigo_nota]);
+                unset($_SESSION["total" . $codigo_nota]);
+                echo json_encode("exito");
+            } else {
+                echo json_encode("error");
+            }
+        }
+    } else {
+        echo json_encode("not-exist");
+    }
+}
+if ($action == 'lista_notas_adquiridas') {
+
+    include('../clases/notas.php');
+    $database = new notas();
+    //Recibir variables enviadas
+    $busqueda = strip_tags($_REQUEST['busqueda']);
+    $campoOrden = strip_tags($_REQUEST['campoOrden']);
+    $orden = strip_tags($_REQUEST['orden']);
+    $per_page = intval($_REQUEST['per_page']);
+    $vista = strip_tags($_REQUEST['vista']);
+    $id_cliente = intval($_SESSION['id']);
+
+    //Variables de paginación
+    $page = (isset($_REQUEST['page']) && !empty($_REQUEST['page'])) ? $_REQUEST['page'] : 1;
+    $adjacents  = 4; //espacio entre páginas después del número de adyacentes
+    $offset = ($page - 1) * $per_page;
+
+    $search = array("id_cliente" => $id_cliente, "busqueda" => $busqueda, "campoOrden" => $campoOrden, "orden" => $orden, "per_page" => $per_page, "offset" => $offset);
+    //consulta principal para recuperar los datos
+    $datos = $database->getListaNotasAdquiridas($search);
+    $countAll = $database->getCounter();
+    $row = $countAll;
+
+    if ($row > 0) {
+        $numrows = $countAll;;
+    } else {
+        $numrows = 0;
+    }
+    $total_pages = ceil($numrows / $per_page);
+
+
+    //Recorrer los datos recuperados
+
+    if ($numrows > 0) {
+    ?>
+
+        <?php
+        $finales = 0;
+        foreach ($datos as $key => $row) {
+
+            $ahora = date("Y-m-d H:i:s");
+            $fecha_pago =  date("Y-m-d H:i:s", strtotime($row["fecha_pago"]));
+
+            if ($row["tipo_entrega"] == "recoleccion") {
+                $estado_entrega = "";
+            } else {
+            }
+
+            if ($fecha_publicacion > $ahora) {
+                $estatus = "Inicia en";
+                $estado = "Sin Iniciar";
+                $card_color = "card-red";
+            } else {
+                if ($ahora > $fecha_expiracion) {
+                    $estatus = "";
+                    $estado = "Finalizada";
+                    $card_color = "card-green";
+                } else {
+                    if ($fecha_expiracion > $fecha_publicacion) {
+                        $estatus = "Finaliza en";
+                        $estado = "Iniciado";
+                        $card_color = "card-color";
+                    }
+                }
+            }
+
+        ?>
+            <div class="col-lg-4 col-md-4 col-sm-6" onclick="<?= "cargarNota('" . $row["codigo"] . "','" . $ahora . "','" . $row["fecha_publicacion"] . "','" . $row["fecha_expiracion"] . "')" ?>" style="cursor:pointer">
+                <div class="card mb-3">
+                    <div class="card-header <?= $card_color ?>">
+                        <h4><?= $estado ?></h4>
+                    </div>
+
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <img src="<?= APP_URL_ADMIN . "app/ajax/codes/" . $row["codigo_nota"] . ".png" ?>" class="img-fluid rounded-start" alt="...">
+                        </div>
+                        <div class="col-md-8">
+
+                            <div class="card-body">
+                                <h5 class="card-title"><?= $row["codigo"] ?></h5>
+                                <p class="card-text"><?= $row["titulo_nota"] ?></p>
+                                <p class="card-text"><small class="text-muted"><?= $row["fecha_expiracion"] ?></small></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer card-color">
+                        <h4><?= $estatus ?></h4>
+                        <div class="countdown" id="countdown<?= $row['id_venta']; ?>"><?= '<script>countDownVentas("' . $row['fecha_pago'] . '","' . $row['id_venta'] . '","' . $row['estatus'] . '","' . $row['estatus_pago'] . '","' . $row['forma_pago'] . '")</script>'; ?>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        <?php
+            $finales++;
+        }
+        ?>
+
+        <div class="clearfix">
+            <?php
+            $inicios = $offset + 1;
+            $finales += $inicios - 1;
+            echo '<div class="hint-text">Mostrando ' . $inicios . ' al ' . $finales . ' de ' . $numrows . ' registros</div>';
+
+
+            include '../clases/pagination.php'; //include pagination class
+            $pagination = new Pagination($page, $total_pages, $adjacents);
+            echo $pagination->paginate($vista);
+
+            ?>
+        </div>
+<?php
     }
 }
 ?>

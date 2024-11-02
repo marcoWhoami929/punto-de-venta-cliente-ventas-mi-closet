@@ -1,5 +1,5 @@
 <?php
-error_reporting(E_ALL);
+error_reporting(0);
 require_once "controllers/notas.controller.php";
 $url = explode("/", $_GET['ruta']);
 $url = $url[1];
@@ -7,10 +7,10 @@ $tokenNota = $url;
 
 $controlador = new ControllerNotas();
 $notas = $controlador->ctrListarNotas($url);
-$formasPago = $controlador->ctrListarFormasPago();
 
 $codigoNota = $notas["codigo"];
 
+//var_dump($_SESSION["datos_producto_nota"][$codigoNota]);
 if ($notas != false) {
 
     date_default_timezone_set('America/Mexico_City');
@@ -18,8 +18,8 @@ if ($notas != false) {
     $fecha_publicacion =  date("Y-m-d H:i:s", strtotime($notas["fecha_publicacion"]));
     $fecha_expiracion =  date("Y-m-d H:i:s", strtotime($notas["fecha_expiracion"]));
 
-    if (isset($_SESSION["datos_producto_nota"])) {
-        //unset($_SESSION["datos_producto_nota"]);
+    if (isset($_SESSION["datos_producto_nota"][$codigoNota])) {
+        //unset($_SESSION["datos_producto_nota"][$codigoNota]);
     } else {
     }
 
@@ -118,7 +118,7 @@ if ($notas != false) {
                                                     <div class="col-md-6 col-lg-6 col-sm-6 grid-margin stretch-card">
                                                         <div class="form-group">
                                                             <label style="color:#B99654">Tipo Entrega</label>
-                                                            <select id="tipo_entrega_nota" class="form-select form-select-lg">
+                                                            <select id="tipo_entrega_nota" class="form-select form-select-lg" onchange="cargarMetodosPago()">
                                                                 <option value="recoleccion">Recolección en tienda</option>
                                                                 <option value="envio">Envio</option>
                                                             </select>
@@ -128,12 +128,7 @@ if ($notas != false) {
                                                         <div class="form-group">
                                                             <label style="color:#B99654">Forma de Pago</label>
                                                             <select id="forma_pago_nota" class="form-select form-select-lg">
-                                                                <?php
-                                                                foreach ($formasPago as $key => $value) {
-                                                                    echo '<option value="' . $value["id_metodo_pago"] . '">' . $value["metodo"] . '</option>';
-                                                                }
 
-                                                                ?>
                                                             </select>
                                                         </div>
                                                     </div>

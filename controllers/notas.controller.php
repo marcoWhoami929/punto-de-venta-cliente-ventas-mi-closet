@@ -10,10 +10,10 @@ class ControllerNotas
 
         return $respuesta;
     }
-    static public function ctrListarFormasPago()
+    static public function ctrListarFormasPago($tipo_entrega)
     {
 
-        $respuesta =  ModelNotas::mdlListarFormasPago();
+        $respuesta =  ModelNotas::mdlListarFormasPago($tipo_entrega);
 
         return $respuesta;
     }
@@ -35,6 +35,13 @@ class ControllerNotas
     {
 
         $respuesta =  ModelNotas::mdlGenerarVenta($datos_venta);
+
+        return $respuesta;
+    }
+    static public function ctrGuardarProductoVenta($productos_venta)
+    {
+
+        $respuesta =  ModelNotas::mdlGuardarProductoVenta($productos_venta);
 
         return $respuesta;
     }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 31-10-2024 a las 00:31:22
+-- Tiempo de generación: 02-11-2024 a las 01:14:39
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 7.4.33
 
@@ -205,6 +205,16 @@ CREATE TABLE `metodopago` (
   `metodo` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `metodopago`
+--
+
+INSERT INTO `metodopago` (`id_metodo_pago`, `metodo`) VALUES
+(1, 'Efectivo'),
+(2, 'Transferencia Electrónica'),
+(3, 'Tarjeta de Crédito'),
+(4, 'Tarjeta de Débito');
+
 -- --------------------------------------------------------
 
 --
@@ -260,8 +270,8 @@ CREATE TABLE `notas` (
 INSERT INTO `notas` (`id_nota`, `codigo`, `titulo_nota`, `fecha_publicacion`, `fecha_expiracion`, `porc_descuento`, `qr`, `estatus`, `fecha`) VALUES
 (1, 'NOT-CHSKUFP7DZIOX9ZBLPWRYC', 'Mio Mio 2', '2024-10-30 10:00:00', '2024-11-01 10:00:00', '10.00', 'http://localhost/pos2/notas/NOT-CHSKUFP7DZIOX9ZBLPWRYC', 1, '2024-10-22 16:33:08'),
 (2, 'NOT-U7MKR1JIAWRE2HPSWMKXOT', 'Prueba 2', '2024-10-31 09:00:00', '2024-11-01 10:00:00', '10.00', 'http://localhost/pos2/notas/NOT-U7MKR1JIAWRE2HPSWMKXOT', 1, '2024-10-24 19:53:10'),
-(3, 'NOT-FWRVZUFKQMSGJABLGYDOI6', 'Prueba nota', '2024-10-28 10:00:00', '2024-10-29 10:00:00', '0.00', 'http://localhost/pos2/notas/NOT-FWRVZUFKQMSGJABLGYDOI6', 1, '2024-10-25 17:20:29'),
-(4, 'NOT-TC12R5DBK0C8VBVMO4H6JA', 'Prueba', '2024-10-26 10:30:00', '2024-10-31 10:00:00', '5.00', 'http://localhost/pos2/detalleNota/NOT-TC12R5DBK0C8VBVMO4H6JA', 1, '2024-10-26 16:30:55');
+(3, 'NOT-FWRVZUFKQMSGJABLGYDOI6', 'Prueba nota', '2024-10-28 10:00:00', '2024-11-02 10:00:00', '0.00', 'http://localhost/pos2/notas/NOT-FWRVZUFKQMSGJABLGYDOI6', 1, '2024-10-25 17:20:29'),
+(4, 'NOT-TC12R5DBK0C8VBVMO4H6JA', 'Prueba', '2024-10-26 10:30:00', '2024-11-02 10:00:00', '5.00', 'http://localhost/pos2/detalleNota/NOT-TC12R5DBK0C8VBVMO4H6JA', 1, '2024-10-26 16:30:55');
 
 -- --------------------------------------------------------
 
@@ -274,6 +284,7 @@ CREATE TABLE `pago` (
   `id_venta` int(11) NOT NULL,
   `id_metodo_pago` int(11) NOT NULL,
   `monto_pagado` decimal(10,3) NOT NULL,
+  `cambio` decimal(30,2) NOT NULL,
   `fecha_pago` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
@@ -393,9 +404,11 @@ INSERT INTO `usuario` (`id_usuario`, `nombre`, `email`, `usuario`, `password`, `
 
 CREATE TABLE `venta` (
   `id_venta` int(30) NOT NULL,
-  `tipo_venta` enum('directa','nota') NOT NULL,
-  `codigo` varchar(200) NOT NULL,
-  `codigo_nota` text NOT NULL,
+  `tipo_venta` enum('directa','nota') CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `tipo_entrega` text CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `forma_pago` int(11) NOT NULL,
+  `codigo` varchar(200) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `codigo_nota` text CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `fecha_venta` date NOT NULL,
   `hora_venta` time NOT NULL,
   `subtotal` decimal(30,2) NOT NULL,
@@ -408,18 +421,17 @@ CREATE TABLE `venta` (
   `id_cliente` int(11) NOT NULL,
   `id_caja` int(11) NOT NULL,
   `estatus` int(11) NOT NULL,
-  `fecha_registro` timestamp NOT NULL DEFAULT current_timestamp()
+  `estatus_pago` int(11) NOT NULL,
+  `fecha_registro` timestamp NOT NULL DEFAULT current_timestamp(),
+  `fecha_pago` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
 -- Volcado de datos para la tabla `venta`
 --
 
-INSERT INTO `venta` (`id_venta`, `tipo_venta`, `codigo`, `codigo_nota`, `fecha_venta`, `hora_venta`, `subtotal`, `porc_descuento`, `descuento`, `total`, `pagado`, `cambio`, `id_usuario`, `id_cliente`, `id_caja`, `estatus`, `fecha_registro`) VALUES
-(4, 'directa', 'S6L2K3T9Y0-1', '', '2024-10-16', '06:39:00', '850.00', '10.00', '85.000', '765.00', '800.00', '35.00', 1, 1, 1, 0, '2024-10-16 23:39:32'),
-(5, 'directa', 'Q7X8H3C3G1-2', '', '2024-10-16', '06:51:00', '300.00', '10.00', '30.000', '270.00', '500.00', '230.00', 1, 1, 1, 1, '2024-10-16 23:51:58'),
-(6, 'directa', 'N0N0B4L3P0-3', '', '2024-10-16', '06:53:00', '250.00', '0.00', '0.000', '250.00', '300.00', '50.00', 1, 1, 1, 2, '2024-10-16 23:53:18'),
-(7, 'directa', 'F6Z0D1E5R1-4', '', '2024-10-18', '02:26:00', '250.00', '10.00', '25.000', '225.00', '300.00', '75.00', 1, 1, 1, 2, '2024-10-18 19:26:39');
+INSERT INTO `venta` (`id_venta`, `tipo_venta`, `tipo_entrega`, `forma_pago`, `codigo`, `codigo_nota`, `fecha_venta`, `hora_venta`, `subtotal`, `porc_descuento`, `descuento`, `total`, `pagado`, `cambio`, `id_usuario`, `id_cliente`, `id_caja`, `estatus`, `estatus_pago`, `fecha_registro`, `fecha_pago`) VALUES
+(1, 'nota', 'recoleccion', 2, 'O2E5X4Y1Y5-1', 'NOT-FWRVZUFKQMSGJABLGYDOI6', '2024-11-01', '13:41:42', '250.00', '0.00', '0.000', '250.00', '0.00', '0.00', 1, 7, 1, 1, 0, '2024-11-01 19:41:42', '2024-11-02 13:41:42');
 
 -- --------------------------------------------------------
 
@@ -450,11 +462,7 @@ CREATE TABLE `venta_detalle` (
 --
 
 INSERT INTO `venta_detalle` (`id_detalle`, `id_producto`, `token`, `descripcion`, `codigo`, `cantidad`, `color`, `talla`, `precio_compra`, `precio_venta`, `porc_descuento`, `descuento`, `subtotal`, `total`, `fecha_movimiento`) VALUES
-(6, 4, '', 'Sueter Mio Mio', 'S6L2K3T9Y0-1', 2, '', '', '0.00', '300.00', '0.00', '0.00', '0.00', '540.00', '2024-10-16 23:39:32'),
-(7, 5, '', 'Pantalon Mezclilla', 'S6L2K3T9Y0-1', 1, '', '', '0.00', '250.00', '0.00', '0.00', '0.00', '225.00', '2024-10-16 23:39:32'),
-(8, 4, '', 'Sueter Mio Mio', 'Q7X8H3C3G1-2', 1, '', '', '0.00', '300.00', '10.00', '30.00', '300.00', '270.00', '2024-10-16 23:51:58'),
-(9, 5, '', 'Pantalon Mezclilla', 'N0N0B4L3P0-3', 1, '', '', '0.00', '250.00', '0.00', '0.00', '250.00', '250.00', '2024-10-16 23:53:18'),
-(10, 5, '', 'Pantalon Mezclilla', 'F6Z0D1E5R1-4', 1, '', '', '0.00', '250.00', '10.00', '25.00', '250.00', '225.00', '2024-10-18 19:26:39');
+(1, 5, 'Y0H8U2R4', 'Pantalon Mezclilla', 'O2E5X4Y1Y5-1', 1, 'azul', '18', '0.00', '250.00', '0.00', '0.00', '250.00', '250.00', '2024-11-01 19:41:42');
 
 --
 -- Índices para tablas volcadas
@@ -646,7 +654,7 @@ ALTER TABLE `inventario`
 -- AUTO_INCREMENT de la tabla `metodopago`
 --
 ALTER TABLE `metodopago`
-  MODIFY `id_metodo_pago` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_metodo_pago` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `moviimientocaja`
@@ -700,13 +708,13 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `venta`
 --
 ALTER TABLE `venta`
-  MODIFY `id_venta` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_venta` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT de la tabla `venta_detalle`
 --
 ALTER TABLE `venta_detalle`
-  MODIFY `id_detalle` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_detalle` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Restricciones para tablas volcadas

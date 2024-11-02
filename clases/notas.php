@@ -43,7 +43,40 @@ class notas extends ConexionsBd
 
         $query = $query->fetchAll();
 
-        $sql1 = "SELECT  * FROM notas";
+        $sql1 = "SELECT  * FROM notas $sWhere";
+
+        $nums_row = $this->countAll($sql1);
+
+        //Set counter
+        $this->setCounter($nums_row);
+        return $query;
+    }
+    public function getListaNotasAdquiridas($search)
+    {
+        $offset = $search['offset'];
+        $per_page = $search['per_page'];
+        $campoOrden =  $search["campoOrden"];
+        $orden = $search['orden'];
+        $id_cliente = $search['id_cliente'];
+
+        if ($search["busqueda"] != "") {
+
+            $sWhere = "and vent.codigo LIKE '%" . $search['busqueda'] . "%' OR vent.codigo_nota LIKE '%" . $search['busqueda'] . "%'";
+        } else {
+            $sWhere = "";
+        }
+
+
+        $sql = "SELECT met.metodo,vent.* FROM venta as vent INNER JOIN metodopago as met ON vent.forma_pago = met.id_metodo_pago WHERE vent.id_cliente = '" . $id_cliente . "' $sWhere order by $campoOrden $orden LIMIT $per_page OFFSET $offset";
+
+        $query = ConexionsBd::conectar()->prepare($sql);
+
+
+        $query->execute();
+
+        $query = $query->fetchAll();
+
+        $sql1 = "SELECT met.metodo,vent.* FROM venta as vent INNER JOIN metodopago as met ON vent.forma_pago = met.id_metodo_pago WHERE vent.id_cliente = '" . $id_cliente . "' $sWhere";
 
         $nums_row = $this->countAll($sql1);
 
