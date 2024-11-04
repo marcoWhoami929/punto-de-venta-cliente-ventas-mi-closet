@@ -55,11 +55,16 @@ require_once "config/app.php";
 			$class = $carpeta . $_GET["ruta"] . '.php';
 
 			if (!file_exists($class)) {
-				$url2 = $_GET["ruta"];
-				$url2 = $url2[1];
+				$url2 = explode('/', $_GET["ruta"]);
+				$url2 = $url2[0];
+
 				if (isset($url2)) {
 
-					include "moduls/detalleNota.php";
+					if ($url2 == "detalleNota") {
+						include "moduls/detalleNota.php";
+					} else if ($url2 == "visualizarNota") {
+						include "moduls/visualizarNota.php";
+					}
 				} else {
 
 					include "moduls/404.php";

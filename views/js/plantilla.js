@@ -12,11 +12,21 @@ $(function () {
       break;
   }
   if (ruta[3] != undefined) {
-    codigoNota = ruta[3];
-    detalleProductosNota(codigoNota);
-    carritoNota(codigoNota);
-    $("#modalProductos").modal("show");
-    cargarMetodosPago();
+    switch (ruta[2]) {
+      
+      case "detalleNota":
+        codigoNota = ruta[3];
+        detalleProductosNota(codigoNota);
+        carritoNota(codigoNota);
+        $("#modalProductos").modal("show");
+        cargarMetodosPago();
+        break;
+        case "visualizarNota":
+          codigoVenta = ruta[3];
+          carritoVenta(codigoVenta);
+        break;
+    }
+    
   }
 });
 function listadoNotas(page) {
@@ -99,57 +109,101 @@ function countDown(fechaPublicacion, fechaExpiracion, id, estado) {
     timer = setInterval(showRemaining, 1000);
   }
 }
-function countDownVentas(fechaPago, id, estado) {
-  if (estado == 0) {
-    document.getElementById("countdown" + id).innerHTML =
-      "<span class='text-white'>CURSO CANCELADO!</span>";
-  } else {
-    var publicacion = new Date(fechaPublicacion).getTime();
-    var expiracion = new Date(fechaExpiracion).getTime();
-    var _second = 1000;
-    var _minute = _second * 60;
-    var _hour = _minute * 60;
-    var _day = _hour * 24;
-    var timer;
-
-    function showRemaining() {
-      var now = new Date();
-      var distance = publicacion - now;
-      var distance2 = expiracion - now;
-
-      if (distance < 0) {
-        if (distance2 < 0) {
-          document.getElementById("countdown" + id).innerHTML =
-            "<span class='text-white'>Nota Finalizada</span>";
-          return;
-        } else {
-          var distance = expiracion - now;
-        }
-
-        /*
-        clearInterval(timer);
-        document.getElementById("countdown" + id).innerHTML =
-          "<span class='text-white'>CURSO INICIADO!</span>";
-        return;
-        */
-      }
-      var days = Math.floor(distance / _day);
-      var hours = Math.floor((distance % _day) / _hour);
-      var minutes = Math.floor((distance % _hour) / _minute);
-      var seconds = Math.floor((distance % _minute) / _second);
-      document.getElementById("countdown" + id).innerHTML =
-        '<div class="box">' +
-        days +
-        '<div class="text">DIAS</div></div><div class="box">' +
-        hours +
-        '<div class="text">HORAS</div></div><div class="box">' +
-        minutes +
-        '<div class="text">MIN</div></div><div class="box">' +
-        seconds +
-        '<div class="text">SEG</div></div>';
-    }
-    timer = setInterval(showRemaining, 1000);
+function countDownVentas(fechaPago, id_venta, estatus,estatus_pago,forma_pago) {
+  if (estatus_pago == 1) {
+    return;
+   
   }
+  var fechaPago = new Date(fechaPago).getTime();
+  
+  var _second = 1000;
+  var _minute = _second * 60;
+  var _hour = _minute * 60;
+  var _day = _hour * 24;
+  var timer;
+
+  function showRemainingVentas() {
+    var now = new Date();
+    var distance = fechaPago - now;
+  
+    if (distance < 0) {
+    
+      clearInterval(timer);
+      document.getElementById("estatusPagoNota" + id_venta).innerHTML = "No Se Puede Adquirir";
+      document.getElementById("riboon" + id_venta).innerHTML = '<div class="ribbon-2 ">Por Cancelar</div>';
+      
+      document.getElementById("countdownVentas" + id_venta).innerHTML =
+        "<span class='text-white'>Tiempo Agotado</span>";
+      return;
+      
+    }else{
+      var distance = fechaPago - now;
+    }
+    var days = Math.floor(distance / _day);
+    var hours = Math.floor((distance % _day) / _hour);
+    var minutes = Math.floor((distance % _hour) / _minute);
+    var seconds = Math.floor((distance % _minute) / _second);
+    document.getElementById("countdownVentas" + id_venta).innerHTML =
+      '<div class="box">' +
+      days +
+      '<div class="text">DIAS</div></div><div class="box">' +
+      hours +
+      '<div class="text">HORAS</div></div><div class="box">' +
+      minutes +
+      '<div class="text">MIN</div></div><div class="box">' +
+      seconds +
+      '<div class="text">SEG</div></div>';
+      document.getElementById("estatusPagoNota" + id_venta).innerHTML = "Tiempo Para Pagar"
+  }
+  timer = setInterval(showRemainingVentas, 1000);
+}
+function countDownVentasDetalle(fechaPago, id_venta, estatus,estatus_pago,forma_pago) {
+  if (estatus_pago == 1) {
+    document.getElementById("countdownVentasDetalle" + id_venta).innerHTML ='<button type="button" class="btn btn-success mx-2 mb-3  btn-lg" style="justify-content: center;align-items: center;">Nota Pagada</button>';
+    return;
+   
+  }
+  var fechaPago = new Date(fechaPago).getTime();
+  
+  var _second = 1000;
+  var _minute = _second * 60;
+  var _hour = _minute * 60;
+  var _day = _hour * 24;
+  var timer;
+
+  function showRemainingVentasDetalle() {
+    var now = new Date();
+    var distance = fechaPago - now;
+  
+    if (distance < 0) {
+    
+      clearInterval(timer);
+      
+      
+      document.getElementById("countdownVentasDetalle" + id_venta).innerHTML =
+        "<span class='text-white'>Tiempo Agotado</span>";
+      return;
+      
+    }else{
+      var distance = fechaPago - now;
+    }
+    var days = Math.floor(distance / _day);
+    var hours = Math.floor((distance % _day) / _hour);
+    var minutes = Math.floor((distance % _hour) / _minute);
+    var seconds = Math.floor((distance % _minute) / _second);
+    document.getElementById("countdownVentasDetalle" + id_venta).innerHTML =
+      '<div class="box">' +
+      days +
+      '<div class="text">DIAS</div></div><div class="box">' +
+      hours +
+      '<div class="text">HORAS</div></div><div class="box">' +
+      minutes +
+      '<div class="text">MIN</div></div><div class="box">' +
+      seconds +
+      '<div class="text">SEG</div></div>';
+      
+  }
+  timer = setInterval(showRemainingVentasDetalle, 1000);
 }
 function cargarNota(codigo, fechaActual, fechaPublicacion, fechaExpiracion) {
   var fechaActual = new Date(fechaActual);
@@ -187,8 +241,6 @@ function cargarNota(codigo, fechaActual, fechaPublicacion, fechaExpiracion) {
         }).then((result) => {
           if (result.isConfirmed) {
             window.location.href = "detalleNota/" + codigo;
-          } else {
-            alert("cancelado");
           }
         });
       }
@@ -252,6 +304,21 @@ function detalleProductosNota(codigoNota) {
     beforeSend: function (objeto) {},
     success: function (data) {
       $(".detalle-notas").html(data).fadeIn("slow");
+    },
+  });
+}
+function detalleProductosVenta(codigoVenta) {
+  var parametros = {
+    action: "detalle_venta",
+    codigoVenta: codigoVenta,
+  };
+
+  $.ajax({
+    url: "../ajax/notas.ajax.php",
+    data: parametros,
+    beforeSend: function (objeto) {},
+    success: function (data) {
+      $(".detalle-venta").html(data).fadeIn("slow");
     },
   });
 }
@@ -528,5 +595,94 @@ function listadoNotasAdquiridas(page) {
       $(".lista-notas-adquiridas").html(data).fadeIn("slow");
       $("#loader").html("");
     },
+  });
+}
+function visualizarNota(codigo, fechaActual,fecha_pago, estatus_pago) {
+  var fechaActual = new Date(fechaActual);
+  var fecha_pago = new Date(fecha_pago);
+
+  if (fecha_pago > fechaActual) {
+
+    if(estatus_pago == "0"){
+      Swal.fire({
+        title: "Exito",
+        text: "Visualizar nota y proceder a pagarla.",
+        icon: "success",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Visualizar",
+        cancelButtonText: "Cancelar",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = "visualizarNota/" + codigo;
+        }
+      });
+    }else{
+      Swal.fire({
+        title: "Exito",
+        text: "Visualizar nota.",
+        icon: "success",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Visualizar",
+        cancelButtonText: "Cancelar",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = "visualizarNota/" + codigo;
+        }
+      });
+    }
+  } else {
+    if (fechaActual > fecha_pago) {
+      if(estatus_pago == "0"){
+        Swal.fire({
+          title: "Error",
+          text: "La nota no puede ser pagada porque expiró el tiempo de pago.",
+          icon: "warning",
+          confirmButtonColor: "#B99654",
+          confirmButtonText: "Entendido",
+        });
+      }else{
+        Swal.fire({
+          title: "Exito",
+          text: "Visualizar nota.",
+          icon: "success",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Visualizar",
+          cancelButtonText: "Cancelar",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = "visualizarNota/" + codigo;
+          }
+        });
+
+      }
+      
+    }
+  }
+}
+
+function carritoVenta(codigoVenta) {
+  var parametros = {
+    action: "carrito_venta",
+    codigoVenta: codigoVenta,
+  };
+  new Promise(function (resolve) {
+    resolve(
+      $.ajax({
+        url: "../ajax/notas.ajax.php",
+        data: parametros,
+        beforeSend: function (objeto) {},
+        success: function (data) {
+          $(".productos-venta").html(data).fadeIn("slow");
+        },
+      })
+    );
+  }).then(function (result) {
+    totalesCarrito(codigoVenta);
   });
 }

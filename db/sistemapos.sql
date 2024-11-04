@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-11-2024 a las 01:14:39
+-- Tiempo de generación: 04-11-2024 a las 04:24:30
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 7.4.33
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `sistemapos`
+-- Base de datos: `sistemapos2`
 --
 
 -- --------------------------------------------------------
@@ -268,10 +268,10 @@ CREATE TABLE `notas` (
 --
 
 INSERT INTO `notas` (`id_nota`, `codigo`, `titulo_nota`, `fecha_publicacion`, `fecha_expiracion`, `porc_descuento`, `qr`, `estatus`, `fecha`) VALUES
-(1, 'NOT-CHSKUFP7DZIOX9ZBLPWRYC', 'Mio Mio 2', '2024-10-30 10:00:00', '2024-11-01 10:00:00', '10.00', 'http://localhost/pos2/notas/NOT-CHSKUFP7DZIOX9ZBLPWRYC', 1, '2024-10-22 16:33:08'),
-(2, 'NOT-U7MKR1JIAWRE2HPSWMKXOT', 'Prueba 2', '2024-10-31 09:00:00', '2024-11-01 10:00:00', '10.00', 'http://localhost/pos2/notas/NOT-U7MKR1JIAWRE2HPSWMKXOT', 1, '2024-10-24 19:53:10'),
-(3, 'NOT-FWRVZUFKQMSGJABLGYDOI6', 'Prueba nota', '2024-10-28 10:00:00', '2024-11-02 10:00:00', '0.00', 'http://localhost/pos2/notas/NOT-FWRVZUFKQMSGJABLGYDOI6', 1, '2024-10-25 17:20:29'),
-(4, 'NOT-TC12R5DBK0C8VBVMO4H6JA', 'Prueba', '2024-10-26 10:30:00', '2024-11-02 10:00:00', '5.00', 'http://localhost/pos2/detalleNota/NOT-TC12R5DBK0C8VBVMO4H6JA', 1, '2024-10-26 16:30:55');
+(1, 'NOT-CHSKUFP7DZIOX9ZBLPWRYC', 'Mio Mio 2', '2024-10-30 10:00:00', '2024-11-04 10:00:00', '10.00', 'http://localhost/pos2/notas/NOT-CHSKUFP7DZIOX9ZBLPWRYC', 1, '2024-10-22 16:33:08'),
+(2, 'NOT-U7MKR1JIAWRE2HPSWMKXOT', 'Prueba 2', '2024-10-31 09:00:00', '2024-11-04 10:00:00', '10.00', 'http://localhost/pos2/notas/NOT-U7MKR1JIAWRE2HPSWMKXOT', 1, '2024-10-24 19:53:10'),
+(3, 'NOT-FWRVZUFKQMSGJABLGYDOI6', 'Prueba nota', '2024-10-28 10:00:00', '2024-11-04 10:00:00', '0.00', 'http://localhost/pos2/notas/NOT-FWRVZUFKQMSGJABLGYDOI6', 1, '2024-10-25 17:20:29'),
+(4, 'NOT-TC12R5DBK0C8VBVMO4H6JA', 'Prueba', '2024-10-26 10:30:00', '2024-11-04 10:00:00', '5.00', 'http://localhost/pos2/detalleNota/NOT-TC12R5DBK0C8VBVMO4H6JA', 1, '2024-10-26 16:30:55');
 
 -- --------------------------------------------------------
 
@@ -281,12 +281,23 @@ INSERT INTO `notas` (`id_nota`, `codigo`, `titulo_nota`, `fecha_publicacion`, `f
 
 CREATE TABLE `pago` (
   `id_pago` int(11) NOT NULL,
+  `codigo_pago` text NOT NULL,
   `id_venta` int(11) NOT NULL,
   `id_metodo_pago` int(11) NOT NULL,
-  `monto_pagado` decimal(10,3) NOT NULL,
-  `cambio` decimal(30,2) NOT NULL,
+  `total_pago` decimal(30,2) NOT NULL,
+  `total_pagado` decimal(30,2) NOT NULL,
+  `total_cambio` decimal(30,2) NOT NULL,
+  `referencia` text NOT NULL,
   `fecha_pago` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `pago`
+--
+
+INSERT INTO `pago` (`id_pago`, `codigo_pago`, `id_venta`, `id_metodo_pago`, `total_pago`, `total_pagado`, `total_cambio`, `referencia`, `fecha_pago`) VALUES
+(1, 'PAY-RHCWLS0IZB2CDGLPNHVDMY-1', 19, 2, '495.00', '495.00', '0.00', '', '2024-11-03 23:02:24'),
+(2, 'PAY-16U2QRXAEKGWOLYTX95BDT-2', 1, 1, '250.00', '500.00', '250.00', '', '2024-11-04 00:54:26');
 
 -- --------------------------------------------------------
 
@@ -431,7 +442,9 @@ CREATE TABLE `venta` (
 --
 
 INSERT INTO `venta` (`id_venta`, `tipo_venta`, `tipo_entrega`, `forma_pago`, `codigo`, `codigo_nota`, `fecha_venta`, `hora_venta`, `subtotal`, `porc_descuento`, `descuento`, `total`, `pagado`, `cambio`, `id_usuario`, `id_cliente`, `id_caja`, `estatus`, `estatus_pago`, `fecha_registro`, `fecha_pago`) VALUES
-(1, 'nota', 'recoleccion', 2, 'O2E5X4Y1Y5-1', 'NOT-FWRVZUFKQMSGJABLGYDOI6', '2024-11-01', '13:41:42', '250.00', '0.00', '0.000', '250.00', '0.00', '0.00', 1, 7, 1, 1, 0, '2024-11-01 19:41:42', '2024-11-02 13:41:42');
+(1, 'nota', 'recoleccion', 1, 'O2E5X4Y1Y5-1', 'NOT-FWRVZUFKQMSGJABLGYDOI6', '2024-11-01', '13:41:42', '250.00', '0.00', '0.000', '250.00', '500.00', '250.00', 1, 7, 1, 1, 1, '2024-11-01 19:41:42', '2024-11-04 13:41:42'),
+(19, 'nota', 'recoleccion', 2, 'J3J8T3V5J9-2', 'NOT-CHSKUFP7DZIOX9ZBLPWRYC', '2024-11-02', '22:43:37', '550.00', '10.00', '55.000', '495.00', '495.00', '0.00', 1, 7, 1, 2, 1, '2024-11-03 04:43:37', '2024-11-02 22:43:37'),
+(20, 'nota', 'recoleccion', 1, 'S6W1L3S6G3-3', 'NOT-CHSKUFP7DZIOX9ZBLPWRYC', '2024-11-03', '18:37:29', '550.00', '10.00', '55.000', '495.00', '0.00', '0.00', 1, 7, 1, 1, 0, '2024-11-04 00:37:29', '2024-11-10 18:37:29');
 
 -- --------------------------------------------------------
 
@@ -462,7 +475,11 @@ CREATE TABLE `venta_detalle` (
 --
 
 INSERT INTO `venta_detalle` (`id_detalle`, `id_producto`, `token`, `descripcion`, `codigo`, `cantidad`, `color`, `talla`, `precio_compra`, `precio_venta`, `porc_descuento`, `descuento`, `subtotal`, `total`, `fecha_movimiento`) VALUES
-(1, 5, 'Y0H8U2R4', 'Pantalon Mezclilla', 'O2E5X4Y1Y5-1', 1, 'azul', '18', '0.00', '250.00', '0.00', '0.00', '250.00', '250.00', '2024-11-01 19:41:42');
+(1, 5, 'Y0H8U2R4', 'Pantalon Mezclilla', 'O2E5X4Y1Y5-1', 1, 'azul', '18', '0.00', '250.00', '0.00', '0.00', '250.00', '250.00', '2024-11-01 19:41:42'),
+(2, 5, 'P3M2K5N3', 'Pantalon Mezclilla', 'J3J8T3V5J9-2', 1, 'Gris', '14', '0.00', '250.00', '10.00', '25.00', '250.00', '225.00', '2024-11-03 04:43:37'),
+(3, 4, 'A1D0K3U8', 'Sueter Mio Mio', 'J3J8T3V5J9-2', 1, 'azul', '20', '0.00', '300.00', '10.00', '30.00', '300.00', '270.00', '2024-11-03 04:43:37'),
+(4, 5, 'B3Z0T8B8', 'Pantalon Mezclilla', 'S6W1L3S6G3-3', 1, 'Gris', '14', '0.00', '250.00', '10.00', '25.00', '250.00', '225.00', '2024-11-04 00:37:29'),
+(5, 4, 'F0K4V3Z5', 'Sueter Mio Mio', 'S6W1L3S6G3-3', 1, 'azul', '20', '0.00', '300.00', '10.00', '30.00', '300.00', '270.00', '2024-11-04 00:37:29');
 
 --
 -- Índices para tablas volcadas
@@ -678,7 +695,7 @@ ALTER TABLE `notas`
 -- AUTO_INCREMENT de la tabla `pago`
 --
 ALTER TABLE `pago`
-  MODIFY `id_pago` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_pago` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `producto`
@@ -708,13 +725,13 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `venta`
 --
 ALTER TABLE `venta`
-  MODIFY `id_venta` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id_venta` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT de la tabla `venta_detalle`
 --
 ALTER TABLE `venta_detalle`
-  MODIFY `id_detalle` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_detalle` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Restricciones para tablas volcadas

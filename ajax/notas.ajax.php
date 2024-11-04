@@ -102,6 +102,7 @@ if ($action == 'totales_carrito') {
 
     <?php
 }
+
 if ($action == 'lista_notas') {
 
     include('../clases/notas.php');
@@ -565,11 +566,16 @@ if ($action == 'guardar_nota') {
 
 
             $codigo_venta = generarCodigoAleatorioNota(10, $ventas);
-            if ($forma_pago != 1) {
-                $fecha_pago =  date("Y-m-d H:i:s", strtotime('+1 days'));
+            if ($tipo_entrega == "recoleccion") {
+                if ($forma_pago != 1) {
+                    $fecha_pago =  date("Y-m-d H:i:s", strtotime('+1 days'));
+                } else {
+                    $fecha_pago =  date("Y-m-d H:i:s", strtotime('+7 days'));
+                }
             } else {
-                $fecha_pago =  date("Y-m-d H:i:s");
+                $fecha_pago =  date("Y-m-d H:i:s", strtotime('+1 days'));
             }
+
 
             $datos_venta = [
                 "tipo_venta" => $tipo_venta,
@@ -672,30 +678,23 @@ if ($action == 'lista_notas_adquiridas') {
             $fecha_pago =  date("Y-m-d H:i:s", strtotime($row["fecha_pago"]));
 
             if ($row["tipo_entrega"] == "recoleccion") {
-                $estado_entrega = "";
+                if ($row["estatus_pago"] == 0) {
+
+                    $estado = "Nota Sin Pagar";
+                    $card_color = "card-red";
+                } else {
+
+                    $estado = "Nota Pagada";
+                    $card_color = "card-green";
+                }
             } else {
             }
 
-            if ($fecha_publicacion > $ahora) {
-                $estatus = "Inicia en";
-                $estado = "Sin Iniciar";
-                $card_color = "card-red";
-            } else {
-                if ($ahora > $fecha_expiracion) {
-                    $estatus = "";
-                    $estado = "Finalizada";
-                    $card_color = "card-green";
-                } else {
-                    if ($fecha_expiracion > $fecha_publicacion) {
-                        $estatus = "Finaliza en";
-                        $estado = "Iniciado";
-                        $card_color = "card-color";
-                    }
-                }
-            }
+
 
         ?>
-            <div class="col-lg-4 col-md-4 col-sm-6" onclick="<?= "cargarNota('" . $row["codigo"] . "','" . $ahora . "','" . $row["fecha_publicacion"] . "','" . $row["fecha_expiracion"] . "')" ?>" style="cursor:pointer">
+            <div class="col-lg-4 col-md-4 col-sm-6" onclick="<?= "visualizarNota('" . $row["codigo"] . "','" . $ahora . "','" . $row["fecha_pago"] . "','" . $row["estatus_pago"] . "')" ?>" style="cursor:pointer">
+                <div id="riboon<?= $row['id_venta']; ?>"></div>
                 <div class="card mb-3">
                     <div class="card-header <?= $card_color ?>">
                         <h4><?= $estado ?></h4>
@@ -709,14 +708,14 @@ if ($action == 'lista_notas_adquiridas') {
 
                             <div class="card-body">
                                 <h5 class="card-title"><?= $row["codigo"] ?></h5>
-                                <p class="card-text"><?= $row["titulo_nota"] ?></p>
-                                <p class="card-text"><small class="text-muted"><?= $row["fecha_expiracion"] ?></small></p>
+                                <h4 class="card-title-total">$ <?= $row["total"] ?></h4>
+                                <p class="card-text"><small class="text-muted"><?= $row["fecha_venta"] ?></small></p>
                             </div>
                         </div>
                     </div>
                     <div class="card-footer card-color">
-                        <h4><?= $estatus ?></h4>
-                        <div class="countdown" id="countdown<?= $row['id_venta']; ?>"><?= '<script>countDownVentas("' . $row['fecha_pago'] . '","' . $row['id_venta'] . '","' . $row['estatus'] . '","' . $row['estatus_pago'] . '","' . $row['forma_pago'] . '")</script>'; ?>
+                        <h4 id="estatusPagoNota<?= $row['id_venta']; ?>"></h4>
+                        <div class="countdownVentas" id="countdownVentas<?= $row['id_venta']; ?>"><?= '<script>countDownVentas("' . $row['fecha_pago'] . '","' . $row['id_venta'] . '","' . $row['estatus'] . '","' . $row['estatus_pago'] . '","' . $row['forma_pago'] . '")</script>'; ?>
 
                         </div>
                     </div>
@@ -741,7 +740,137 @@ if ($action == 'lista_notas_adquiridas') {
 
             ?>
         </div>
-<?php
+    <?php
     }
 }
+if ($action ==  'carrito_venta') {
+    $codigoVenta = strip_tags($_REQUEST['codigoVenta']);
+    include('../clases/notas.php');
+    $database = new notas();
+    //Recibir variables enviadas
+
+    $search = array("codigoVenta" => $codigoVenta);
+    //consulta principal para recuperar los datos
+    $datos = $database->getDetalleVenta($search);
+    $countAll = $database->getCounter();
+
+    $row = $countAll;
+
+    if ($row > 0) {
+        $numrows = $countAll;;
+    } else {
+        $numrows = 0;
+    }
+
+    if ($numrows > 0) {
+    ?>
+
+        <?php
+        $finales = 0;
+        $_SESSION['total' . $codigoVenta] = 0;
+        $_SESSION['subtotal' . $codigoVenta] = 0;
+        $_SESSION['descuento' . $codigoVenta] = 0;
+        foreach ($datos as $key => $producto) {
+
+        ?>
+            <div class="card card-gray mb-2">
+                <div class="card-body">
+                    <div class="container">
+                        <div class="row">
+
+                            <div class="col-md-2 col-sm-2 col-lg-2">
+                                <h6 class="card-subtitle"><?= $producto["descripcion"] ?></h6>
+                                <h5 class="card-subtitle-2"><?= $producto["token"] ?></h5>
+                                <h5 class="card-subtitle-2"><?php echo MONEDA_SIMBOLO . number_format($producto['precio_venta'], MONEDA_DECIMALES, MONEDA_SEPARADOR_DECIMAL, MONEDA_SEPARADOR_MILLAR) . " " . MONEDA_NOMBRE; ?></h5>
+                            </div>
+                            <div class="col-md-1 col-sm-1 col-lg-1">
+                                <div class="form-group">
+                                    <div class="input-group d-flex align-items-center">
+
+                                        <h6 class="card-subtitle"><?= $producto["cantidad"] ?></h6>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-1 col-sm-1 col-lg-1">
+                                <div class="form-group">
+                                    <label>Color</label>
+                                    <select class="form-select">
+                                        <?php
+
+                                        $colores = explode(",", $producto['color']);
+
+                                        foreach ($colores as $key => $value) {
+                                            echo '<option value="' . $value . '">' . $value . '</option>';
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-1 col-sm-1 col-lg-1">
+                                <div class="form-group">
+                                    <label>Talla</label>
+                                    <select class="form-select">
+                                        <?php
+
+                                        $tallas = explode(",", $producto['talla']);
+
+                                        foreach ($tallas as $key => $value) {
+                                            echo '<option value="' . $value . '">' . $value . '</option>';
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-2 col-sm-2 col-lg-2">
+                                <label>Subtotal</label>
+                                <h5 class="card-subtitle"><?php echo MONEDA_SIMBOLO . number_format($producto['subtotal'], MONEDA_DECIMALES, MONEDA_SEPARADOR_DECIMAL, MONEDA_SEPARADOR_MILLAR) . " " . MONEDA_NOMBRE; ?></h5>
+                            </div>
+                            <div class="col-md-2 col-sm-2 col-lg-2">
+                                <label>Desc</label>
+                                <h5 class="card-subtitle"><?php echo MONEDA_SIMBOLO . number_format($producto['descuento'], MONEDA_DECIMALES, MONEDA_SEPARADOR_DECIMAL, MONEDA_SEPARADOR_MILLAR) . " " . MONEDA_NOMBRE; ?></h5>
+                            </div>
+                            <div class="col-md-2 col-sm-2 col-lg-2">
+                                <label>Total</label>
+                                <h5 class="card-subtitle"><?php echo MONEDA_SIMBOLO . number_format($producto['total'], MONEDA_DECIMALES, MONEDA_SEPARADOR_DECIMAL, MONEDA_SEPARADOR_MILLAR) . " " . MONEDA_NOMBRE; ?></h5>
+                            </div>
+                            <div class="col-md-1 col-sm-1 col-lg-1">
+                                <button class="btn btn-md btn-danger mt-4" type="button" disabled onclick="removerProductoCarrito('<?= $producto["token"] ?>','<?= $codigoVenta ?>')">
+                                    <i class="ti-trash" style="color:#ffffff"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        <?php
+            $finales++;
+
+            $_SESSION['subtotal' . $codigoVenta] += $producto['subtotal'];
+            $_SESSION['descuento' . $codigoVenta] += $producto['descuento'];
+            $_SESSION['total' . $codigoVenta] += $producto['total'];
+        }
+
+        ?>
+
+
+    <?php
+    } else {
+        $_SESSION['total' . $codigoVenta] = 0;
+        $_SESSION['subtotal' . $codigoVenta] = 0;
+        $_SESSION['descuento' . $codigoVenta] = 0;
+        echo ' <tr class="has-text-centered">
+                                                <td colspan="13">
+                                                    No hay productos agregados
+                                                </td>
+                                            </tr>';
+    }
+
+    ?>
+
+<?php
+}
+
 ?>

@@ -113,4 +113,14 @@ class ModelNotas
 
         $stmt = null;
     }
+    static public function mdlListarVentas($url)
+    {
+        $stmt = ConexionsBd::conectar()->prepare("SELECT * FROM venta WHERE codigo = '$url'");
+
+        $stmt->execute();
+
+        return $stmt->fetch();
+
+        $stmt = null;
+    }
 }

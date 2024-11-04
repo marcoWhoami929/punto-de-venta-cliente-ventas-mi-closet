@@ -45,4 +45,11 @@ class ControllerNotas
 
         return $respuesta;
     }
+    static public function ctrListarVentas($url)
+    {
+
+        $respuesta =  ModelNotas::mdlListarVentas($url);
+
+        return $respuesta;
+    }
 }

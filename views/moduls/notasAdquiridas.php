@@ -70,7 +70,7 @@
         </div>
     </div>
     <style>
-        .countdown {
+        .countdownVentas {
             width: 300px;
             margin: 0 auto;
             border: 1px solid transparent;
@@ -103,5 +103,34 @@
             font-size: 20px;
             text-align: center;
             color: #B99654;
+        }
+
+        .ribbon-2 {
+            --f: 10px;
+            /* control the folded part*/
+            --r: 15px;
+            /* control the ribbon shape */
+            --t: 40px;
+            /* the top offset */
+            color: #ffffff;
+            font-weight: bold;
+            position: relative;
+            inset: var(--t) calc(-1*var(--f)) auto auto;
+            padding: 20px 10px var(--f) calc(10px + var(--r));
+            clip-path:
+                polygon(0 0, 100% 0, 100% calc(100% - var(--f)), calc(100% - var(--f)) 100%,
+                    calc(100% - var(--f)) calc(100% - var(--f)), 0 calc(100% - var(--f)),
+                    var(--r) calc(50% - var(--f)/2));
+            background: #BD1550;
+            box-shadow: 0 calc(-1*var(--f)) 0 inset #0005;
+            height: 60px;
+            z-index: 1001;
+            font-size: 20px;
+        }
+
+        .card-title-total {
+            font-size: 4.0vh;
+            font-weight: bold;
+            color: #B99654
         }
     </style>

@@ -104,7 +104,26 @@ class notas extends ConexionsBd
         $this->setCounter($nums_row);
         return $query;
     }
+    public function getDetalleVenta($search)
+    {
+        $codigo = $search['codigoVenta'];
 
+        $sql = "SELECT * FROM venta_detalle as vent WHERE vent.codigo = '$codigo'";
+
+        $query = ConexionsBd::conectar()->prepare($sql);
+
+        $query->execute();
+
+        $query = $query->fetchAll();
+
+        $sql1 = "SELECT * FROM venta_detalle as vent WHERE vent.codigo = '$codigo'";
+
+        $nums_row = $this->countAll($sql1);
+
+        //Set counter
+        $this->setCounter($nums_row);
+        return $query;
+    }
     function setCounter($counter)
     {
         $this->counter = $counter;
