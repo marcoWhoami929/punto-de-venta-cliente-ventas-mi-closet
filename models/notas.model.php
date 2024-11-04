@@ -115,11 +115,57 @@ class ModelNotas
     }
     static public function mdlListarVentas($url)
     {
-        $stmt = ConexionsBd::conectar()->prepare("SELECT * FROM venta WHERE codigo = '$url'");
+        $stmt = ConexionsBd::conectar()->prepare("SELECT vent.*,met.metodo FROM venta as vent inner join metodopago as met ON vent.forma_pago = met.id_metodo_pago WHERE vent.codigo = '$url'");
 
         $stmt->execute();
 
         return $stmt->fetch();
+
+        $stmt = null;
+    }
+    static public function mdlCancelarVenta($id_venta)
+    {
+
+        $stmt = ConexionsBd::conectar()->prepare("UPDATE venta set estatus = 0 WHERE id_venta = '" . $id_venta . "'");
+
+        if ($stmt->execute()) {
+
+            return "ok";
+        } else {
+
+            return "error";
+        }
+        $stmt->close();
+
+        $stmt = null;
+    }
+    static public function mdlDetalleVenta($url)
+    {
+        $stmt = ConexionsBd::conectar()->prepare("SELECT ven.*,caja.*,cli.nombre as 'nombreCliente',cli.celular,cli.apellidos,cli.domicilio,usu.nombre as 'nombreCajero' FROM venta as ven INNER JOIN cliente as cli ON ven.id_cliente=cli.id_cliente INNER JOIN usuario as usu ON ven.id_usuario=usu.id_usuario INNER JOIN caja as caja ON ven.id_caja=caja.id_caja WHERE codigo = '$url'");
+
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+
+        $stmt = null;
+    }
+    static public function mdlDetalleEmpresa()
+    {
+        $stmt = ConexionsBd::conectar()->prepare("SELECT * FROM empresa");
+
+        $stmt->execute();
+
+        return $stmt->fetch();
+
+        $stmt = null;
+    }
+    static public function mdlDetalleProductosVenta($codigo)
+    {
+        $stmt = ConexionsBd::conectar()->prepare("SELECT * FROM venta_detalle  WHERE codigo = '$codigo'");
+
+        $stmt->execute();
+
+        return $stmt->fetchAll();
 
         $stmt = null;
     }

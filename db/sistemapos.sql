@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 04-11-2024 a las 04:24:30
+-- Tiempo de generación: 05-11-2024 a las 00:32:02
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 7.4.33
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `sistemapos2`
+-- Base de datos: `sistemapos`
 --
 
 -- --------------------------------------------------------
@@ -268,10 +268,10 @@ CREATE TABLE `notas` (
 --
 
 INSERT INTO `notas` (`id_nota`, `codigo`, `titulo_nota`, `fecha_publicacion`, `fecha_expiracion`, `porc_descuento`, `qr`, `estatus`, `fecha`) VALUES
-(1, 'NOT-CHSKUFP7DZIOX9ZBLPWRYC', 'Mio Mio 2', '2024-10-30 10:00:00', '2024-11-04 10:00:00', '10.00', 'http://localhost/pos2/notas/NOT-CHSKUFP7DZIOX9ZBLPWRYC', 1, '2024-10-22 16:33:08'),
-(2, 'NOT-U7MKR1JIAWRE2HPSWMKXOT', 'Prueba 2', '2024-10-31 09:00:00', '2024-11-04 10:00:00', '10.00', 'http://localhost/pos2/notas/NOT-U7MKR1JIAWRE2HPSWMKXOT', 1, '2024-10-24 19:53:10'),
-(3, 'NOT-FWRVZUFKQMSGJABLGYDOI6', 'Prueba nota', '2024-10-28 10:00:00', '2024-11-04 10:00:00', '0.00', 'http://localhost/pos2/notas/NOT-FWRVZUFKQMSGJABLGYDOI6', 1, '2024-10-25 17:20:29'),
-(4, 'NOT-TC12R5DBK0C8VBVMO4H6JA', 'Prueba', '2024-10-26 10:30:00', '2024-11-04 10:00:00', '5.00', 'http://localhost/pos2/detalleNota/NOT-TC12R5DBK0C8VBVMO4H6JA', 1, '2024-10-26 16:30:55');
+(1, 'NOT-CHSKUFP7DZIOX9ZBLPWRYC', 'Mio Mio 2', '2024-10-30 10:00:00', '2024-11-08 10:00:00', '10.00', 'http://localhost/pos2/notas/NOT-CHSKUFP7DZIOX9ZBLPWRYC', 1, '2024-10-22 16:33:08'),
+(2, 'NOT-U7MKR1JIAWRE2HPSWMKXOT', 'Prueba 2', '2024-10-31 09:00:00', '2024-11-07 10:00:00', '10.00', 'http://localhost/pos2/notas/NOT-U7MKR1JIAWRE2HPSWMKXOT', 1, '2024-10-24 19:53:10'),
+(3, 'NOT-FWRVZUFKQMSGJABLGYDOI6', 'Prueba nota', '2024-10-28 10:00:00', '2024-11-05 10:00:00', '0.00', 'http://localhost/pos2/notas/NOT-FWRVZUFKQMSGJABLGYDOI6', 1, '2024-10-25 17:20:29'),
+(4, 'NOT-TC12R5DBK0C8VBVMO4H6JA', 'Prueba', '2024-10-26 10:30:00', '2024-11-05 10:00:00', '5.00', 'http://localhost/pos2/detalleNota/NOT-TC12R5DBK0C8VBVMO4H6JA', 1, '2024-10-26 16:30:55');
 
 -- --------------------------------------------------------
 
@@ -442,9 +442,11 @@ CREATE TABLE `venta` (
 --
 
 INSERT INTO `venta` (`id_venta`, `tipo_venta`, `tipo_entrega`, `forma_pago`, `codigo`, `codigo_nota`, `fecha_venta`, `hora_venta`, `subtotal`, `porc_descuento`, `descuento`, `total`, `pagado`, `cambio`, `id_usuario`, `id_cliente`, `id_caja`, `estatus`, `estatus_pago`, `fecha_registro`, `fecha_pago`) VALUES
-(1, 'nota', 'recoleccion', 1, 'O2E5X4Y1Y5-1', 'NOT-FWRVZUFKQMSGJABLGYDOI6', '2024-11-01', '13:41:42', '250.00', '0.00', '0.000', '250.00', '500.00', '250.00', 1, 7, 1, 1, 1, '2024-11-01 19:41:42', '2024-11-04 13:41:42'),
+(1, 'nota', 'recoleccion', 1, 'O2E5X4Y1Y5-1', 'NOT-FWRVZUFKQMSGJABLGYDOI6', '2024-11-01', '13:41:42', '250.00', '0.00', '0.000', '250.00', '500.00', '250.00', 1, 7, 1, 3, 1, '2024-11-01 19:41:42', '2024-11-04 13:41:42'),
 (19, 'nota', 'recoleccion', 2, 'J3J8T3V5J9-2', 'NOT-CHSKUFP7DZIOX9ZBLPWRYC', '2024-11-02', '22:43:37', '550.00', '10.00', '55.000', '495.00', '495.00', '0.00', 1, 7, 1, 2, 1, '2024-11-03 04:43:37', '2024-11-02 22:43:37'),
-(20, 'nota', 'recoleccion', 1, 'S6W1L3S6G3-3', 'NOT-CHSKUFP7DZIOX9ZBLPWRYC', '2024-11-03', '18:37:29', '550.00', '10.00', '55.000', '495.00', '0.00', '0.00', 1, 7, 1, 1, 0, '2024-11-04 00:37:29', '2024-11-10 18:37:29');
+(20, 'nota', 'recoleccion', 1, 'S6W1L3S6G3-3', 'NOT-CHSKUFP7DZIOX9ZBLPWRYC', '2024-11-03', '18:37:29', '550.00', '10.00', '55.000', '495.00', '0.00', '0.00', 1, 7, 1, 0, 0, '2024-11-04 00:37:29', '2024-11-10 18:37:29'),
+(21, 'nota', 'recoleccion', 1, 'B0G3S9R3B3-4', 'NOT-U7MKR1JIAWRE2HPSWMKXOT', '2024-11-04', '10:31:21', '5100.00', '10.00', '510.000', '4590.00', '0.00', '0.00', 1, 7, 1, 1, 0, '2024-11-04 16:31:21', '2024-11-11 10:31:21'),
+(22, 'nota', 'envio', 2, 'V5V4I6J1C1-5', 'NOT-U7MKR1JIAWRE2HPSWMKXOT', '2024-11-04', '11:13:14', '1200.00', '10.00', '120.000', '1080.00', '0.00', '0.00', 1, 7, 1, 1, 0, '2024-11-04 17:13:14', '2024-11-05 11:13:14');
 
 -- --------------------------------------------------------
 
@@ -479,7 +481,28 @@ INSERT INTO `venta_detalle` (`id_detalle`, `id_producto`, `token`, `descripcion`
 (2, 5, 'P3M2K5N3', 'Pantalon Mezclilla', 'J3J8T3V5J9-2', 1, 'Gris', '14', '0.00', '250.00', '10.00', '25.00', '250.00', '225.00', '2024-11-03 04:43:37'),
 (3, 4, 'A1D0K3U8', 'Sueter Mio Mio', 'J3J8T3V5J9-2', 1, 'azul', '20', '0.00', '300.00', '10.00', '30.00', '300.00', '270.00', '2024-11-03 04:43:37'),
 (4, 5, 'B3Z0T8B8', 'Pantalon Mezclilla', 'S6W1L3S6G3-3', 1, 'Gris', '14', '0.00', '250.00', '10.00', '25.00', '250.00', '225.00', '2024-11-04 00:37:29'),
-(5, 4, 'F0K4V3Z5', 'Sueter Mio Mio', 'S6W1L3S6G3-3', 1, 'azul', '20', '0.00', '300.00', '10.00', '30.00', '300.00', '270.00', '2024-11-04 00:37:29');
+(5, 4, 'F0K4V3Z5', 'Sueter Mio Mio', 'S6W1L3S6G3-3', 1, 'azul', '20', '0.00', '300.00', '10.00', '30.00', '300.00', '270.00', '2024-11-04 00:37:29'),
+(6, 4, 'P4W9O6U4', 'Sueter Mio Mio', 'B0G3S9R3B3-4', 1, 'azul', '20', '0.00', '300.00', '10.00', '30.00', '300.00', '270.00', '2024-11-04 16:31:21'),
+(7, 4, 'B9Y7E2Z1', 'Sueter Mio Mio', 'B0G3S9R3B3-4', 1, 'azul', '20', '0.00', '300.00', '10.00', '30.00', '300.00', '270.00', '2024-11-04 16:31:21'),
+(8, 4, 'H4Z9Q8Q2', 'Sueter Mio Mio', 'B0G3S9R3B3-4', 1, 'azul', '20', '0.00', '300.00', '10.00', '30.00', '300.00', '270.00', '2024-11-04 16:31:21'),
+(9, 4, 'X2P2R8Z1', 'Sueter Mio Mio', 'B0G3S9R3B3-4', 1, 'azul', '20', '0.00', '300.00', '10.00', '30.00', '300.00', '270.00', '2024-11-04 16:31:21'),
+(10, 4, 'V2N9A3U4', 'Sueter Mio Mio', 'B0G3S9R3B3-4', 1, 'azul', '20', '0.00', '300.00', '10.00', '30.00', '300.00', '270.00', '2024-11-04 16:31:21'),
+(11, 4, 'H0P0Y7N3', 'Sueter Mio Mio', 'B0G3S9R3B3-4', 1, 'azul', '20', '0.00', '300.00', '10.00', '30.00', '300.00', '270.00', '2024-11-04 16:31:22'),
+(12, 4, 'Y8E5W3A9', 'Sueter Mio Mio', 'B0G3S9R3B3-4', 1, 'azul', '20', '0.00', '300.00', '10.00', '30.00', '300.00', '270.00', '2024-11-04 16:31:22'),
+(13, 4, 'D4I9X4R5', 'Sueter Mio Mio', 'B0G3S9R3B3-4', 1, 'azul', '20', '0.00', '300.00', '10.00', '30.00', '300.00', '270.00', '2024-11-04 16:31:22'),
+(14, 4, 'J5Q8V5R7', 'Sueter Mio Mio', 'B0G3S9R3B3-4', 1, 'azul', '20', '0.00', '300.00', '10.00', '30.00', '300.00', '270.00', '2024-11-04 16:31:22'),
+(15, 4, 'Z7P9N6G1', 'Sueter Mio Mio', 'B0G3S9R3B3-4', 1, 'azul', '20', '0.00', '300.00', '10.00', '30.00', '300.00', '270.00', '2024-11-04 16:31:22'),
+(16, 4, 'L6A6E0H2', 'Sueter Mio Mio', 'B0G3S9R3B3-4', 1, 'azul', '20', '0.00', '300.00', '10.00', '30.00', '300.00', '270.00', '2024-11-04 16:31:22'),
+(17, 4, 'C8T9D2D4', 'Sueter Mio Mio', 'B0G3S9R3B3-4', 1, 'azul', '20', '0.00', '300.00', '10.00', '30.00', '300.00', '270.00', '2024-11-04 16:31:22'),
+(18, 4, 'L1L2U7W2', 'Sueter Mio Mio', 'B0G3S9R3B3-4', 1, 'azul', '20', '0.00', '300.00', '10.00', '30.00', '300.00', '270.00', '2024-11-04 16:31:22'),
+(19, 4, 'H9P2S3F4', 'Sueter Mio Mio', 'B0G3S9R3B3-4', 1, 'azul', '20', '0.00', '300.00', '10.00', '30.00', '300.00', '270.00', '2024-11-04 16:31:22'),
+(20, 4, 'B2M6K1L0', 'Sueter Mio Mio', 'B0G3S9R3B3-4', 1, 'azul', '20', '0.00', '300.00', '10.00', '30.00', '300.00', '270.00', '2024-11-04 16:31:22'),
+(21, 4, 'T4J1G2B3', 'Sueter Mio Mio', 'B0G3S9R3B3-4', 1, 'azul', '20', '0.00', '300.00', '10.00', '30.00', '300.00', '270.00', '2024-11-04 16:31:22'),
+(22, 4, 'V8F4X8C1', 'Sueter Mio Mio', 'B0G3S9R3B3-4', 1, 'azul', '20', '0.00', '300.00', '10.00', '30.00', '300.00', '270.00', '2024-11-04 16:31:22'),
+(23, 4, 'Y4M8B5O0', 'Sueter Mio Mio', 'V5V4I6J1C1-5', 1, 'azul', '20', '0.00', '300.00', '10.00', '30.00', '300.00', '270.00', '2024-11-04 17:13:14'),
+(24, 4, 'G7X9K3G3', 'Sueter Mio Mio', 'V5V4I6J1C1-5', 1, 'azul', '20', '0.00', '300.00', '10.00', '30.00', '300.00', '270.00', '2024-11-04 17:13:14'),
+(25, 4, 'G6W3B1D2', 'Sueter Mio Mio', 'V5V4I6J1C1-5', 1, 'azul', '20', '0.00', '300.00', '10.00', '30.00', '300.00', '270.00', '2024-11-04 17:13:14'),
+(26, 4, 'L9S5G8F1', 'Sueter Mio Mio', 'V5V4I6J1C1-5', 1, 'azul', '20', '0.00', '300.00', '10.00', '30.00', '300.00', '270.00', '2024-11-04 17:13:14');
 
 --
 -- Índices para tablas volcadas
@@ -725,13 +748,13 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `venta`
 --
 ALTER TABLE `venta`
-  MODIFY `id_venta` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id_venta` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT de la tabla `venta_detalle`
 --
 ALTER TABLE `venta_detalle`
-  MODIFY `id_detalle` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_detalle` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- Restricciones para tablas volcadas

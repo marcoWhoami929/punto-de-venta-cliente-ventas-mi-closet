@@ -645,13 +645,14 @@ if ($action == 'lista_notas_adquiridas') {
     $per_page = intval($_REQUEST['per_page']);
     $vista = strip_tags($_REQUEST['vista']);
     $id_cliente = intval($_SESSION['id']);
+    $visualizar = strip_tags($_REQUEST['visualizar']);
 
     //Variables de paginación
     $page = (isset($_REQUEST['page']) && !empty($_REQUEST['page'])) ? $_REQUEST['page'] : 1;
     $adjacents  = 4; //espacio entre páginas después del número de adyacentes
     $offset = ($page - 1) * $per_page;
 
-    $search = array("id_cliente" => $id_cliente, "busqueda" => $busqueda, "campoOrden" => $campoOrden, "orden" => $orden, "per_page" => $per_page, "offset" => $offset);
+    $search = array("visualizar" => $visualizar, "id_cliente" => $id_cliente, "busqueda" => $busqueda, "campoOrden" => $campoOrden, "orden" => $orden, "per_page" => $per_page, "offset" => $offset);
     //consulta principal para recuperar los datos
     $datos = $database->getListaNotasAdquiridas($search);
     $countAll = $database->getCounter();
@@ -677,7 +678,7 @@ if ($action == 'lista_notas_adquiridas') {
             $ahora = date("Y-m-d H:i:s");
             $fecha_pago =  date("Y-m-d H:i:s", strtotime($row["fecha_pago"]));
 
-            if ($row["tipo_entrega"] == "recoleccion") {
+            if ($row["estatus"] != 0) {
                 if ($row["estatus_pago"] == 0) {
 
                     $estado = "Nota Sin Pagar";
@@ -688,15 +689,18 @@ if ($action == 'lista_notas_adquiridas') {
                     $card_color = "card-green";
                 }
             } else {
+                $estado = "";
+                $card_color = "card-red";
             }
 
 
 
         ?>
-            <div class="col-lg-4 col-md-4 col-sm-6" onclick="<?= "visualizarNota('" . $row["codigo"] . "','" . $ahora . "','" . $row["fecha_pago"] . "','" . $row["estatus_pago"] . "')" ?>" style="cursor:pointer">
-                <div id="riboon<?= $row['id_venta']; ?>"></div>
+            <div class="col-lg-4 col-md-4 col-sm-6" onclick="<?= "visualizarNota('" . $row["codigo"] . "','" . $ahora . "','" . $row["fecha_pago"] . "','" . $row["estatus_pago"] . "','" . $row["estatus"] . "')" ?>" style="cursor:pointer">
+
                 <div class="card mb-3">
                     <div class="card-header <?= $card_color ?>">
+                        <div id="riboon<?= $row['id_venta']; ?>"></div>
                         <h4><?= $estado ?></h4>
                     </div>
 
@@ -870,7 +874,158 @@ if ($action ==  'carrito_venta') {
 
     ?>
 
-<?php
+    <?php
 }
+if ($action == 'cancelar_venta') {
+    require_once "../models/notas.model.php";
+    $id_venta = strip_tags($_REQUEST['id_venta']);
 
+    $controlador = new ControllerNotas();
+
+    $cancelacion = $controlador->ctrCancelarVenta($id_venta);
+    echo json_encode($cancelacion);
+}
+if ($action == 'listado_estatus_notas') {
+
+    include('../clases/notas.php');
+    $database = new notas();
+    //Recibir variables enviadas
+    $busqueda = strip_tags($_REQUEST['busqueda']);
+    $campoOrden = strip_tags($_REQUEST['campoOrden']);
+    $orden = strip_tags($_REQUEST['orden']);
+    $per_page = intval($_REQUEST['per_page']);
+    $vista = strip_tags($_REQUEST['vista']);
+
+    //Variables de paginación
+    $page = (isset($_REQUEST['page']) && !empty($_REQUEST['page'])) ? $_REQUEST['page'] : 1;
+    $adjacents  = 4; //espacio entre páginas después del número de adyacentes
+    $offset = ($page - 1) * $per_page;
+
+    $search = array("busqueda" => $busqueda, "campoOrden" => $campoOrden, "orden" => $orden, "per_page" => $per_page, "offset" => $offset);
+    //consulta principal para recuperar los datos
+    $datos = $database->getListaEstatusNotas($search);
+    $countAll = $database->getCounter();
+    $row = $countAll;
+
+    if ($row > 0) {
+        $numrows = $countAll;;
+    } else {
+        $numrows = 0;
+    }
+    $total_pages = ceil($numrows / $per_page);
+
+
+    //Recorrer los datos recuperados
+
+    if ($numrows > 0) {
+    ?>
+
+        <?php
+        $finales = 0;
+        foreach ($datos as $key => $row) {
+            switch ($row["estatus"]) {
+                case '1':
+                    $estatus1 = "completed";
+                    $estatus2 = "";
+                    $estatus3 = "";
+                    $estatus4 = "";
+                    //$color = 'style="background:#00D1B2"';
+                    break;
+                case '2':
+                    $estatus1 = "completed";
+                    $estatus2 = "completed";
+                    $estatus3 = "";
+                    $estatus4 = "";
+                    //$color = 'style="background:#00D1B2"';
+                    break;
+                case '3':
+                    $estatus1 = "completed";
+                    $estatus2 = "completed";
+                    $estatus3 = "completed";
+                    $estatus4 = "";
+                    //$color = 'style="background:#23D160"';
+                    break;
+                case '4':
+                    $estatus1 = "completed";
+                    $estatus2 = "completed";
+                    $estatus3 = "completed";
+                    $estatus4 = "completed";
+                    //$color = 'style="background:#FFDD57"';
+                    break;
+            }
+            if ($row["estatus_pago"] == 0) {
+                $displaySinPagar = "";
+                $displayPagado = "display:none";
+            } else {
+                $displaySinPagar = "display:none";
+                $displayPagado = "";
+            }
+
+        ?>
+            <div class="col-md-12 col-lg-12 col-sm-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="ribbon right" style="--c: #CC333F;--f: 10px;<?= $displaySinPagar ?>">Sin Pagar</div>
+                        <div class="ribbon right" style="--c: #27ae60;--f: 10px;<?= $displayPagado ?>">Nota Pagada</div>
+                        <div class="row">
+                            <div class="col-lg-7 col-md-7 col-sm-7">
+                                <h3><?php echo $row["codigo"] ?></h3>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                    <div class="card-body">
+                        <div class="steps d-flex flex-wrap flex-sm-nowrap justify-content-between padding-top-2x padding-bottom-1x">
+                            <div class="step <?php echo  $estatus1 ?>">
+                                <div class="step-icon-wrap">
+                                    <div class="step-icon" style="background:#00D1B2"><i class="ti-shopping-cart"></i></div>
+                                </div>
+                                <h4 class="step-title">Recibido</h4>
+                            </div>
+                            <div class="step <?php echo  $estatus2  ?>">
+                                <div class="step-icon-wrap">
+                                    <div class="step-icon" style="background:#209CEE"><i class="ti-package"></i></div>
+                                </div>
+                                <h4 class="step-title">En Preparación</h4>
+                            </div>
+                            <div class="step <?php echo  $estatus3  ?>">
+                                <div class="step-icon-wrap">
+                                    <div class="step-icon" style="background:#23D160"><i class="ti-truck"></i></div>
+                                </div>
+                                <h4 class="step-title">Enviado</h4>
+                            </div>
+                            <div class="step <?php echo  $estatus4  ?>">
+                                <div class="step-icon-wrap">
+                                    <div class="step-icon" style="background:#FFDD57"><i class="ti-check-box"></i></div>
+                                </div>
+                                <h4 class="step-title">Entregado</h4>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php
+            $finales++;
+        }
+        ?>
+
+        <div class="clearfix">
+            <?php
+            $inicios = $offset + 1;
+            $finales += $inicios - 1;
+            echo '<div class="hint-text">Mostrando ' . $inicios . ' al ' . $finales . ' de ' . $numrows . ' registros</div>';
+
+
+            include '../clases/pagination.php'; //include pagination class
+            $pagination = new Pagination($page, $total_pages, $adjacents);
+            echo $pagination->paginate($vista);
+
+            ?>
+        </div>
+<?php
+    }
+}
 ?>

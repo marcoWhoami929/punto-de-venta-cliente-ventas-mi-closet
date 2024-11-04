@@ -52,4 +52,32 @@ class ControllerNotas
 
         return $respuesta;
     }
+    static public function ctrCancelarVenta($id_venta)
+    {
+
+        $respuesta =  ModelNotas::mdlCancelarVenta($id_venta);
+
+        return $respuesta;
+    }
+    static public function ctrDetalleVenta($url)
+    {
+
+        $respuesta =  ModelNotas::mdlDetalleVenta($url);
+
+        return $respuesta;
+    }
+    static public function ctrDetalleEmpresa()
+    {
+
+        $respuesta =  ModelNotas::mdlDetalleEmpresa();
+
+        return $respuesta;
+    }
+    static public function ctrDetalleProductosVenta($codigo)
+    {
+
+        $respuesta =  ModelNotas::mdlDetalleProductosVenta($codigo);
+
+        return $respuesta;
+    }
 }

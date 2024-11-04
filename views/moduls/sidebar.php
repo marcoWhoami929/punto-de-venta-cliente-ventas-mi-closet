@@ -26,12 +26,7 @@
                 <span class="menu-title">Notas Adquiridas</span>
             </a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="<?= APP_URL_CLIENT ?>notasPendientes">
-                <i class="mdi mdi-currency-usd menu-icon"></i>
-                <span class="menu-title">Notas Por Pagar</span>
-            </a>
-        </li>
+
         <li class="nav-item">
             <a class="nav-link" href="<?= APP_URL_CLIENT ?>estatusNotas">
                 <i class="mdi mdi-flag-checkered menu-icon"></i>

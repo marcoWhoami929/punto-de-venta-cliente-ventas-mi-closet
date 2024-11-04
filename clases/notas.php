@@ -59,15 +59,25 @@ class notas extends ConexionsBd
         $orden = $search['orden'];
         $id_cliente = $search['id_cliente'];
 
+
+        $sWhere = "vent.id_cliente = '" . $id_cliente . "' ";
         if ($search["busqueda"] != "") {
 
-            $sWhere = "and vent.codigo LIKE '%" . $search['busqueda'] . "%' OR vent.codigo_nota LIKE '%" . $search['busqueda'] . "%'";
-        } else {
-            $sWhere = "";
+            $sWhere .= "and vent.codigo LIKE '%" . $search['busqueda'] . "%' OR vent.codigo_nota LIKE '%" . $search['busqueda'] . "%'";
+        }
+        if ($search["visualizar"] != "") {
+            if ($search["visualizar"] == "porPagar") {
+                $sWhere .= "and vent.estatus_pago = 0 and vent.estatus = 1";
+            }
+            if ($search["visualizar"] == "pagadas") {
+                $sWhere .= "and vent.estatus_pago = 1";
+            }
+            if ($search["visualizar"] == "canceladas") {
+                $sWhere .= "and vent.estatus = 0";
+            }
         }
 
-
-        $sql = "SELECT met.metodo,vent.* FROM venta as vent INNER JOIN metodopago as met ON vent.forma_pago = met.id_metodo_pago WHERE vent.id_cliente = '" . $id_cliente . "' $sWhere order by $campoOrden $orden LIMIT $per_page OFFSET $offset";
+        $sql = "SELECT met.metodo,vent.* FROM venta as vent INNER JOIN metodopago as met ON vent.forma_pago = met.id_metodo_pago WHERE  $sWhere order by $campoOrden $orden LIMIT $per_page OFFSET $offset";
 
         $query = ConexionsBd::conectar()->prepare($sql);
 
@@ -76,7 +86,7 @@ class notas extends ConexionsBd
 
         $query = $query->fetchAll();
 
-        $sql1 = "SELECT met.metodo,vent.* FROM venta as vent INNER JOIN metodopago as met ON vent.forma_pago = met.id_metodo_pago WHERE vent.id_cliente = '" . $id_cliente . "' $sWhere";
+        $sql1 = "SELECT met.metodo,vent.* FROM venta as vent INNER JOIN metodopago as met ON vent.forma_pago = met.id_metodo_pago WHERE  $sWhere";
 
         $nums_row = $this->countAll($sql1);
 
@@ -117,6 +127,37 @@ class notas extends ConexionsBd
         $query = $query->fetchAll();
 
         $sql1 = "SELECT * FROM venta_detalle as vent WHERE vent.codigo = '$codigo'";
+
+        $nums_row = $this->countAll($sql1);
+
+        //Set counter
+        $this->setCounter($nums_row);
+        return $query;
+    }
+    public function getListaEstatusNotas($search)
+    {
+        $offset = $search['offset'];
+        $per_page = $search['per_page'];
+        $campoOrden =  $search["campoOrden"];
+        $orden = $search['orden'];
+        $sWhere = "estatus != 0 ";
+        if ($search["busqueda"] != "") {
+
+            $sWhere .= "AND codigo_nota LIKE '%" . $search['busqueda'] . "%' OR codigo LIKE '%" . $search['busqueda'] . "%'";
+        }
+
+
+        $sql = "SELECT * FROM venta WHERE $sWhere order by $campoOrden $orden LIMIT $per_page OFFSET $offset";
+
+
+        $query = ConexionsBd::conectar()->prepare($sql);
+
+
+        $query->execute();
+
+        $query = $query->fetchAll();
+
+        $sql1 = "SELECT  * FROM venta WHERE $sWhere";
 
         $nums_row = $this->countAll($sql1);
 
