@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 09-11-2024 a las 01:23:51
+-- Tiempo de generación: 14-11-2024 a las 01:19:59
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 7.4.33
 
@@ -46,7 +46,7 @@ CREATE TABLE `caja` (
 --
 
 INSERT INTO `caja` (`id_caja`, `numero`, `nombre`, `fecha_apertura`, `saldo_inicial`, `efectivo`, `tarjeta_debito`, `tarjeta_credito`, `saldo_final`, `fecha_cierre`, `estado`) VALUES
-(1, 1, 'Caja Principal', '2024-10-04 20:04:59', '100.00', '2440.00', '0.00', '0.00', '0.00', '2024-10-04 20:04:59', 'abierta'),
+(1, 1, 'Caja Principal', '2024-10-04 20:04:59', '100.00', '3040.00', '0.00', '0.00', '0.00', '2024-10-04 20:04:59', 'abierta'),
 (2, 2, 'Caja Piso 1', '2024-10-05 17:17:24', '0.00', '0.00', '0.00', '0.00', '0.00', '2024-10-05 17:17:24', 'abierta'),
 (4, 3, 'Caja Piso 2', '2024-11-08 18:45:34', '0.00', '0.00', '0.00', '0.00', '0.00', '2024-11-08 18:45:34', 'abierta');
 
@@ -265,6 +265,13 @@ CREATE TABLE `notas` (
   `fecha` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `notas`
+--
+
+INSERT INTO `notas` (`id_nota`, `codigo`, `titulo_nota`, `fecha_publicacion`, `fecha_expiracion`, `porc_descuento`, `qr`, `estatus`, `fecha`) VALUES
+(1, 'NOT-HJWMZR0RLX3TOQO6DQIJE4', 'Nota prueba', '2024-11-13 13:00:00', '2024-11-14 13:00:00', '0.00', 'http://localhost/pos2/detalleNota/NOT-HJWMZR0RLX3TOQO6DQIJE4', 1, '2024-11-13 18:13:54');
+
 -- --------------------------------------------------------
 
 --
@@ -325,9 +332,9 @@ CREATE TABLE `producto` (
 
 INSERT INTO `producto` (`id_producto`, `id_categoria`, `id_proveedor`, `codigo`, `nombre`, `descripcion`, `stock_total`, `tipo_unidad`, `precio_compra`, `precio_venta`, `marca`, `modelo`, `colores`, `tallas`, `estado`, `foto`, `fecha_ceacion`, `fecha_actualizacion`) VALUES
 (4, 1, 0, '1010110101', 'Sueter Mio Mio', '', '10.000', 'Pieza', '0.00', '300.00', '', '', 'azul,gris', '20,22,24,30,32,38', 1, '1010110101_54.jpg', '2024-10-15 22:36:23', '2024-11-08 17:28:58'),
-(5, 3, 0, '123456789', 'Pantalon Mezclilla', '', '10.000', 'Pieza', '0.00', '250.00', '', '', 'Gris,azul', '14,16,18,20,22', 1, '', '2024-10-15 22:56:47', '2024-11-08 17:29:01'),
+(5, 3, 0, '123456789', 'Pantalon Mezclilla', '', '9.000', 'Pieza', '0.00', '250.00', '', '', 'Gris,azul', '14,16,18,20,22', 1, '', '2024-10-15 22:56:47', '2024-11-13 19:45:06'),
 (6, 1, 0, '6957303503681', 'Sueter', '', '10.000', 'Pieza', '0.00', '300.00', '', '', 'AZUL,VERDE,MORADO,LILA', '30,32,34,38,40', 1, '', '2024-11-07 18:12:04', '2024-11-08 17:29:02'),
-(7, 5, 0, '845973085452', 'Perfume', '', '10.000', 'Pieza', '0.00', '350.00', '', '', '', '', 1, '', '2024-11-07 18:12:55', '2024-11-07 18:14:28');
+(7, 5, 0, '845973085452', 'Perfume', '', '9.000', 'Pieza', '0.00', '350.00', '', '', '', '', 1, '', '2024-11-07 18:12:55', '2024-11-13 19:45:06');
 
 -- --------------------------------------------------------
 
@@ -348,6 +355,14 @@ CREATE TABLE `productos_notas` (
   `estatus` int(11) NOT NULL,
   `fecha` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `productos_notas`
+--
+
+INSERT INTO `productos_notas` (`id_detalle_nota`, `codigo_nota`, `id_producto`, `codigo`, `descripcion`, `precio_venta`, `limite_nota`, `colores`, `tallas`, `estatus`, `fecha`) VALUES
+(1, 'NOT-HJWMZR0RLX3TOQO6DQIJE4', 4, '1010110101', 'Sueter Mio Mio', '300.00', 10, 'azul,gris', '20,22,24,30,32,38', 1, '2024-11-13 18:13:54'),
+(2, 'NOT-HJWMZR0RLX3TOQO6DQIJE4', 5, '123456789', 'Pantalon Mezclilla', '250.00', 10, 'Gris,azul', '14,16,18,20,22', 1, '2024-11-13 18:13:54');
 
 -- --------------------------------------------------------
 
@@ -679,7 +694,7 @@ ALTER TABLE `movimientoinventario`
 -- AUTO_INCREMENT de la tabla `notas`
 --
 ALTER TABLE `notas`
-  MODIFY `id_nota` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_nota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `pago`
@@ -697,7 +712,7 @@ ALTER TABLE `producto`
 -- AUTO_INCREMENT de la tabla `productos_notas`
 --
 ALTER TABLE `productos_notas`
-  MODIFY `id_detalle_nota` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_detalle_nota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `proveedor`

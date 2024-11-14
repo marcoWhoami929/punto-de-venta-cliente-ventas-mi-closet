@@ -13,11 +13,11 @@ require_once "config/app.php";
 	<link rel="stylesheet" href="<?php echo APP_URL_CLIENT; ?>views/vendors/feather/feather.css">
 	<link rel="stylesheet" href="<?php echo APP_URL_CLIENT; ?>views/vendors/ti-icons/css/themify-icons.css">
 	<link rel="stylesheet" href="<?php echo APP_URL_CLIENT; ?>views/vendors/css/vendor.bundle.base.css">
-	<link rel="stylesheet" href="<?php echo APP_URL_CLIENT; ?>views/vendors/font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" href="<?php echo APP_URL_CLIENT; ?>views/vendors/font-awesome/css/all.min.css">
 	<link rel="stylesheet" href="<?php echo APP_URL_CLIENT; ?>views/vendors/mdi/css/materialdesignicons.min.css">
 	<!-- endinject -->
 	<!-- Plugin css for this page -->
-	<link rel="stylesheet" href="<?php echo APP_URL_CLIENT; ?>views/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
+	<!--<link rel="stylesheet" href="<?php echo APP_URL_CLIENT; ?>views/vendors/datatables.net-bs4/dataTables.bootstrap4.css">-->
 	<!--<link rel="stylesheet" href="<?php echo APP_URL_CLIENT; ?>views/vendors/datatables.net-bs5/dataTables.bootstrap5.css">-->
 	<link rel="stylesheet" href="<?php echo APP_URL_CLIENT; ?>views/vendors/ti-icons/css/themify-icons.css">
 	<link rel="stylesheet" type="text/css" href="<?php echo APP_URL_CLIENT; ?>views/js/select.dataTables.min.css">
@@ -36,6 +36,8 @@ require_once "config/app.php";
 	<script src="<?php echo APP_URL_CLIENT; ?>views/vendors/sweet-alert/sweetalert.js"></script>
 	<script type="text/javascript" src="<?php echo APP_URL_CLIENT; ?>views/js/plantilla.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script type="text/javascript" src="<?php echo APP_URL_CLIENT; ?>views/vendors/font-awesome/js/all.min.js"></script>
+
 
 </head>
 
@@ -104,8 +106,8 @@ require_once "config/app.php";
 	<!-- endinject -->
 	<!-- Plugin js for this page -->
 	<script src="<?php echo APP_URL_CLIENT; ?>views/vendors/chart.js/chart.umd.js"></script>
-	<!--<script src="<?php echo APP_URL_CLIENT; ?>views/vendors/datatables.net/jquery.dataTables.js"></script>-->
-	<script src="<?php echo APP_URL_CLIENT; ?>views/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+	<!--<script src="<?php echo APP_URL_CLIENT; ?>views/vendors/datatables.net/jquery.dataTables.js"></script>
+	<script src="<?php echo APP_URL_CLIENT; ?>views/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>-->
 	<!--<script src="<?php echo APP_URL_CLIENT; ?>views/vendors/datatables.net-bs5/dataTables.bootstrap5.js"></script>-->
 	<script src="<?php echo APP_URL_CLIENT; ?>views/js/dataTables.select.min.js"></script>
 	<!-- End plugin js for this page -->
