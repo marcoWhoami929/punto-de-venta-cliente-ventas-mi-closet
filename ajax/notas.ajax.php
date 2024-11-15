@@ -212,6 +212,41 @@ if ($action == 'lista_notas') {
             ?>
         </div>
     <?php
+    } else {
+        echo '<div class="col-md-12 col-lg-12 col-sm-12 grid-margin stretch-card">
+                <div class="card bg-info">
+                    <div class="card-body">
+                        <div class="content-wrapper d-flex align-items-center text-center error-page bg-info">
+                            <div class="row flex-grow">
+                                <div class="col-lg-7 mx-auto text-white">
+                                    <div class="row align-items-center d-flex flex-row">
+                                        <div class="col-lg-6 text-lg-right pr-lg-4">
+                                            
+                                            <p class="has-text-centered has-text-white pb-3">
+                                                <i class="fas fa-sad-tear fa-10x" style="color:#ffffff"></i>
+                                            </p>
+                                        </div>
+                                        <div class="col-lg-6 error-page-divider text-lg-left pl-lg-4">
+                                            <h2>Upps!</h2>
+                                            <h3 class="font-weight-light">Aún no hay notas creadas.</h3>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-5">
+                                        <div class="col-12 text-center mt-xl-2">
+                                           
+                                        </div>
+                                    </div>
+                                    <div class="row mt-5">
+                                        <div class="col-12 mt-xl-2">
+                                            <p class="text-white font-weight-medium text-center"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>';
     }
 }
 if ($action == 'detalle_nota') {
@@ -1061,6 +1096,41 @@ if ($action == 'listado_estatus_notas') {
             ?>
         </div>
 <?php
+    } else {
+        echo '<div class="col-md-12 col-lg-12 col-sm-12 grid-margin stretch-card">
+                <div class="card bg-info">
+                    <div class="card-body">
+                        <div class="content-wrapper d-flex align-items-center text-center error-page bg-info">
+                            <div class="row flex-grow">
+                                <div class="col-lg-7 mx-auto text-white">
+                                    <div class="row align-items-center d-flex flex-row">
+                                        <div class="col-lg-6 text-lg-right pr-lg-4">
+                                            
+                                            <p class="has-text-centered has-text-white pb-3">
+                                                <i class="fas fa-sad-tear fa-10x" style="color:#ffffff"></i>
+                                            </p>
+                                        </div>
+                                        <div class="col-lg-6 error-page-divider text-lg-left pl-lg-4">
+                                            <h2>Upps!</h2>
+                                            <h3 class="font-weight-light">Aún no hay notas creadas.</h3>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-5">
+                                        <div class="col-12 text-center mt-xl-2">
+                                           
+                                        </div>
+                                    </div>
+                                    <div class="row mt-5">
+                                        <div class="col-12 mt-xl-2">
+                                            <p class="text-white font-weight-medium text-center"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>';
     }
 }
 ?>

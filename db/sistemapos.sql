@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 14-11-2024 a las 01:19:59
+-- Tiempo de generación: 15-11-2024 a las 01:13:49
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 7.4.33
 
@@ -30,25 +30,17 @@ SET time_zone = "+00:00";
 CREATE TABLE `caja` (
   `id_caja` int(11) NOT NULL,
   `numero` int(10) NOT NULL,
-  `nombre` varchar(100) NOT NULL,
-  `fecha_apertura` timestamp NOT NULL DEFAULT current_timestamp(),
-  `saldo_inicial` decimal(10,2) NOT NULL,
-  `efectivo` decimal(30,2) NOT NULL,
-  `tarjeta_debito` decimal(30,2) NOT NULL,
-  `tarjeta_credito` decimal(30,2) NOT NULL,
-  `saldo_final` decimal(10,2) NOT NULL,
-  `fecha_cierre` timestamp NOT NULL DEFAULT current_timestamp(),
-  `estado` enum('abierta','cerrada') DEFAULT 'abierta'
+  `nombre` varchar(100) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
 -- Volcado de datos para la tabla `caja`
 --
 
-INSERT INTO `caja` (`id_caja`, `numero`, `nombre`, `fecha_apertura`, `saldo_inicial`, `efectivo`, `tarjeta_debito`, `tarjeta_credito`, `saldo_final`, `fecha_cierre`, `estado`) VALUES
-(1, 1, 'Caja Principal', '2024-10-04 20:04:59', '100.00', '3040.00', '0.00', '0.00', '0.00', '2024-10-04 20:04:59', 'abierta'),
-(2, 2, 'Caja Piso 1', '2024-10-05 17:17:24', '0.00', '0.00', '0.00', '0.00', '0.00', '2024-10-05 17:17:24', 'abierta'),
-(4, 3, 'Caja Piso 2', '2024-11-08 18:45:34', '0.00', '0.00', '0.00', '0.00', '0.00', '2024-11-08 18:45:34', 'abierta');
+INSERT INTO `caja` (`id_caja`, `numero`, `nombre`) VALUES
+(1, 1, 'Caja Principal'),
+(2, 2, 'Caja Piso 1'),
+(4, 3, 'Caja Piso 2');
 
 -- --------------------------------------------------------
 
@@ -71,9 +63,9 @@ CREATE TABLE `cajaempleado` (
 
 CREATE TABLE `categoria` (
   `id_categoria` int(11) NOT NULL,
-  `nombre` varchar(50) NOT NULL,
-  `ubicacion` varchar(150) NOT NULL,
-  `descripcion` text NOT NULL,
+  `nombre` text CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `ubicacion` text CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `descripcion` text CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `fecha_registro` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
@@ -104,12 +96,12 @@ CREATE TABLE `cliente` (
   `telefono` varchar(15) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `celular` varchar(12) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `domicilio` text CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
-  `calle` text NOT NULL,
-  `numero` text NOT NULL,
-  `ciudad` text NOT NULL,
-  `estado` text NOT NULL,
-  `cp` text NOT NULL,
-  `pais` text NOT NULL,
+  `calle` text CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `numero` text CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `ciudad` text CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `estado` text CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `cp` text CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `pais` text CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `facebook` text CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `credito` decimal(30,3) NOT NULL,
   `pagado` decimal(30,3) NOT NULL,
@@ -270,7 +262,7 @@ CREATE TABLE `notas` (
 --
 
 INSERT INTO `notas` (`id_nota`, `codigo`, `titulo_nota`, `fecha_publicacion`, `fecha_expiracion`, `porc_descuento`, `qr`, `estatus`, `fecha`) VALUES
-(1, 'NOT-HJWMZR0RLX3TOQO6DQIJE4', 'Nota prueba', '2024-11-13 13:00:00', '2024-11-14 13:00:00', '0.00', 'http://localhost/pos2/detalleNota/NOT-HJWMZR0RLX3TOQO6DQIJE4', 1, '2024-11-13 18:13:54');
+(2, 'NOT-W3N6IORVWLJTMEZDKNVQZC', 'Prueba', '2024-11-14 12:01:00', '2024-11-16 12:00:00', '10.00', 'http://localhost/pos2/detalleNota/NOT-W3N6IORVWLJTMEZDKNVQZC', 1, '2024-11-14 18:03:19');
 
 -- --------------------------------------------------------
 
@@ -289,15 +281,6 @@ CREATE TABLE `pago` (
   `referencia` text NOT NULL,
   `fecha_pago` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
---
--- Volcado de datos para la tabla `pago`
---
-
-INSERT INTO `pago` (`id_pago`, `codigo_pago`, `id_venta`, `id_metodo_pago`, `total_pago`, `total_pagado`, `total_cambio`, `referencia`, `fecha_pago`) VALUES
-(1, 'PAY-RHCWLS0IZB2CDGLPNHVDMY-1', 19, 2, '495.00', '495.00', '0.00', '', '2024-11-03 23:02:24'),
-(2, 'PAY-16U2QRXAEKGWOLYTX95BDT-2', 1, 1, '250.00', '500.00', '250.00', '', '2024-11-04 00:54:26'),
-(3, 'PAY-MUZX0D9VWBJT2Q7GHCCVFN-3', 21, 1, '4590.00', '5000.00', '410.00', '', '2024-11-06 19:35:57');
 
 -- --------------------------------------------------------
 
@@ -318,8 +301,8 @@ CREATE TABLE `producto` (
   `precio_venta` decimal(30,2) NOT NULL,
   `marca` varchar(35) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `modelo` varchar(35) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
-  `colores` text NOT NULL,
-  `tallas` text NOT NULL,
+  `colores` text CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `tallas` text CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `estado` int(11) NOT NULL,
   `foto` varchar(500) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `fecha_ceacion` timestamp NOT NULL DEFAULT current_timestamp(),
@@ -332,9 +315,9 @@ CREATE TABLE `producto` (
 
 INSERT INTO `producto` (`id_producto`, `id_categoria`, `id_proveedor`, `codigo`, `nombre`, `descripcion`, `stock_total`, `tipo_unidad`, `precio_compra`, `precio_venta`, `marca`, `modelo`, `colores`, `tallas`, `estado`, `foto`, `fecha_ceacion`, `fecha_actualizacion`) VALUES
 (4, 1, 0, '1010110101', 'Sueter Mio Mio', '', '10.000', 'Pieza', '0.00', '300.00', '', '', 'azul,gris', '20,22,24,30,32,38', 1, '1010110101_54.jpg', '2024-10-15 22:36:23', '2024-11-08 17:28:58'),
-(5, 3, 0, '123456789', 'Pantalon Mezclilla', '', '9.000', 'Pieza', '0.00', '250.00', '', '', 'Gris,azul', '14,16,18,20,22', 1, '', '2024-10-15 22:56:47', '2024-11-13 19:45:06'),
+(5, 3, 0, '123456789', 'Pantalon Mezclilla', '', '10.000', 'Pieza', '0.00', '250.00', '', '', 'Gris,azul', '14,16,18,20,22', 1, '', '2024-10-15 22:56:47', '2024-11-14 18:02:58'),
 (6, 1, 0, '6957303503681', 'Sueter', '', '10.000', 'Pieza', '0.00', '300.00', '', '', 'AZUL,VERDE,MORADO,LILA', '30,32,34,38,40', 1, '', '2024-11-07 18:12:04', '2024-11-08 17:29:02'),
-(7, 5, 0, '845973085452', 'Perfume', '', '9.000', 'Pieza', '0.00', '350.00', '', '', '', '', 1, '', '2024-11-07 18:12:55', '2024-11-13 19:45:06');
+(7, 5, 0, '845973085452', 'Perfume', '', '10.000', 'Pieza', '0.00', '350.00', '', '', '', '', 1, '', '2024-11-07 18:12:55', '2024-11-14 18:03:03');
 
 -- --------------------------------------------------------
 
@@ -361,8 +344,10 @@ CREATE TABLE `productos_notas` (
 --
 
 INSERT INTO `productos_notas` (`id_detalle_nota`, `codigo_nota`, `id_producto`, `codigo`, `descripcion`, `precio_venta`, `limite_nota`, `colores`, `tallas`, `estatus`, `fecha`) VALUES
-(1, 'NOT-HJWMZR0RLX3TOQO6DQIJE4', 4, '1010110101', 'Sueter Mio Mio', '300.00', 10, 'azul,gris', '20,22,24,30,32,38', 1, '2024-11-13 18:13:54'),
-(2, 'NOT-HJWMZR0RLX3TOQO6DQIJE4', 5, '123456789', 'Pantalon Mezclilla', '250.00', 10, 'Gris,azul', '14,16,18,20,22', 1, '2024-11-13 18:13:54');
+(3, 'NOT-W3N6IORVWLJTMEZDKNVQZC', 6, '6957303503681', 'Sueter', '300.00', 10, 'AZUL,VERDE,MORADO,LILA', '30,32,34,38,40', 1, '2024-11-14 18:03:19'),
+(4, 'NOT-W3N6IORVWLJTMEZDKNVQZC', 4, '1010110101', 'Sueter Mio Mio', '300.00', 10, 'azul,gris', '20,22,24,30,32,38', 1, '2024-11-14 18:03:19'),
+(5, 'NOT-W3N6IORVWLJTMEZDKNVQZC', 7, '845973085452', 'Perfume', '350.00', 10, '', '', 1, '2024-11-14 18:03:19'),
+(6, 'NOT-W3N6IORVWLJTMEZDKNVQZC', 5, '123456789', 'Pantalon Mezclilla', '250.00', 10, 'Gris,azul', '14,16,18,20,22', 1, '2024-11-14 18:03:19');
 
 -- --------------------------------------------------------
 
@@ -382,23 +367,32 @@ CREATE TABLE `proveedor` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `tabla`
+-- Estructura de tabla para la tabla `sesiones_caja`
 --
 
-CREATE TABLE `tabla` (
-  `id` int(11) NOT NULL,
-  `nombre` varchar(250) NOT NULL,
-  `codigo` varchar(250) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE `sesiones_caja` (
+  `id_sesion` int(11) NOT NULL,
+  `codigo_sesion` text NOT NULL,
+  `id_usuario` int(11) NOT NULL,
+  `id_caja` int(11) NOT NULL,
+  `notas_apertura` text NOT NULL,
+  `fecha_apertura` timestamp NOT NULL DEFAULT current_timestamp(),
+  `saldo_inicial` decimal(30,2) NOT NULL,
+  `efectivo` decimal(30,2) NOT NULL,
+  `tarjeta_debito` decimal(30,2) NOT NULL,
+  `tarjeta_credito` decimal(30,2) NOT NULL,
+  `transferencia` decimal(30,2) NOT NULL,
+  `saldo_final` decimal(30,2) NOT NULL,
+  `fecha_cierre` timestamp NULL DEFAULT NULL,
+  `estado` enum('abierta','cerrada') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Volcado de datos para la tabla `tabla`
+-- Volcado de datos para la tabla `sesiones_caja`
 --
 
-INSERT INTO `tabla` (`id`, `nombre`, `codigo`) VALUES
-(1, 'gyjty', '54357'),
-(2, 'ytjj', '123456789'),
-(3, 'Perfume', '845973085452');
+INSERT INTO `sesiones_caja` (`id_sesion`, `codigo_sesion`, `id_usuario`, `id_caja`, `notas_apertura`, `fecha_apertura`, `saldo_inicial`, `efectivo`, `tarjeta_debito`, `tarjeta_credito`, `transferencia`, `saldo_final`, `fecha_cierre`, `estado`) VALUES
+(1, 'POS-L5Z9K9Q6M5-1', 3, 2, 'apertura inicial', '2024-11-14 23:55:55', '100.00', '0.00', '0.00', '0.00', '0.00', '0.00', NULL, 'abierta');
 
 -- --------------------------------------------------------
 
@@ -408,12 +402,12 @@ INSERT INTO `tabla` (`id`, `nombre`, `codigo`) VALUES
 
 CREATE TABLE `usuario` (
   `id_usuario` int(11) NOT NULL,
-  `nombre` text NOT NULL,
-  `email` text NOT NULL,
-  `usuario` text NOT NULL,
-  `password` text NOT NULL,
-  `foto` varchar(200) NOT NULL,
-  `perfil` text NOT NULL,
+  `nombre` text CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `email` text CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `usuario` text CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `password` text CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `foto` varchar(200) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `perfil` text CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `id_caja` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
@@ -465,12 +459,12 @@ CREATE TABLE `venta` (
 CREATE TABLE `venta_detalle` (
   `id_detalle` int(100) NOT NULL,
   `id_producto` int(20) NOT NULL,
-  `token` text NOT NULL,
-  `descripcion` varchar(200) NOT NULL,
-  `codigo` varchar(200) NOT NULL,
+  `token` text CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `descripcion` varchar(200) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `codigo` varchar(200) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `cantidad` int(10) NOT NULL,
-  `color` text NOT NULL,
-  `talla` text NOT NULL,
+  `color` text CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `talla` text CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `precio_compra` decimal(30,2) NOT NULL,
   `precio_venta` decimal(30,2) NOT NULL,
   `porc_descuento` decimal(30,2) NOT NULL,
@@ -592,10 +586,10 @@ ALTER TABLE `proveedor`
   ADD PRIMARY KEY (`id_proveedor`);
 
 --
--- Indices de la tabla `tabla`
+-- Indices de la tabla `sesiones_caja`
 --
-ALTER TABLE `tabla`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `sesiones_caja`
+  ADD PRIMARY KEY (`id_sesion`);
 
 --
 -- Indices de la tabla `usuario`
@@ -694,13 +688,13 @@ ALTER TABLE `movimientoinventario`
 -- AUTO_INCREMENT de la tabla `notas`
 --
 ALTER TABLE `notas`
-  MODIFY `id_nota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_nota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `pago`
 --
 ALTER TABLE `pago`
-  MODIFY `id_pago` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_pago` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `producto`
@@ -712,7 +706,7 @@ ALTER TABLE `producto`
 -- AUTO_INCREMENT de la tabla `productos_notas`
 --
 ALTER TABLE `productos_notas`
-  MODIFY `id_detalle_nota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_detalle_nota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `proveedor`
@@ -721,10 +715,10 @@ ALTER TABLE `proveedor`
   MODIFY `id_proveedor` int(20) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `tabla`
+-- AUTO_INCREMENT de la tabla `sesiones_caja`
 --
-ALTER TABLE `tabla`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+ALTER TABLE `sesiones_caja`
+  MODIFY `id_sesion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
