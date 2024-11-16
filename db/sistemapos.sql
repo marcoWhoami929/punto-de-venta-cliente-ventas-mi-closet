@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 15-11-2024 a las 01:13:49
+-- Tiempo de generación: 16-11-2024 a las 01:15:36
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 7.4.33
 
@@ -273,14 +273,21 @@ INSERT INTO `notas` (`id_nota`, `codigo`, `titulo_nota`, `fecha_publicacion`, `f
 CREATE TABLE `pago` (
   `id_pago` int(11) NOT NULL,
   `codigo_pago` text NOT NULL,
-  `id_venta` int(11) NOT NULL,
+  `codigo_venta` text NOT NULL,
   `id_metodo_pago` int(11) NOT NULL,
   `total_pago` decimal(30,2) NOT NULL,
   `total_pagado` decimal(30,2) NOT NULL,
   `total_cambio` decimal(30,2) NOT NULL,
-  `referencia` text NOT NULL,
+  `referencia` text DEFAULT NULL,
   `fecha_pago` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `pago`
+--
+
+INSERT INTO `pago` (`id_pago`, `codigo_pago`, `codigo_venta`, `id_metodo_pago`, `total_pago`, `total_pagado`, `total_cambio`, `referencia`, `fecha_pago`) VALUES
+(1, 'PAY-1EOVTMYBBQIPIHGSAJN0FE-1', 'SALE-C3C2C4E3Q0-1', 1, '1080.00', '1100.00', '20.00', '', '2024-11-15 17:51:52');
 
 -- --------------------------------------------------------
 
@@ -314,7 +321,7 @@ CREATE TABLE `producto` (
 --
 
 INSERT INTO `producto` (`id_producto`, `id_categoria`, `id_proveedor`, `codigo`, `nombre`, `descripcion`, `stock_total`, `tipo_unidad`, `precio_compra`, `precio_venta`, `marca`, `modelo`, `colores`, `tallas`, `estado`, `foto`, `fecha_ceacion`, `fecha_actualizacion`) VALUES
-(4, 1, 0, '1010110101', 'Sueter Mio Mio', '', '10.000', 'Pieza', '0.00', '300.00', '', '', 'azul,gris', '20,22,24,30,32,38', 1, '1010110101_54.jpg', '2024-10-15 22:36:23', '2024-11-08 17:28:58'),
+(4, 1, 0, '1010110101', 'Sueter Mio Mio', '', '7.000', 'Pieza', '0.00', '300.00', '', '', 'azul,gris', '20,22,24,30,32,38', 1, '1010110101_54.jpg', '2024-10-15 22:36:23', '2024-11-15 17:29:06'),
 (5, 3, 0, '123456789', 'Pantalon Mezclilla', '', '10.000', 'Pieza', '0.00', '250.00', '', '', 'Gris,azul', '14,16,18,20,22', 1, '', '2024-10-15 22:56:47', '2024-11-14 18:02:58'),
 (6, 1, 0, '6957303503681', 'Sueter', '', '10.000', 'Pieza', '0.00', '300.00', '', '', 'AZUL,VERDE,MORADO,LILA', '30,32,34,38,40', 1, '', '2024-11-07 18:12:04', '2024-11-08 17:29:02'),
 (7, 5, 0, '845973085452', 'Perfume', '', '10.000', 'Pieza', '0.00', '350.00', '', '', '', '', 1, '', '2024-11-07 18:12:55', '2024-11-14 18:03:03');
@@ -450,6 +457,13 @@ CREATE TABLE `venta` (
   `fecha_pago` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
+--
+-- Volcado de datos para la tabla `venta`
+--
+
+INSERT INTO `venta` (`id_venta`, `tipo_venta`, `tipo_entrega`, `forma_pago`, `codigo`, `codigo_nota`, `fecha_venta`, `hora_venta`, `subtotal`, `porc_descuento`, `descuento`, `total`, `pagado`, `cambio`, `id_usuario`, `id_cliente`, `id_caja`, `estatus`, `estatus_pago`, `fecha_registro`, `fecha_pago`) VALUES
+(1, 'nota', 'recoleccion', 1, 'SALE-C3C2C4E3Q0-1', 'NOT-W3N6IORVWLJTMEZDKNVQZC', '2024-11-15', '11:50:49', '1200.00', '10.00', '120.000', '1080.00', '1100.00', '20.00', 1, 7, 1, 1, 1, '2024-11-15 17:50:49', '2024-11-22 11:50:49');
+
 -- --------------------------------------------------------
 
 --
@@ -473,6 +487,16 @@ CREATE TABLE `venta_detalle` (
   `total` decimal(30,2) NOT NULL,
   `fecha_movimiento` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+
+--
+-- Volcado de datos para la tabla `venta_detalle`
+--
+
+INSERT INTO `venta_detalle` (`id_detalle`, `id_producto`, `token`, `descripcion`, `codigo`, `cantidad`, `color`, `talla`, `precio_compra`, `precio_venta`, `porc_descuento`, `descuento`, `subtotal`, `total`, `fecha_movimiento`) VALUES
+(1, 6, 'G3P3V3P9', 'Sueter', 'C3C2C4E3Q0-1', 1, 'AZUL', '30', '0.00', '300.00', '10.00', '30.00', '300.00', '270.00', '2024-11-15 17:50:49'),
+(2, 4, 'T9M7B6L5', 'Sueter Mio Mio', 'C3C2C4E3Q0-1', 1, 'azul', '20', '0.00', '300.00', '10.00', '30.00', '300.00', '270.00', '2024-11-15 17:50:49'),
+(3, 7, 'W6P1J3G0', 'Perfume', 'C3C2C4E3Q0-1', 1, '', '', '0.00', '350.00', '10.00', '35.00', '350.00', '315.00', '2024-11-15 17:50:49'),
+(4, 5, 'K0J2E1X2', 'Pantalon Mezclilla', 'C3C2C4E3Q0-1', 1, 'Gris', '14', '0.00', '250.00', '10.00', '25.00', '250.00', '225.00', '2024-11-15 17:50:49');
 
 --
 -- Índices para tablas volcadas
@@ -562,8 +586,7 @@ ALTER TABLE `notas`
 --
 ALTER TABLE `pago`
   ADD PRIMARY KEY (`id_pago`),
-  ADD KEY `id_metodo_pago` (`id_metodo_pago`),
-  ADD KEY `id_venta` (`id_venta`);
+  ADD KEY `id_metodo_pago` (`id_metodo_pago`);
 
 --
 -- Indices de la tabla `producto`
@@ -694,7 +717,7 @@ ALTER TABLE `notas`
 -- AUTO_INCREMENT de la tabla `pago`
 --
 ALTER TABLE `pago`
-  MODIFY `id_pago` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_pago` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `producto`
@@ -718,7 +741,7 @@ ALTER TABLE `proveedor`
 -- AUTO_INCREMENT de la tabla `sesiones_caja`
 --
 ALTER TABLE `sesiones_caja`
-  MODIFY `id_sesion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_sesion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
@@ -730,13 +753,13 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `venta`
 --
 ALTER TABLE `venta`
-  MODIFY `id_venta` int(30) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_venta` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `venta_detalle`
 --
 ALTER TABLE `venta_detalle`
-  MODIFY `id_detalle` int(100) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_detalle` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Restricciones para tablas volcadas
@@ -778,8 +801,7 @@ ALTER TABLE `movimientoinventario`
 -- Filtros para la tabla `pago`
 --
 ALTER TABLE `pago`
-  ADD CONSTRAINT `pago_ibfk_1` FOREIGN KEY (`id_metodo_pago`) REFERENCES `metodopago` (`id_metodo_pago`),
-  ADD CONSTRAINT `pago_ibfk_2` FOREIGN KEY (`id_venta`) REFERENCES `venta` (`id_venta`);
+  ADD CONSTRAINT `pago_ibfk_1` FOREIGN KEY (`id_metodo_pago`) REFERENCES `metodopago` (`id_metodo_pago`);
 
 --
 -- Filtros para la tabla `producto`

@@ -24,8 +24,9 @@ function generarCodigoAleatorio($longitud)
     }
     return $codigo;
 }
-function generarCodigoAleatorioNota($longitud, $correlativo)
+function generarCodigoAleatorioNota($prefijo, $longitud, $correlativo)
 {
+    $prefijo = $prefijo;
     $codigo = "";
     $caracter = "Letra";
     for ($i = 1; $i <= $longitud; $i++) {
@@ -40,7 +41,7 @@ function generarCodigoAleatorioNota($longitud, $correlativo)
             $caracter = "Letra";
         }
     }
-    return $codigo . "-" . $correlativo;
+    return $prefijo . "-" . $codigo . "-" . $correlativo;
 }
 if ($action == 'metodos_pago') {
     require_once "../models/notas.model.php";
@@ -600,7 +601,7 @@ if ($action == 'guardar_nota') {
             $ventas = count($ventas) + 1;
 
 
-            $codigo_venta = generarCodigoAleatorioNota(10, $ventas);
+            $codigo_venta = generarCodigoAleatorioNota('SALE', 10,  $ventas);
             if ($tipo_entrega == "recoleccion") {
                 if ($forma_pago != 1) {
                     $fecha_pago =  date("Y-m-d H:i:s", strtotime('+1 days'));
