@@ -297,13 +297,13 @@ if ($action == 'detalle_nota') {
                                 <div class="form-group">
                                     <div class="input-group d-flex align-items-center">
                                         <div class="input-group-append">
-                                            <button class="btn btn-sm btn-info me-2" type="button" onclick="decrementar(<?= $row['id_producto'] ?>)">
+                                            <button class="btn btn-sm btn-info me-2" type="button" onclick="decrementar(<?= $row['cid_producto'] ?>)">
                                                 <i class="ti-minus"></i>
                                             </button>
                                         </div>
-                                        <input type="text" class="form-control" value="1" id="cantidad<?= $row['id_producto'] ?>" readonly>
+                                        <input type="text" class="form-control" value="1" id="cantidad<?= $row['cid_producto'] ?>" readonly>
                                         <div class="input-group-append">
-                                            <button class="btn btn-sm btn-info ms-2" type="button" onclick="incrementar(<?= $row['id_producto'] ?>)">
+                                            <button class="btn btn-sm btn-info ms-2" type="button" onclick="incrementar(<?= $row['cid_producto'] ?>)">
                                                 <i class="ti-plus"></i>
                                             </button>
                                         </div>
@@ -313,7 +313,7 @@ if ($action == 'detalle_nota') {
                             <div class="col-md-1 col-sm-1 col-lg-1">
                                 <div class="form-group">
                                     <label>Color</label>
-                                    <select class="form-select" id="color<?= $row['id_producto'] ?>">
+                                    <select class="form-select" id="color<?= $row['cid_producto'] ?>">
                                         <?php
 
                                         $colores = explode(",", $row['colores']);
@@ -328,7 +328,7 @@ if ($action == 'detalle_nota') {
                             <div class="col-md-1 col-sm-1 col-lg-1">
                                 <div class="form-group">
                                     <label>Talla</label>
-                                    <select class="form-select" id="talla<?= $row['id_producto'] ?>">
+                                    <select class="form-select" id="talla<?= $row['cid_producto'] ?>">
                                         <?php
 
                                         $tallas = explode(",", $row['tallas']);
@@ -346,7 +346,7 @@ if ($action == 'detalle_nota') {
                             </div>
 
                             <div class="col-md-1 col-sm-1 col-lg-1">
-                                <button class="btn btn-md btn-info mt-4" type="button" onclick="agregarProductoCarrito('<?= $row["id_producto"] ?>','<?= $row["codigo"] ?>','<?= $row["descripcion"] ?>','<?= $row["porc_descuento"] ?>','<?= $row["precio_venta"] ?>','<?= $codigo ?>')">
+                                <button class="btn btn-md btn-info mt-4" type="button" onclick="agregarProductoCarrito('<?= $row["cid_producto"] ?>','<?= $row["codigo"] ?>','<?= $row["descripcion"] ?>','<?= $row["porc_descuento"] ?>','<?= $row["precio_venta"] ?>','<?= $codigo ?>')">
                                     <i class="ti-shopping-cart" style="color:#ffffff"></i>Agregar
                                 </button>
                             </div>

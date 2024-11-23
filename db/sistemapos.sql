@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 21-11-2024 a las 01:14:00
+-- Tiempo de generación: 23-11-2024 a las 01:10:30
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 7.4.33
 
@@ -74,10 +74,10 @@ CREATE TABLE `categoria` (
 --
 
 INSERT INTO `categoria` (`id_categoria`, `nombre`, `ubicacion`, `descripcion`, `fecha_registro`) VALUES
-(1, 'Sueteres', 'Pb', '', '2024-10-08 16:43:16'),
-(3, 'Pantalones', 'Pb', '', '2024-10-15 22:55:44'),
-(4, 'Joggers', 'Pa', '', '2024-10-15 22:55:59'),
-(5, 'Perfumes', 'Pa', '', '2024-11-07 18:14:13');
+(1, 'Sueteres', 'Planta Alta', '', '2024-11-21 17:17:23'),
+(2, 'Pantalones', 'Planta Alta', '', '2024-11-21 17:17:33'),
+(3, 'Joggers', 'Planta Baja', '', '2024-11-21 17:17:44'),
+(4, 'Vestidos', 'Planta Baja', '', '2024-11-21 17:51:56');
 
 -- --------------------------------------------------------
 
@@ -193,10 +193,9 @@ CREATE TABLE `inventario` (
 --
 
 INSERT INTO `inventario` (`id_inventario`, `id_producto`, `stock_total`, `stock_minimo`, `stock_maximo`, `fecha_actualizacion`) VALUES
-(1, 4, '10.000', '2.000', '20.000', '2024-11-20 19:35:49'),
-(2, 5, '10.000', '2.000', '20.000', '2024-11-20 19:36:32'),
-(3, 6, '10.000', '2.000', '20.000', '2024-11-20 19:36:32'),
-(4, 7, '10.000', '2.000', '20.000', '2024-11-20 19:36:46');
+(1, 1, '10.000', '3.000', '20.000', '2024-11-21 17:23:00'),
+(2, 2, '1.000', '3.000', '20.000', '2024-11-22 20:31:59'),
+(5, 3, '5.000', '3.000', '20.000', '2024-11-21 19:40:04');
 
 -- --------------------------------------------------------
 
@@ -244,7 +243,7 @@ CREATE TABLE `movimiento_inventario` (
   `id_movimiento_inventario` int(11) NOT NULL,
   `id_producto` int(11) NOT NULL,
   `tipo_movimiento` enum('entrada','salida') NOT NULL,
-  `documento` text NOT NULL,
+  `documento` text DEFAULT NULL,
   `cantidad` decimal(10,3) NOT NULL,
   `descripcion` text DEFAULT NULL,
   `fecha_movimiento` timestamp NOT NULL DEFAULT current_timestamp()
@@ -255,10 +254,9 @@ CREATE TABLE `movimiento_inventario` (
 --
 
 INSERT INTO `movimiento_inventario` (`id_movimiento_inventario`, `id_producto`, `tipo_movimiento`, `documento`, `cantidad`, `descripcion`, `fecha_movimiento`) VALUES
-(1, 4, 'entrada', '2147483647', '10.000', 'inventario inicial', '2024-11-20 19:55:51'),
-(2, 5, 'entrada', '0', '10.000', 'inventario inicial', '2024-11-20 19:56:09'),
-(3, 6, 'entrada', '0', '10.000', 'inventario inicial', '2024-11-20 19:56:25'),
-(4, 7, 'entrada', '0', '10.000', 'inventario inicial', '2024-11-20 19:56:37');
+(1, 1, 'entrada', NULL, '10.000', 'inventario inicial', '2024-11-21 17:23:00'),
+(2, 2, 'entrada', NULL, '5.000', 'inventario inicial', '2024-11-21 17:24:38'),
+(5, 3, 'entrada', NULL, '5.000', 'inventario inicial', '2024-11-21 18:35:58');
 
 -- --------------------------------------------------------
 
@@ -278,14 +276,6 @@ CREATE TABLE `notas` (
   `fecha` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
---
--- Volcado de datos para la tabla `notas`
---
-
-INSERT INTO `notas` (`id_nota`, `codigo`, `titulo_nota`, `fecha_publicacion`, `fecha_expiracion`, `porc_descuento`, `qr`, `estatus`, `fecha`) VALUES
-(2, 'NOT-W3N6IORVWLJTMEZDKNVQZC', 'Prueba', '2024-11-14 12:01:00', '2024-11-16 12:00:00', '10.00', 'http://localhost/pos2/detalleNota/NOT-W3N6IORVWLJTMEZDKNVQZC', 1, '2024-11-14 18:03:19'),
-(3, 'NOT-YYSFXTEM8LDBQ0FKZE4X1G', 'Prueba 1', '2024-11-20 13:00:00', '2024-11-22 12:00:00', '5.00', 'http://localhost/pos2/detalleNota/NOT-YYSFXTEM8LDBQ0FKZE4X1G', 1, '2024-11-20 18:44:43');
-
 -- --------------------------------------------------------
 
 --
@@ -303,13 +293,6 @@ CREATE TABLE `pago` (
   `referencia` text DEFAULT NULL,
   `fecha_pago` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
---
--- Volcado de datos para la tabla `pago`
---
-
-INSERT INTO `pago` (`id_pago`, `codigo_pago`, `codigo_venta`, `id_metodo_pago`, `total_pago`, `total_pagado`, `total_cambio`, `referencia`, `fecha_pago`) VALUES
-(1, 'PAY-1EOVTMYBBQIPIHGSAJN0FE-1', 'SALE-C3C2C4E3Q0-1', 1, '1080.00', '1100.00', '20.00', '', '2024-11-15 17:51:52');
 
 -- --------------------------------------------------------
 
@@ -344,12 +327,9 @@ CREATE TABLE `producto` (
 --
 
 INSERT INTO `producto` (`id_producto`, `cid_producto`, `out_stock`, `id_categoria`, `id_proveedor`, `codigo`, `nombre`, `descripcion`, `tipo_unidad`, `precio_compra`, `precio_venta`, `marca`, `modelo`, `colores`, `tallas`, `estado`, `foto`, `fecha_ceacion`, `fecha_actualizacion`) VALUES
-(4, 4, '0', 1, 0, '1010110101', 'Sueter Mio Mio', '', 'Pieza', '0.00', '300.00', '', '', 'azul,gris', '20,22,24,30,32,38', 1, '1010110101_54.jpg', '2024-10-15 22:36:23', '2024-11-20 23:52:32'),
-(5, 5, '0', 3, 0, '123456789', 'Pantalon Mezclilla', '', 'Pieza', '0.00', '250.00', '', '', 'Gris,azul', '14,16,18,20,22', 1, '', '2024-10-15 22:56:47', '2024-11-20 23:52:34'),
-(6, 6, '0', 1, 0, '6957303503681', 'Sueter', '', 'Pieza', '0.00', '300.00', '', '', 'AZUL,VERDE,MORADO,LILA', '30,32,34,38,40', 1, '', '2024-11-07 18:12:04', '2024-11-20 23:52:36'),
-(7, 7, '0', 5, 0, '845973085452', 'Perfume', '', 'Pieza', '0.00', '350.00', '', '', '', '', 1, '', '2024-11-07 18:12:55', '2024-11-20 23:52:38'),
-(8, 8, '0', 1, 0, '12548752411', 'asdasd', '', 'Pieza', '0.00', '100.00', '', '', '', '', 1, '', '2024-11-20 20:49:18', '2024-11-20 23:52:40'),
-(9, 9, '0', 1, 0, '5458245244', 'sdas', '', 'Pieza', '0.00', '100.00', '', '', '', '', 1, '', '2024-11-20 20:50:49', '2024-11-20 23:52:42');
+(1, 1, '0', 1, 0, '00123456789', 'Sueter Mio Mio', '', 'Pieza', '250.00', '350.00', '', '', 'Azul,Gris,Verde', '32,38,40', 1, '', '2024-11-21 17:23:00', '2024-11-21 17:23:00'),
+(2, 2, '0', 2, 0, '00023456789', 'Pantalon Mezclilla', '', 'Pieza', '0.00', '250.00', '', '', '', '', 1, '00023456789_61.jpg', '2024-11-21 17:24:38', '2024-11-21 17:50:00'),
+(5, 3, '0', 4, 0, '100123456789', 'Vestido Largo Moda', '', 'Pieza', '0.00', '200.00', '', '', '', '', 1, '100123456789_26.jpg', '2024-11-21 18:35:58', '2024-11-21 18:36:10');
 
 -- --------------------------------------------------------
 
@@ -370,18 +350,6 @@ CREATE TABLE `productos_notas` (
   `estatus` int(11) NOT NULL,
   `fecha` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
---
--- Volcado de datos para la tabla `productos_notas`
---
-
-INSERT INTO `productos_notas` (`id_detalle_nota`, `codigo_nota`, `id_producto`, `codigo`, `descripcion`, `precio_venta`, `limite_nota`, `colores`, `tallas`, `estatus`, `fecha`) VALUES
-(3, 'NOT-W3N6IORVWLJTMEZDKNVQZC', 6, '6957303503681', 'Sueter', '300.00', 10, 'AZUL,VERDE,MORADO,LILA', '30,32,34,38,40', 1, '2024-11-14 18:03:19'),
-(4, 'NOT-W3N6IORVWLJTMEZDKNVQZC', 4, '1010110101', 'Sueter Mio Mio', '300.00', 10, 'azul,gris', '20,22,24,30,32,38', 1, '2024-11-14 18:03:19'),
-(5, 'NOT-W3N6IORVWLJTMEZDKNVQZC', 7, '845973085452', 'Perfume', '350.00', 10, '', '', 1, '2024-11-14 18:03:19'),
-(6, 'NOT-W3N6IORVWLJTMEZDKNVQZC', 5, '123456789', 'Pantalon Mezclilla', '250.00', 10, 'Gris,azul', '14,16,18,20,22', 1, '2024-11-14 18:03:19'),
-(7, 'NOT-YYSFXTEM8LDBQ0FKZE4X1G', 5, '123456789', 'Pantalon Mezclilla', '250.00', 10, 'Gris,azul', '14,16,18,20,22', 1, '2024-11-20 18:44:43'),
-(8, 'NOT-YYSFXTEM8LDBQ0FKZE4X1G', 7, '845973085452', 'Perfume', '350.00', 10, '', '', 1, '2024-11-20 18:44:43');
 
 -- --------------------------------------------------------
 
@@ -563,8 +531,7 @@ ALTER TABLE `empresa`
 -- Indices de la tabla `inventario`
 --
 ALTER TABLE `inventario`
-  ADD PRIMARY KEY (`id_inventario`),
-  ADD KEY `id_producto` (`id_producto`);
+  ADD PRIMARY KEY (`id_inventario`);
 
 --
 -- Indices de la tabla `metodopago`
@@ -668,7 +635,7 @@ ALTER TABLE `cajaempleado`
 -- AUTO_INCREMENT de la tabla `categoria`
 --
 ALTER TABLE `categoria`
-  MODIFY `id_categoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_categoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `cliente`
@@ -698,7 +665,7 @@ ALTER TABLE `empresa`
 -- AUTO_INCREMENT de la tabla `inventario`
 --
 ALTER TABLE `inventario`
-  MODIFY `id_inventario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_inventario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `metodopago`
@@ -716,31 +683,31 @@ ALTER TABLE `movimiento_caja`
 -- AUTO_INCREMENT de la tabla `movimiento_inventario`
 --
 ALTER TABLE `movimiento_inventario`
-  MODIFY `id_movimiento_inventario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_movimiento_inventario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `notas`
 --
 ALTER TABLE `notas`
-  MODIFY `id_nota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_nota` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `pago`
 --
 ALTER TABLE `pago`
-  MODIFY `id_pago` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_pago` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `producto`
 --
 ALTER TABLE `producto`
-  MODIFY `id_producto` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_producto` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `productos_notas`
 --
 ALTER TABLE `productos_notas`
-  MODIFY `id_detalle_nota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_detalle_nota` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `proveedor`
@@ -791,22 +758,10 @@ ALTER TABLE `detalleventa`
   ADD CONSTRAINT `detalleventa_ibfk_2` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id_producto`);
 
 --
--- Filtros para la tabla `inventario`
---
-ALTER TABLE `inventario`
-  ADD CONSTRAINT `inventario_ibfk_1` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id_producto`);
-
---
 -- Filtros para la tabla `movimiento_caja`
 --
 ALTER TABLE `movimiento_caja`
   ADD CONSTRAINT `movimiento_caja_ibfk_1` FOREIGN KEY (`id_caja`) REFERENCES `caja` (`id_caja`);
-
---
--- Filtros para la tabla `movimiento_inventario`
---
-ALTER TABLE `movimiento_inventario`
-  ADD CONSTRAINT `movimiento_inventario_ibfk_1` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id_producto`);
 
 --
 -- Filtros para la tabla `pago`
