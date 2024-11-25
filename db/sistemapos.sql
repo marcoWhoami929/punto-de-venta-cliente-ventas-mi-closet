@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 23-11-2024 a las 01:10:30
+-- Tiempo de generación: 26-11-2024 a las 00:53:53
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 7.4.33
 
@@ -194,8 +194,8 @@ CREATE TABLE `inventario` (
 
 INSERT INTO `inventario` (`id_inventario`, `id_producto`, `stock_total`, `stock_minimo`, `stock_maximo`, `fecha_actualizacion`) VALUES
 (1, 1, '10.000', '3.000', '20.000', '2024-11-21 17:23:00'),
-(2, 2, '1.000', '3.000', '20.000', '2024-11-22 20:31:59'),
-(5, 3, '5.000', '3.000', '20.000', '2024-11-21 19:40:04');
+(2, 2, '3.000', '3.000', '20.000', '2024-11-25 22:07:58'),
+(5, 3, '3.000', '3.000', '20.000', '2024-11-25 22:12:26');
 
 -- --------------------------------------------------------
 
@@ -329,7 +329,7 @@ CREATE TABLE `producto` (
 INSERT INTO `producto` (`id_producto`, `cid_producto`, `out_stock`, `id_categoria`, `id_proveedor`, `codigo`, `nombre`, `descripcion`, `tipo_unidad`, `precio_compra`, `precio_venta`, `marca`, `modelo`, `colores`, `tallas`, `estado`, `foto`, `fecha_ceacion`, `fecha_actualizacion`) VALUES
 (1, 1, '0', 1, 0, '00123456789', 'Sueter Mio Mio', '', 'Pieza', '250.00', '350.00', '', '', 'Azul,Gris,Verde', '32,38,40', 1, '', '2024-11-21 17:23:00', '2024-11-21 17:23:00'),
 (2, 2, '0', 2, 0, '00023456789', 'Pantalon Mezclilla', '', 'Pieza', '0.00', '250.00', '', '', '', '', 1, '00023456789_61.jpg', '2024-11-21 17:24:38', '2024-11-21 17:50:00'),
-(5, 3, '0', 4, 0, '100123456789', 'Vestido Largo Moda', '', 'Pieza', '0.00', '200.00', '', '', '', '', 1, '100123456789_26.jpg', '2024-11-21 18:35:58', '2024-11-21 18:36:10');
+(5, 3, '0', 4, 0, '100123456789', 'Vestido Largo Moda', '', 'Pieza', '0.00', '200.00', '', '', '', '', 1, '', '2024-11-21 18:35:58', '2024-11-25 19:30:09');
 
 -- --------------------------------------------------------
 
