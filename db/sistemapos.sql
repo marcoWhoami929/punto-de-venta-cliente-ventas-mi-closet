@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 26-11-2024 a las 00:53:53
+-- Tiempo de generación: 27-11-2024 a las 01:18:23
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 7.4.33
 
@@ -233,6 +233,14 @@ CREATE TABLE `movimiento_caja` (
   `fecha_movimiento` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `movimiento_caja`
+--
+
+INSERT INTO `movimiento_caja` (`id_movimiento`, `id_caja`, `tipo_movimiento`, `monto`, `descripcion`, `fecha_movimiento`) VALUES
+(1, 1, 'ingreso', '450.000', '', '2024-11-26 19:57:59'),
+(2, 1, 'ingreso', '900.000', '', '2024-11-26 20:01:58');
+
 -- --------------------------------------------------------
 
 --
@@ -395,7 +403,7 @@ CREATE TABLE `sesiones_caja` (
 
 INSERT INTO `sesiones_caja` (`id_sesion`, `codigo_sesion`, `id_usuario`, `id_caja`, `notas_apertura`, `fecha_apertura`, `saldo_inicial`, `efectivo`, `tarjeta_debito`, `tarjeta_credito`, `transferencia`, `saldo_final`, `fecha_cierre`, `estado`) VALUES
 (1, 'POS-L5Z9K9Q6M5-1', 3, 2, 'apertura inicial', '2024-11-14 23:55:55', '100.00', '0.00', '0.00', '0.00', '0.00', '0.00', NULL, 'abierta'),
-(3, 'POS-V1Y9L1L1F8-2', 1, 1, 'apertura inicial', '2024-11-20 18:17:12', '100.00', '0.00', '0.00', '0.00', '0.00', '0.00', NULL, 'abierta');
+(3, 'POS-V1Y9L1L1F8-2', 1, 1, 'apertura inicial', '2024-11-20 18:17:12', '100.00', '1350.00', '0.00', '0.00', '0.00', '0.00', NULL, 'abierta');
 
 -- --------------------------------------------------------
 
@@ -452,6 +460,14 @@ CREATE TABLE `venta` (
   `fecha_registro` timestamp NOT NULL DEFAULT current_timestamp(),
   `fecha_pago` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+
+--
+-- Volcado de datos para la tabla `venta`
+--
+
+INSERT INTO `venta` (`id_venta`, `tipo_venta`, `tipo_entrega`, `forma_pago`, `codigo`, `codigo_nota`, `fecha_venta`, `hora_venta`, `subtotal`, `porc_descuento`, `descuento`, `total`, `pagado`, `cambio`, `id_usuario`, `id_cliente`, `id_caja`, `estatus`, `estatus_pago`, `fecha_registro`, `fecha_pago`) VALUES
+(1, 'directa', 'recoleccion', 1, 'SALE-W2T2Z2S7T0-1', '', '2024-11-26', '01:57:00', '450.00', '0.00', '0.000', '450.00', '500.00', '50.00', 1, 1, 1, 1, 0, '2024-11-26 19:57:58', NULL),
+(2, 'directa', 'recoleccion', 1, 'SALE-A5D5S4Z6B3-2', '', '2024-11-26', '02:01:00', '900.00', '0.00', '0.000', '900.00', '1000.00', '100.00', 1, 1, 1, 1, 0, '2024-11-26 20:01:58', NULL);
 
 -- --------------------------------------------------------
 
@@ -677,7 +693,7 @@ ALTER TABLE `metodopago`
 -- AUTO_INCREMENT de la tabla `movimiento_caja`
 --
 ALTER TABLE `movimiento_caja`
-  MODIFY `id_movimiento` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_movimiento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `movimiento_inventario`
@@ -731,7 +747,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `venta`
 --
 ALTER TABLE `venta`
-  MODIFY `id_venta` int(30) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_venta` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `venta_detalle`
