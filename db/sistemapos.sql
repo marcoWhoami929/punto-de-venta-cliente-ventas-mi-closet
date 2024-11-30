@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 29-11-2024 a las 01:05:46
+-- Tiempo de generación: 30-11-2024 a las 01:07:50
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 7.4.33
 
@@ -41,7 +41,11 @@ CREATE TABLE `bitacora` (
 INSERT INTO `bitacora` (`id_bitacora`, `accion`, `id_usuario`, `fecha`) VALUES
 (1, 'Cierre de Caja Con N° de Sesion POS-K8V6N6B2C6-1', 1, '2024-11-28 18:53:03'),
 (2, 'Ingreso de Efectivo a Caja en la Sesion N° de Sesion POS-K7E3Y3O5E4-2', 1, '2024-11-28 20:23:09'),
-(3, 'Salida de Efectivo de Caja en la Sesion N° de Sesion POS-K7E3Y3O5E4-2', 1, '2024-11-28 20:23:37');
+(3, 'Salida de Efectivo de Caja en la Sesion N° de Sesion POS-K7E3Y3O5E4-2', 1, '2024-11-28 20:23:37'),
+(4, 'Entrada de Inventario de 2 unidades de Pantalon Mezclilla', 1, '2024-11-29 18:47:20'),
+(5, 'Entrada de Inventario de 3 unidades de Sueter Mio Mio', 1, '2024-11-29 18:48:02'),
+(6, 'Salida de Inventario de 2 unidades de Vestido Largo Moda', 1, '2024-11-29 18:48:17'),
+(7, 'Entrada de Inventario de 1 unidades de Sueter Mio Mio', 1, '2024-11-29 22:35:07');
 
 -- --------------------------------------------------------
 
@@ -215,9 +219,9 @@ CREATE TABLE `inventario` (
 --
 
 INSERT INTO `inventario` (`id_inventario`, `id_producto`, `stock_total`, `stock_minimo`, `stock_maximo`, `fecha_actualizacion`) VALUES
-(1, 1, '8.000', '3.000', '20.000', '2024-11-28 18:56:40'),
-(2, 2, '3.000', '3.000', '20.000', '2024-11-28 18:22:01'),
-(5, 3, '2.000', '3.000', '20.000', '2024-11-27 18:12:39');
+(1, 1, '11.000', '3.000', '20.000', '2024-11-29 22:35:07'),
+(2, 2, '20.000', '3.000', '20.000', '2024-11-29 18:47:20'),
+(5, 3, '20.000', '3.000', '20.000', '2024-11-29 18:48:17');
 
 -- --------------------------------------------------------
 
@@ -298,7 +302,15 @@ INSERT INTO `movimiento_inventario` (`id_movimiento_inventario`, `id_producto`, 
 (14, 3, 'salida', 'SALE-X4X8O6O9Q9G8T5R7V3Z6K4-1', '1.000', 'Venta de producto', '2024-11-27 17:25:36'),
 (15, 3, 'salida', 'SALE-J8P4K3F0Z2F9T8X0B2Z4A8-2', '2.000', 'Venta de producto', '2024-11-27 18:12:39'),
 (16, 2, 'salida', 'SALE-E0A5V8G8F6W2J6F4C1B5Q1-3', '1.000', 'Venta de producto', '2024-11-28 18:22:01'),
-(17, 1, 'salida', 'SALE-S0P0U3V8Y2V5U3D5K4P8E3-4', '1.000', 'Venta de producto', '2024-11-28 18:56:40');
+(17, 1, 'salida', 'SALE-S0P0U3V8Y2V5U3D5K4P8E3-4', '1.000', 'Venta de producto', '2024-11-28 18:56:40'),
+(18, 2, 'entrada', NULL, '20.000', 'Entrada de producto', '2024-11-29 18:06:54'),
+(19, 2, 'salida', NULL, '5.000', 'unidades sacadas por error de conteo', '2024-11-29 18:21:38'),
+(20, 3, 'entrada', NULL, '20.000', '', '2024-11-29 18:22:55'),
+(21, 1, 'salida', NULL, '1.000', 'error de conteo de inventario', '2024-11-29 18:30:07'),
+(22, 2, 'entrada', NULL, '2.000', '', '2024-11-29 18:47:20'),
+(23, 1, 'entrada', NULL, '3.000', '', '2024-11-29 18:48:02'),
+(24, 3, 'salida', NULL, '2.000', '', '2024-11-29 18:48:17'),
+(25, 1, 'entrada', NULL, '1.000', '', '2024-11-29 22:35:07');
 
 -- --------------------------------------------------------
 
@@ -464,7 +476,8 @@ CREATE TABLE `sesiones_caja` (
 
 INSERT INTO `sesiones_caja` (`id_sesion`, `codigo_sesion`, `id_usuario`, `id_caja`, `notas_apertura`, `fecha_apertura`, `saldo_inicial`, `efectivo`, `tarjeta_debito`, `tarjeta_credito`, `transferencia`, `saldo_final`, `diferencia`, `observaciones`, `fecha_cierre`, `estado`) VALUES
 (1, 'POS-K8V6N6B2C6-1', 1, 1, 'apertura inicial', '2024-11-27 01:54:53', '0.00', '930.00', '0.00', '0.00', '400.00', '1000.00', '50.00', 'prueba de cierre', '2024-11-28 12:53:03', 'cerrada'),
-(2, 'POS-K7E3Y3O5E4-2', 1, 1, 'apertura con 50 por sobrante de caja', '2024-11-28 18:56:30', '50.00', '350.00', '0.00', '0.00', '0.00', '0.00', '0.00', NULL, NULL, 'abierta');
+(2, 'POS-K7E3Y3O5E4-2', 1, 1, 'apertura con 50 por sobrante de caja', '2024-11-28 18:56:30', '50.00', '350.00', '0.00', '0.00', '0.00', '0.00', '0.00', NULL, NULL, 'abierta'),
+(3, 'POS-H3R5U9M8W0-3', 3, 2, '', '2024-11-29 23:30:56', '100.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', NULL, NULL, 'abierta');
 
 -- --------------------------------------------------------
 
@@ -491,7 +504,7 @@ CREATE TABLE `usuario` (
 INSERT INTO `usuario` (`id_usuario`, `nombre`, `email`, `usuario`, `password`, `foto`, `perfil`, `id_caja`, `codigo_sesion`) VALUES
 (1, 'Administrador', '', 'Administrador', '$2y$10$Jgm6xFb5Onz/BMdIkNK2Tur8yg/NYEMb/tdnhoV7kB1BwIG4R05D2', '', 'Administrador', 1, 'POS-K7E3Y3O5E4-2'),
 (2, 'Cajero 2', '', 'cajero2', '$2y$10$9zt9trw18J9i8I5NDYVTPOhyLEZ95l./tnhVC/kbcR9/FarK2Poni', 'Marco_Antonio_Lopez_Perez_18.png', 'Caja', 4, NULL),
-(3, 'Cajero 1', '', 'cajero1', '$2y$10$skfgnFM/v//X9b1QiAWAxePh2Xx/AK20jJR64MiHk0afyStaT0Kwe', '', 'Caja', 2, NULL);
+(3, 'Cajero 1', '', 'cajero1', '$2y$10$skfgnFM/v//X9b1QiAWAxePh2Xx/AK20jJR64MiHk0afyStaT0Kwe', '', 'Caja', 2, 'POS-H3R5U9M8W0-3');
 
 -- --------------------------------------------------------
 
@@ -720,7 +733,7 @@ ALTER TABLE `venta_detalle`
 -- AUTO_INCREMENT de la tabla `bitacora`
 --
 ALTER TABLE `bitacora`
-  MODIFY `id_bitacora` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_bitacora` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `caja`
@@ -786,7 +799,7 @@ ALTER TABLE `movimiento_caja`
 -- AUTO_INCREMENT de la tabla `movimiento_inventario`
 --
 ALTER TABLE `movimiento_inventario`
-  MODIFY `id_movimiento_inventario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id_movimiento_inventario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT de la tabla `notas`
@@ -822,7 +835,7 @@ ALTER TABLE `proveedor`
 -- AUTO_INCREMENT de la tabla `sesiones_caja`
 --
 ALTER TABLE `sesiones_caja`
-  MODIFY `id_sesion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_sesion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
