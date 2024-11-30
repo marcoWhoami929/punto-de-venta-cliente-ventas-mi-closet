@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-11-2024 a las 01:07:50
+-- Tiempo de generación: 30-11-2024 a las 20:18:20
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 7.4.33
 
@@ -143,6 +143,34 @@ CREATE TABLE `cliente` (
 INSERT INTO `cliente` (`id_cliente`, `tipo_cliente`, `nombre`, `apellidos`, `usuario`, `email`, `password`, `telefono`, `celular`, `domicilio`, `calle`, `numero`, `ciudad`, `estado`, `cp`, `pais`, `facebook`, `credito`, `pagado`, `pendiente`, `fecha_registro`, `estatus`) VALUES
 (1, 'General', 'Publico', 'General', 'PublicoGeneral', '', '$2y$10$L1GE2DSXHLGz5HprNIWKpeZPklQwphKRFcGL2ljziQQFPZSYtB.1W', '', '22222222', 'Dalias 6124', '', '', '', '', '', '', '', '0.000', '0.000', '0.000', '2024-10-16 23:38:01', 0),
 (7, 'Facebook', 'Marco Antonio', 'Lopez Perez', 'MALP-WEOC9YBH', '', 'ZnBiTUQzL3JoS090cnoyc0pUemdOQT09', '', '2211636228', 'Dalias 6124, Bugambilias, Heroica Puebla de Zaragoza, Pue., México', 'Dalias', '6124', 'Heroica Puebla de Zaragoza', 'Puebla', '72580', 'México', 'marcWhoami', '0.000', '0.000', '0.000', '2024-10-14 23:08:44', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `corte_caja`
+--
+
+CREATE TABLE `corte_caja` (
+  `id_corte` int(11) NOT NULL,
+  `codigo_sesion` text NOT NULL,
+  `id_caja` int(11) NOT NULL,
+  `dn1` decimal(30,2) NOT NULL,
+  `dn2` decimal(30,2) NOT NULL,
+  `dn3` decimal(30,2) NOT NULL,
+  `dn4` decimal(30,2) NOT NULL,
+  `dn5` decimal(30,2) NOT NULL,
+  `dn6` decimal(30,2) NOT NULL,
+  `dn7` decimal(30,2) NOT NULL,
+  `dn8` decimal(30,2) NOT NULL,
+  `dn9` decimal(30,2) NOT NULL,
+  `dn10` decimal(30,2) NOT NULL,
+  `dn11` decimal(30,2) NOT NULL,
+  `dn12` decimal(30,2) NOT NULL,
+  `dn13` decimal(30,2) NOT NULL,
+  `dn14` decimal(30,2) NOT NULL,
+  `total_caja` decimal(30,2) NOT NULL,
+  `fecha` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
 
@@ -619,6 +647,12 @@ ALTER TABLE `cliente`
   ADD PRIMARY KEY (`id_cliente`);
 
 --
+-- Indices de la tabla `corte_caja`
+--
+ALTER TABLE `corte_caja`
+  ADD PRIMARY KEY (`id_corte`);
+
+--
 -- Indices de la tabla `detalleventa`
 --
 ALTER TABLE `detalleventa`
@@ -758,6 +792,12 @@ ALTER TABLE `categoria`
 --
 ALTER TABLE `cliente`
   MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT de la tabla `corte_caja`
+--
+ALTER TABLE `corte_caja`
+  MODIFY `id_corte` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `detalleventa`
