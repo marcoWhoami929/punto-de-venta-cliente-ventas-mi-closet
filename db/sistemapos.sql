@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 05-12-2024 a las 01:21:33
+-- Tiempo de generación: 05-12-2024 a las 06:57:56
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 7.4.33
 
@@ -55,7 +55,9 @@ INSERT INTO `bitacora` (`id_bitacora`, `accion`, `id_usuario`, `fecha`) VALUES
 (14, 'Salida de Inventario de 8 unidades de Sueter Mio Mio', 1, '2024-12-03 22:25:55'),
 (15, 'Salida de Inventario de 3 unidades de Sueter Mio Mio', 1, '2024-12-03 22:26:41'),
 (16, 'Salida de Inventario de 5 unidades de Sueter Mio Mio', 1, '2024-12-04 17:43:41'),
-(17, 'Entrada de Inventario de 10 unidades de Sueter Mio Mio', 1, '2024-12-04 17:50:39');
+(17, 'Entrada de Inventario de 10 unidades de Sueter Mio Mio', 1, '2024-12-04 17:50:39'),
+(18, 'Cierre de Caja Con N° de Sesion POS-F8B2R9Z6V9-6', 1, '2024-12-05 03:10:34'),
+(19, 'Salida de Inventario de 2 unidades de Pantalon Mezclilla', 1, '2024-12-05 03:34:47');
 
 -- --------------------------------------------------------
 
@@ -182,16 +184,6 @@ CREATE TABLE `corte_caja` (
   `fecha` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
---
--- Volcado de datos para la tabla `corte_caja`
---
-
-INSERT INTO `corte_caja` (`id_corte`, `codigo_sesion`, `id_caja`, `dn1`, `dn2`, `dn3`, `dn4`, `dn5`, `dn6`, `dn7`, `dn8`, `dn9`, `dn10`, `dn11`, `dn12`, `dn13`, `dn14`, `total_caja`, `fecha`) VALUES
-(1, 'POS-K7E3Y3O5E4-2', 1, '0.00', '500.00', '200.00', '0.00', '100.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '800.00', '2024-12-02 15:44:26'),
-(2, 'POS-J1Z9X3F4E5-4', 1, '0.00', '0.00', '0.00', '800.00', '200.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '1000.00', '2024-12-02 15:47:41'),
-(3, 'POS-J1Z9X3F4E5-4', 1, '0.00', '0.00', '0.00', '800.00', '200.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '1000.00', '2024-12-02 15:47:57'),
-(4, 'POS-C5G6S4U4Q0-5', 1, '1000.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '1000.00', '2024-12-02 17:07:24');
-
 -- --------------------------------------------------------
 
 --
@@ -267,9 +259,9 @@ CREATE TABLE `inventario` (
 --
 
 INSERT INTO `inventario` (`id_inventario`, `id_producto`, `stock_total`, `stock_minimo`, `stock_maximo`, `fecha_actualizacion`) VALUES
-(1, 1, '10.000', '1.000', '20.000', '2024-12-04 17:50:39'),
-(2, 2, '18.000', '1.000', '20.000', '2024-12-03 22:24:58'),
-(5, 3, '20.000', '1.000', '20.000', '2024-12-03 22:25:00');
+(1, 1, '20.000', '1.000', '20.000', '2024-12-05 05:40:41'),
+(2, 2, '14.000', '1.000', '20.000', '2024-12-05 03:34:47'),
+(5, 3, '20.000', '1.000', '20.000', '2024-12-05 03:11:17');
 
 -- --------------------------------------------------------
 
@@ -290,7 +282,8 @@ INSERT INTO `metodopago` (`id_metodo_pago`, `metodo`) VALUES
 (1, 'Efectivo'),
 (2, 'Transferencia Electrónica'),
 (3, 'Tarjeta de Crédito'),
-(4, 'Tarjeta de Débito');
+(4, 'Tarjeta de Débito'),
+(5, 'Credito');
 
 -- --------------------------------------------------------
 
@@ -313,16 +306,10 @@ CREATE TABLE `movimiento_caja` (
 --
 
 INSERT INTO `movimiento_caja` (`id_movimiento`, `sesion_caja`, `id_caja`, `tipo_movimiento`, `monto`, `descripcion`, `fecha_movimiento`) VALUES
-(1, 'POS-K8V6N6B2C6-1', 1, 'ingreso', '680.000', 'PAY-U76BMA8AVLFRLIQU4HOHEG-4', '2024-11-27 17:25:36'),
-(2, 'POS-K8V6N6B2C6-1', 1, 'ingreso', '400.000', 'PAY-DJCVSYXT6ZJADCQRB3F0GU-2', '2024-11-27 18:12:39'),
-(3, 'POS-K8V6N6B2C6-1', 1, 'ingreso', '20.000', 'ENTRADA', '2024-11-27 18:32:30'),
-(5, 'POS-K8V6N6B2C6-1', 1, 'ingreso', '250.000', 'PAY-ZZ4VAEGNFOXSSRL9IL2JTH-3', '2024-11-28 18:22:01'),
-(6, 'POS-K7E3Y3O5E4-2', 1, 'ingreso', '350.000', 'PAY-1LKTZPWJKVQ37GCCUOXB9N-4', '2024-11-28 18:56:40'),
-(7, 'POS-K7E3Y3O5E4-2', 1, 'ingreso', '500.000', 'ENTRADA', '2024-11-28 20:23:09'),
-(8, 'POS-K7E3Y3O5E4-2', 1, 'egreso', '150.000', 'SALIDA', '2024-11-28 20:23:37'),
-(9, 'POS-J1Z9X3F4E5-4', 1, 'ingreso', '350.000', 'PAY-QRMVTCBS6I9NUDZJAO2XWH-5', '2024-12-02 15:46:16'),
-(10, 'POS-J1Z9X3F4E5-4', 1, 'ingreso', '500.000', 'ENTRADA', '2024-12-02 15:46:30'),
-(11, 'POS-F8B2R9Z6V9-6', 1, 'ingreso', '500.000', 'PAY-LE74VBHO0WCAIKQL9W3GJX-6', '2024-12-02 17:09:48');
+(1, 'POS-N0G3D1T4M3-1', 1, 'ingreso', '250.000', 'PAY-JQ9GIAIJDKNCRYHCQFTN4M-1', '2024-12-05 03:18:29'),
+(2, 'POS-N0G3D1T4M3-1', 1, 'ingreso', '100.000', 'PAY-DUMWM5YXDYRLRKFHBNISAC-2', '2024-12-05 03:22:24'),
+(3, 'POS-N0G3D1T4M3-1', 1, 'ingreso', '50.000', 'PAY-ZMSWTPZTOK7NN3F9RXOJC6-3', '2024-12-05 04:27:48'),
+(4, 'POS-N0G3D1T4M3-1', 1, 'ingreso', '100.000', 'PAY-SAUANS5I8WBYEXKHKPITFZ-4', '2024-12-05 04:54:47');
 
 -- --------------------------------------------------------
 
@@ -345,29 +332,16 @@ CREATE TABLE `movimiento_inventario` (
 --
 
 INSERT INTO `movimiento_inventario` (`id_movimiento_inventario`, `id_producto`, `tipo_movimiento`, `documento`, `cantidad`, `descripcion`, `fecha_movimiento`) VALUES
-(1, 1, 'entrada', NULL, '10.000', 'Entrada inicial', '2024-11-27 04:11:12'),
-(2, 2, 'entrada', NULL, '5.000', 'Entrada inicial', '2024-11-27 04:11:12'),
-(3, 3, 'entrada', NULL, '5.000', 'Entrada inicial', '2024-11-27 04:11:12'),
-(12, 1, 'salida', 'SALE-X4X8O6O9Q9G8T5R7V3Z6K4-1', '1.000', 'Venta de producto', '2024-11-27 17:25:36'),
-(13, 2, 'salida', 'SALE-X4X8O6O9Q9G8T5R7V3Z6K4-1', '1.000', 'Venta de producto', '2024-11-27 17:25:36'),
-(14, 3, 'salida', 'SALE-X4X8O6O9Q9G8T5R7V3Z6K4-1', '1.000', 'Venta de producto', '2024-11-27 17:25:36'),
-(15, 3, 'salida', 'SALE-J8P4K3F0Z2F9T8X0B2Z4A8-2', '2.000', 'Venta de producto', '2024-11-27 18:12:39'),
-(16, 2, 'salida', 'SALE-E0A5V8G8F6W2J6F4C1B5Q1-3', '1.000', 'Venta de producto', '2024-11-28 18:22:01'),
-(17, 1, 'salida', 'SALE-S0P0U3V8Y2V5U3D5K4P8E3-4', '1.000', 'Venta de producto', '2024-11-28 18:56:40'),
-(18, 2, 'entrada', NULL, '20.000', 'Entrada de producto', '2024-11-29 18:06:54'),
-(19, 2, 'salida', NULL, '5.000', 'unidades sacadas por error de conteo', '2024-11-29 18:21:38'),
-(20, 3, 'entrada', NULL, '20.000', '', '2024-11-29 18:22:55'),
-(21, 1, 'salida', NULL, '1.000', 'error de conteo de inventario', '2024-11-29 18:30:07'),
-(22, 2, 'entrada', NULL, '2.000', '', '2024-11-29 18:47:20'),
-(23, 1, 'entrada', NULL, '3.000', '', '2024-11-29 18:48:02'),
-(24, 3, 'salida', NULL, '2.000', '', '2024-11-29 18:48:17'),
-(25, 1, 'entrada', NULL, '1.000', '', '2024-11-29 22:35:07'),
-(26, 1, 'salida', 'SALE-P7C5N2M9O4I7A2Z8V6S5Q9-5', '1.000', 'Venta de producto', '2024-12-02 15:46:16'),
-(27, 2, 'salida', 'SALE-T9V6I6V3K0E1X5O6E4U2O0-6', '2.000', 'Venta de producto', '2024-12-02 17:09:48'),
-(28, 1, 'entrada', NULL, '1.000', '', '2024-12-03 19:38:35'),
-(29, 1, 'salida', NULL, '8.000', 'SALIDA POR INVENTARIO', '2024-12-03 22:25:55'),
-(30, 1, 'salida', NULL, '3.000', 'AJUSTE DE INVENTARIO', '2024-12-03 22:26:41'),
-(32, 1, 'entrada', NULL, '10.000', '', '2024-12-04 17:50:39');
+(1, 1, 'entrada', NULL, '20.000', 'Entrada Inicial', '2024-12-05 03:12:01'),
+(2, 2, 'entrada', NULL, '20.000', 'Entrada inicial', '2024-12-05 03:12:34'),
+(3, 3, 'entrada', NULL, '20.000', 'Entrada inicial', '2024-12-05 03:12:49'),
+(4, 2, 'salida', 'SALE-T0W8G7A9G6V9O8J6D0R3B0-1', '1.000', 'Venta de producto', '2024-12-05 03:18:29'),
+(5, 2, 'salida', 'SALE-C7Y2X3J3P2B0B5H3B7V6H7-2', '1.000', 'Venta de producto', '2024-12-05 03:22:24'),
+(6, 2, 'salida', 'SALE-U7Y1B7U7W6Q7K8R0T4C3A5-3', '1.000', 'Venta de producto', '2024-12-05 03:24:14'),
+(7, 2, 'salida', 'SALE-A3A3F0M9X6B7Z4W9Z5R2K1-4', '1.000', 'Venta de producto', '2024-12-05 03:25:30'),
+(8, 2, 'salida', NULL, '2.000', 'ajuste de inventario', '2024-12-05 03:34:47'),
+(9, 1, 'salida', 'SALE-U3P1N3R6H5S1K9I6N8M5W5-5', '1.000', 'Venta de producto', '2024-12-05 05:34:43'),
+(10, 1, 'entrada', 'SALE-U3P1N3R6H5S1K9I6N8M5W5-5', '1.000', 'Devolucion Producto', '2024-12-05 05:40:41');
 
 -- --------------------------------------------------------
 
@@ -386,13 +360,6 @@ CREATE TABLE `notas` (
   `estatus` int(11) NOT NULL,
   `fecha` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
---
--- Volcado de datos para la tabla `notas`
---
-
-INSERT INTO `notas` (`id_nota`, `codigo`, `titulo_nota`, `fecha_publicacion`, `fecha_expiracion`, `porc_descuento`, `qr`, `estatus`, `fecha`) VALUES
-(1, 'NOT-HBB0V5QR3XU6ZJD8YRAYJQ', 'Black Friday', '2024-11-28 14:00:00', '2024-11-29 12:00:00', '10.00', 'http://localhost/pos2/detalleNota/NOT-HBB0V5QR3XU6ZJD8YRAYJQ', 1, '2024-11-28 20:26:33');
 
 -- --------------------------------------------------------
 
@@ -417,12 +384,10 @@ CREATE TABLE `pago` (
 --
 
 INSERT INTO `pago` (`id_pago`, `codigo_pago`, `codigo_venta`, `id_metodo_pago`, `total_pago`, `total_pagado`, `total_cambio`, `referencia`, `fecha_pago`) VALUES
-(4, 'PAY-U76BMA8AVLFRLIQU4HOHEG-4', 'SALE-X4X8O6O9Q9G8T5R7V3Z6K4-1', 2, '680.00', '700.00', '20.00', 'ALDKSMDJNENCJ', '2024-11-27 17:25:36'),
-(5, 'PAY-DJCVSYXT6ZJADCQRB3F0GU-2', 'SALE-J8P4K3F0Z2F9T8X0B2Z4A8-2', 2, '400.00', '400.00', '0.00', 'ALDKSMDJNENCJ', '2024-11-27 18:12:39'),
-(6, 'PAY-ZZ4VAEGNFOXSSRL9IL2JTH-3', 'SALE-E0A5V8G8F6W2J6F4C1B5Q1-3', 1, '250.00', '500.00', '250.00', '', '2024-11-28 18:22:01'),
-(7, 'PAY-1LKTZPWJKVQ37GCCUOXB9N-4', 'SALE-S0P0U3V8Y2V5U3D5K4P8E3-4', 1, '350.00', '500.00', '150.00', '', '2024-11-28 18:56:40'),
-(8, 'PAY-QRMVTCBS6I9NUDZJAO2XWH-5', 'SALE-P7C5N2M9O4I7A2Z8V6S5Q9-5', 1, '350.00', '500.00', '150.00', '', '2024-12-02 15:46:16'),
-(9, 'PAY-LE74VBHO0WCAIKQL9W3GJX-6', 'SALE-T9V6I6V3K0E1X5O6E4U2O0-6', 1, '500.00', '500.00', '0.00', '', '2024-12-02 17:09:48');
+(1, 'PAY-JQ9GIAIJDKNCRYHCQFTN4M-1', 'SALE-T0W8G7A9G6V9O8J6D0R3B0-1', 1, '250.00', '500.00', '250.00', '', '2024-12-05 03:18:29'),
+(2, 'PAY-DUMWM5YXDYRLRKFHBNISAC-2', 'SALE-C7Y2X3J3P2B0B5H3B7V6H7-2', 1, '250.00', '100.00', '-150.00', '', '2024-12-05 03:22:24'),
+(3, 'PAY-ZMSWTPZTOK7NN3F9RXOJC6-3', 'SALE-A3A3F0M9X6B7Z4W9Z5R2K1-4', 1, '250.00', '50.00', '-200.00', '', '2024-12-05 04:27:48'),
+(4, 'PAY-SAUANS5I8WBYEXKHKPITFZ-4', 'SALE-A3A3F0M9X6B7Z4W9Z5R2K1-4', 1, '200.00', '100.00', '-150.00', '', '2024-12-05 04:54:47');
 
 -- --------------------------------------------------------
 
@@ -481,14 +446,6 @@ CREATE TABLE `productos_notas` (
   `fecha` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
---
--- Volcado de datos para la tabla `productos_notas`
---
-
-INSERT INTO `productos_notas` (`id_detalle_nota`, `codigo_nota`, `id_producto`, `codigo`, `descripcion`, `precio_venta`, `limite_nota`, `colores`, `tallas`, `estatus`, `fecha`) VALUES
-(1, 'NOT-HBB0V5QR3XU6ZJD8YRAYJQ', 2, '00023456789', 'Pantalon Mezclilla', '250.00', 3, '', '', 1, '2024-11-28 20:26:33'),
-(2, 'NOT-HBB0V5QR3XU6ZJD8YRAYJQ', 1, '00123456789', 'Sueter Mio Mio', '350.00', 8, 'Azul,Gris,Verde', '32,38,40', 1, '2024-11-28 20:26:33');
-
 -- --------------------------------------------------------
 
 --
@@ -534,12 +491,7 @@ CREATE TABLE `sesiones_caja` (
 --
 
 INSERT INTO `sesiones_caja` (`id_sesion`, `codigo_sesion`, `id_usuario`, `id_caja`, `notas_apertura`, `fecha_apertura`, `saldo_inicial`, `efectivo`, `tarjeta_debito`, `tarjeta_credito`, `transferencia`, `saldo_final`, `diferencia`, `observaciones`, `fecha_cierre`, `estado`) VALUES
-(1, 'POS-K8V6N6B2C6-1', 1, 1, 'apertura inicial', '2024-11-27 01:54:53', '0.00', '930.00', '0.00', '0.00', '400.00', '1000.00', '50.00', 'prueba de cierre', '2024-11-28 12:53:03', 'cerrada'),
-(2, 'POS-K7E3Y3O5E4-2', 1, 1, 'apertura con 50 por sobrante de caja', '2024-11-28 18:56:30', '50.00', '350.00', '0.00', '0.00', '0.00', '800.00', '50.00', '', '2024-12-02 09:44:25', 'cerrada'),
-(3, 'POS-H3R5U9M8W0-3', 3, 2, '', '2024-11-29 23:30:56', '100.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', NULL, NULL, 'abierta'),
-(4, 'POS-J1Z9X3F4E5-4', 1, 1, '', '2024-12-02 15:45:59', '100.00', '350.00', '0.00', '0.00', '0.00', '1000.00', '50.00', '', '2024-12-02 09:47:57', 'cerrada'),
-(5, 'POS-C5G6S4U4Q0-5', 1, 1, '', '2024-12-02 15:48:44', '1000.00', '0.00', '0.00', '0.00', '0.00', '1000.00', '0.00', '', '2024-12-02 11:07:24', 'cerrada'),
-(6, 'POS-F8B2R9Z6V9-6', 1, 1, 'apertura de caja', '2024-12-02 17:08:41', '500.00', '500.00', '0.00', '0.00', '0.00', '0.00', '0.00', NULL, NULL, 'abierta');
+(1, 'POS-N0G3D1T4M3-1', 1, 1, 'apertura de caja', '2024-12-05 03:15:29', '100.00', '500.00', '0.00', '0.00', '0.00', '0.00', '0.00', NULL, NULL, 'abierta');
 
 -- --------------------------------------------------------
 
@@ -566,7 +518,7 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id_usuario`, `nombre`, `email`, `usuario`, `password`, `foto`, `perfil`, `id_caja`, `fecha_alta`, `codigo_sesion`, `estatus`) VALUES
-(1, 'Administrador', '', 'Administrador', '$2y$10$Jgm6xFb5Onz/BMdIkNK2Tur8yg/NYEMb/tdnhoV7kB1BwIG4R05D2', '', 'Administrador', 1, '2024-12-03 03:28:58', 'POS-F8B2R9Z6V9-6', 1),
+(1, 'Administrador', '', 'Administrador', '$2y$10$Jgm6xFb5Onz/BMdIkNK2Tur8yg/NYEMb/tdnhoV7kB1BwIG4R05D2', '', 'Administrador', 1, '2024-12-03 03:28:58', 'POS-N0G3D1T4M3-1', 1),
 (2, 'Cajero 2', '', 'cajero2', '$2y$10$9zt9trw18J9i8I5NDYVTPOhyLEZ95l./tnhVC/kbcR9/FarK2Poni', 'Marco_Antonio_Lopez_Perez_18.png', 'Caja', 4, '2024-12-03 03:39:36', NULL, 1),
 (3, 'Cajero 1', '', 'cajero1', '$2y$10$skfgnFM/v//X9b1QiAWAxePh2Xx/AK20jJR64MiHk0afyStaT0Kwe', '', 'Caja', 2, '2024-12-03 03:39:36', 'POS-H3R5U9M8W0-3', 1);
 
@@ -590,28 +542,25 @@ CREATE TABLE `venta` (
   `descuento` decimal(10,3) NOT NULL,
   `total` decimal(30,2) NOT NULL,
   `pagado` decimal(30,2) NOT NULL,
-  `cambio` decimal(30,2) NOT NULL,
   `pendiente` decimal(30,2) NOT NULL,
   `id_usuario` int(11) NOT NULL,
   `id_cliente` int(11) NOT NULL,
   `id_caja` int(11) NOT NULL,
   `estatus` int(11) NOT NULL,
   `estatus_pago` int(11) NOT NULL,
-  `fecha_registro` timestamp NOT NULL DEFAULT current_timestamp(),
-  `fecha_pago` datetime DEFAULT NULL
+  `fecha_registro` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
 -- Volcado de datos para la tabla `venta`
 --
 
-INSERT INTO `venta` (`id_venta`, `tipo_venta`, `tipo_entrega`, `forma_pago`, `codigo`, `codigo_nota`, `fecha_venta`, `hora_venta`, `subtotal`, `porc_descuento`, `descuento`, `total`, `pagado`, `cambio`, `pendiente`, `id_usuario`, `id_cliente`, `id_caja`, `estatus`, `estatus_pago`, `fecha_registro`, `fecha_pago`) VALUES
-(1, 'directa', 'recoleccion', 1, 'SALE-X4X8O6O9Q9G8T5R7V3Z6K4-1', '', '2024-11-27', '11:25:00', '800.00', '15.00', '120.000', '680.00', '700.00', '20.00', '0.00', 1, 1, 1, 1, 1, '2024-11-27 17:25:36', NULL),
-(2, 'directa', 'recoleccion', 2, 'SALE-J8P4K3F0Z2F9T8X0B2Z4A8-2', '', '2024-11-27', '12:12:00', '400.00', '0.00', '0.000', '400.00', '400.00', '0.00', '0.00', 1, 1, 1, 1, 1, '2024-11-27 18:12:39', NULL),
-(3, 'directa', 'recoleccion', 1, 'SALE-E0A5V8G8F6W2J6F4C1B5Q1-3', '', '2024-11-28', '12:22:00', '250.00', '0.00', '0.000', '250.00', '500.00', '250.00', '0.00', 1, 1, 1, 2, 1, '2024-11-28 18:22:01', NULL),
-(4, 'directa', 'recoleccion', 1, 'SALE-S0P0U3V8Y2V5U3D5K4P8E3-4', '', '2024-11-28', '12:56:00', '350.00', '0.00', '0.000', '350.00', '500.00', '150.00', '0.00', 1, 1, 1, 1, 1, '2024-11-28 18:56:40', NULL),
-(5, 'directa', 'recoleccion', 1, 'SALE-P7C5N2M9O4I7A2Z8V6S5Q9-5', '', '2024-12-02', '09:46:00', '350.00', '0.00', '0.000', '350.00', '500.00', '150.00', '0.00', 1, 1, 1, 1, 1, '2024-12-02 15:46:16', NULL),
-(6, 'directa', 'recoleccion', 1, 'SALE-T9V6I6V3K0E1X5O6E4U2O0-6', '', '2024-12-02', '11:09:00', '500.00', '0.00', '0.000', '500.00', '500.00', '0.00', '0.00', 1, 7, 1, 1, 1, '2024-12-02 17:09:47', NULL);
+INSERT INTO `venta` (`id_venta`, `tipo_venta`, `tipo_entrega`, `forma_pago`, `codigo`, `codigo_nota`, `fecha_venta`, `hora_venta`, `subtotal`, `porc_descuento`, `descuento`, `total`, `pagado`, `pendiente`, `id_usuario`, `id_cliente`, `id_caja`, `estatus`, `estatus_pago`, `fecha_registro`) VALUES
+(1, 'directa', 'recoleccion', 1, 'SALE-T0W8G7A9G6V9O8J6D0R3B0-1', '', '2024-12-04', '09:18:00', '250.00', '0.00', '0.000', '250.00', '250.00', '0.00', 1, 1, 1, 1, 1, '2024-12-05 03:18:29'),
+(2, 'directa', 'recoleccion', 1, 'SALE-C7Y2X3J3P2B0B5H3B7V6H7-2', '', '2024-12-04', '09:22:00', '250.00', '0.00', '0.000', '250.00', '100.00', '150.00', 1, 1, 1, 1, 1, '2024-12-05 03:22:24'),
+(3, 'directa', 'recoleccion', 5, 'SALE-U7Y1B7U7W6Q7K8R0T4C3A5-3', '', '2024-12-04', '09:24:00', '250.00', '0.00', '0.000', '250.00', '0.00', '250.00', 1, 1, 1, 1, 0, '2024-12-05 03:24:14'),
+(4, 'directa', 'recoleccion', 1, 'SALE-A3A3F0M9X6B7Z4W9Z5R2K1-4', '', '2024-12-04', '09:25:00', '250.00', '0.00', '0.000', '250.00', '100.00', '150.00', 1, 1, 1, 1, 1, '2024-12-05 03:25:30'),
+(5, 'directa', 'recoleccion', 5, 'SALE-U3P1N3R6H5S1K9I6N8M5W5-5', '', '2024-12-04', '11:34:00', '350.00', '0.00', '0.000', '350.00', '0.00', '350.00', 1, 1, 1, 0, 0, '2024-12-05 05:34:43');
 
 -- --------------------------------------------------------
 
@@ -642,14 +591,11 @@ CREATE TABLE `venta_detalle` (
 --
 
 INSERT INTO `venta_detalle` (`id_detalle`, `id_producto`, `token`, `descripcion`, `codigo`, `cantidad`, `color`, `talla`, `precio_compra`, `precio_venta`, `porc_descuento`, `descuento`, `subtotal`, `total`, `fecha_movimiento`) VALUES
-(1, 1, 'C3I9R1Y0', 'Sueter Mio Mio', 'SALE-X4X8O6O9Q9G8T5R7V3Z6K4-1', 1, '', '', '250.00', '350.00', '0.00', '52.50', '350.00', '297.50', '2024-11-27 17:25:36'),
-(2, 2, 'D6I5G0Z2', 'Pantalon Mezclilla', 'SALE-X4X8O6O9Q9G8T5R7V3Z6K4-1', 1, '', '', '0.00', '250.00', '0.00', '37.50', '250.00', '212.50', '2024-11-27 17:25:36'),
-(3, 3, 'X5K5S8B3', 'Vestido Largo Moda', 'SALE-X4X8O6O9Q9G8T5R7V3Z6K4-1', 1, '', '', '0.00', '200.00', '0.00', '30.00', '200.00', '170.00', '2024-11-27 17:25:36'),
-(4, 3, 'W3T6U2Z4', 'Vestido Largo Moda', 'SALE-J8P4K3F0Z2F9T8X0B2Z4A8-2', 2, '', '', '0.00', '200.00', '0.00', '0.00', '400.00', '400.00', '2024-11-27 18:12:39'),
-(5, 2, 'J8R4E3U9', 'Pantalon Mezclilla', 'SALE-E0A5V8G8F6W2J6F4C1B5Q1-3', 1, '', '', '0.00', '250.00', '0.00', '0.00', '250.00', '250.00', '2024-11-28 18:22:01'),
-(6, 1, 'L3M8Q9B2', 'Sueter Mio Mio', 'SALE-S0P0U3V8Y2V5U3D5K4P8E3-4', 1, '', '', '250.00', '350.00', '0.00', '0.00', '350.00', '350.00', '2024-11-28 18:56:40'),
-(7, 1, 'R0P5R2B9', 'Sueter Mio Mio', 'SALE-P7C5N2M9O4I7A2Z8V6S5Q9-5', 1, '', '', '250.00', '350.00', '0.00', '0.00', '350.00', '350.00', '2024-12-02 15:46:16'),
-(8, 2, 'P0Y2F6X6', 'Pantalon Mezclilla', 'SALE-T9V6I6V3K0E1X5O6E4U2O0-6', 2, '', '', '0.00', '250.00', '0.00', '0.00', '500.00', '500.00', '2024-12-02 17:09:48');
+(1, 2, 'E7U4R4D8', 'Pantalon Mezclilla', 'SALE-T0W8G7A9G6V9O8J6D0R3B0-1', 1, '', '', '150.00', '250.00', '0.00', '0.00', '250.00', '250.00', '2024-12-05 03:18:29'),
+(2, 2, 'A0J2S2S2', 'Pantalon Mezclilla', 'SALE-C7Y2X3J3P2B0B5H3B7V6H7-2', 1, '', '', '150.00', '250.00', '0.00', '0.00', '250.00', '250.00', '2024-12-05 03:22:24'),
+(3, 2, 'A8E7N3H5', 'Pantalon Mezclilla', 'SALE-U7Y1B7U7W6Q7K8R0T4C3A5-3', 1, '', '', '150.00', '250.00', '0.00', '0.00', '250.00', '250.00', '2024-12-05 03:24:14'),
+(4, 2, 'M3O9G4Z3', 'Pantalon Mezclilla', 'SALE-A3A3F0M9X6B7Z4W9Z5R2K1-4', 1, '', '', '150.00', '250.00', '0.00', '0.00', '250.00', '250.00', '2024-12-05 03:25:30'),
+(5, 1, 'J3K1A9E5', 'Sueter Mio Mio', 'SALE-U3P1N3R6H5S1K9I6N8M5W5-5', 0, '', '', '250.00', '350.00', '0.00', '0.00', '0.00', '0.00', '2024-12-05 05:34:43');
 
 --
 -- Índices para tablas volcadas
@@ -808,7 +754,7 @@ ALTER TABLE `venta_detalle`
 -- AUTO_INCREMENT de la tabla `bitacora`
 --
 ALTER TABLE `bitacora`
-  MODIFY `id_bitacora` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id_bitacora` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de la tabla `caja`
@@ -838,7 +784,7 @@ ALTER TABLE `cliente`
 -- AUTO_INCREMENT de la tabla `corte_caja`
 --
 ALTER TABLE `corte_caja`
-  MODIFY `id_corte` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_corte` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `detalleventa`
@@ -868,31 +814,31 @@ ALTER TABLE `inventario`
 -- AUTO_INCREMENT de la tabla `metodopago`
 --
 ALTER TABLE `metodopago`
-  MODIFY `id_metodo_pago` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_metodo_pago` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `movimiento_caja`
 --
 ALTER TABLE `movimiento_caja`
-  MODIFY `id_movimiento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id_movimiento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `movimiento_inventario`
 --
 ALTER TABLE `movimiento_inventario`
-  MODIFY `id_movimiento_inventario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id_movimiento_inventario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `notas`
 --
 ALTER TABLE `notas`
-  MODIFY `id_nota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_nota` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `pago`
 --
 ALTER TABLE `pago`
-  MODIFY `id_pago` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_pago` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `producto`
@@ -904,7 +850,7 @@ ALTER TABLE `producto`
 -- AUTO_INCREMENT de la tabla `productos_notas`
 --
 ALTER TABLE `productos_notas`
-  MODIFY `id_detalle_nota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_detalle_nota` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `proveedor`
@@ -916,7 +862,7 @@ ALTER TABLE `proveedor`
 -- AUTO_INCREMENT de la tabla `sesiones_caja`
 --
 ALTER TABLE `sesiones_caja`
-  MODIFY `id_sesion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_sesion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
@@ -928,13 +874,13 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `venta`
 --
 ALTER TABLE `venta`
-  MODIFY `id_venta` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_venta` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `venta_detalle`
 --
 ALTER TABLE `venta_detalle`
-  MODIFY `id_detalle` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_detalle` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Restricciones para tablas volcadas
