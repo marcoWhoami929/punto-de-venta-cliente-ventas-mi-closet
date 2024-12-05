@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 04-12-2024 a las 01:18:10
+-- Tiempo de generación: 05-12-2024 a las 01:21:33
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 7.4.33
 
@@ -53,7 +53,9 @@ INSERT INTO `bitacora` (`id_bitacora`, `accion`, `id_usuario`, `fecha`) VALUES
 (12, 'Cierre de Caja Con N° de Sesion POS-C5G6S4U4Q0-5', 1, '2024-12-02 17:07:24'),
 (13, 'Entrada de Inventario de 1 unidades de Sueter Mio Mio', 1, '2024-12-03 19:38:35'),
 (14, 'Salida de Inventario de 8 unidades de Sueter Mio Mio', 1, '2024-12-03 22:25:55'),
-(15, 'Salida de Inventario de 3 unidades de Sueter Mio Mio', 1, '2024-12-03 22:26:41');
+(15, 'Salida de Inventario de 3 unidades de Sueter Mio Mio', 1, '2024-12-03 22:26:41'),
+(16, 'Salida de Inventario de 5 unidades de Sueter Mio Mio', 1, '2024-12-04 17:43:41'),
+(17, 'Entrada de Inventario de 10 unidades de Sueter Mio Mio', 1, '2024-12-04 17:50:39');
 
 -- --------------------------------------------------------
 
@@ -265,7 +267,7 @@ CREATE TABLE `inventario` (
 --
 
 INSERT INTO `inventario` (`id_inventario`, `id_producto`, `stock_total`, `stock_minimo`, `stock_maximo`, `fecha_actualizacion`) VALUES
-(1, 1, '0.000', '1.000', '20.000', '2024-12-03 22:26:41'),
+(1, 1, '10.000', '1.000', '20.000', '2024-12-04 17:50:39'),
 (2, 2, '18.000', '1.000', '20.000', '2024-12-03 22:24:58'),
 (5, 3, '20.000', '1.000', '20.000', '2024-12-03 22:25:00');
 
@@ -343,9 +345,9 @@ CREATE TABLE `movimiento_inventario` (
 --
 
 INSERT INTO `movimiento_inventario` (`id_movimiento_inventario`, `id_producto`, `tipo_movimiento`, `documento`, `cantidad`, `descripcion`, `fecha_movimiento`) VALUES
-(1, 1, 'entrada', NULL, '10.000', NULL, '2024-11-27 04:11:12'),
-(2, 2, 'entrada', NULL, '5.000', NULL, '2024-11-27 04:11:12'),
-(3, 3, 'entrada', NULL, '5.000', NULL, '2024-11-27 04:11:12'),
+(1, 1, 'entrada', NULL, '10.000', 'Entrada inicial', '2024-11-27 04:11:12'),
+(2, 2, 'entrada', NULL, '5.000', 'Entrada inicial', '2024-11-27 04:11:12'),
+(3, 3, 'entrada', NULL, '5.000', 'Entrada inicial', '2024-11-27 04:11:12'),
 (12, 1, 'salida', 'SALE-X4X8O6O9Q9G8T5R7V3Z6K4-1', '1.000', 'Venta de producto', '2024-11-27 17:25:36'),
 (13, 2, 'salida', 'SALE-X4X8O6O9Q9G8T5R7V3Z6K4-1', '1.000', 'Venta de producto', '2024-11-27 17:25:36'),
 (14, 3, 'salida', 'SALE-X4X8O6O9Q9G8T5R7V3Z6K4-1', '1.000', 'Venta de producto', '2024-11-27 17:25:36'),
@@ -364,7 +366,8 @@ INSERT INTO `movimiento_inventario` (`id_movimiento_inventario`, `id_producto`, 
 (27, 2, 'salida', 'SALE-T9V6I6V3K0E1X5O6E4U2O0-6', '2.000', 'Venta de producto', '2024-12-02 17:09:48'),
 (28, 1, 'entrada', NULL, '1.000', '', '2024-12-03 19:38:35'),
 (29, 1, 'salida', NULL, '8.000', 'SALIDA POR INVENTARIO', '2024-12-03 22:25:55'),
-(30, 1, 'salida', NULL, '3.000', 'AJUSTE DE INVENTARIO', '2024-12-03 22:26:41');
+(30, 1, 'salida', NULL, '3.000', 'AJUSTE DE INVENTARIO', '2024-12-03 22:26:41'),
+(32, 1, 'entrada', NULL, '10.000', '', '2024-12-04 17:50:39');
 
 -- --------------------------------------------------------
 
@@ -805,7 +808,7 @@ ALTER TABLE `venta_detalle`
 -- AUTO_INCREMENT de la tabla `bitacora`
 --
 ALTER TABLE `bitacora`
-  MODIFY `id_bitacora` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id_bitacora` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT de la tabla `caja`
@@ -877,7 +880,7 @@ ALTER TABLE `movimiento_caja`
 -- AUTO_INCREMENT de la tabla `movimiento_inventario`
 --
 ALTER TABLE `movimiento_inventario`
-  MODIFY `id_movimiento_inventario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id_movimiento_inventario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT de la tabla `notas`
