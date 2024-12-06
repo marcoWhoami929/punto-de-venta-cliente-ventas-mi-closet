@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 05-12-2024 a las 06:57:56
+-- Tiempo de generación: 06-12-2024 a las 01:21:32
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 7.4.33
 
@@ -361,6 +361,13 @@ CREATE TABLE `notas` (
   `fecha` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `notas`
+--
+
+INSERT INTO `notas` (`id_nota`, `codigo`, `titulo_nota`, `fecha_publicacion`, `fecha_expiracion`, `porc_descuento`, `qr`, `estatus`, `fecha`) VALUES
+(1, 'NOT-HBXZSNIUGDEQXCYSUW67WJ', 'Prueba', '2024-12-05 18:00:00', '2024-12-06 18:00:00', '0.00', 'http://localhost/pos2/detalleNota/NOT-HBXZSNIUGDEQXCYSUW67WJ', 1, '2024-12-06 00:12:18');
+
 -- --------------------------------------------------------
 
 --
@@ -445,6 +452,14 @@ CREATE TABLE `productos_notas` (
   `estatus` int(11) NOT NULL,
   `fecha` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `productos_notas`
+--
+
+INSERT INTO `productos_notas` (`id_detalle_nota`, `codigo_nota`, `id_producto`, `codigo`, `descripcion`, `precio_venta`, `limite_nota`, `colores`, `tallas`, `estatus`, `fecha`) VALUES
+(1, 'NOT-HBXZSNIUGDEQXCYSUW67WJ', 2, '00023456789', 'Pantalon Mezclilla', '250.00', 14, '', '', 1, '2024-12-06 00:12:18'),
+(2, 'NOT-HBXZSNIUGDEQXCYSUW67WJ', 1, '00123456789', 'Sueter Mio Mio', '350.00', 20, 'Azul,Gris,Verde', '32,38,40', 1, '2024-12-06 00:12:18');
 
 -- --------------------------------------------------------
 
@@ -556,7 +571,7 @@ CREATE TABLE `venta` (
 --
 
 INSERT INTO `venta` (`id_venta`, `tipo_venta`, `tipo_entrega`, `forma_pago`, `codigo`, `codigo_nota`, `fecha_venta`, `hora_venta`, `subtotal`, `porc_descuento`, `descuento`, `total`, `pagado`, `pendiente`, `id_usuario`, `id_cliente`, `id_caja`, `estatus`, `estatus_pago`, `fecha_registro`) VALUES
-(1, 'directa', 'recoleccion', 1, 'SALE-T0W8G7A9G6V9O8J6D0R3B0-1', '', '2024-12-04', '09:18:00', '250.00', '0.00', '0.000', '250.00', '250.00', '0.00', 1, 1, 1, 1, 1, '2024-12-05 03:18:29'),
+(1, 'directa', 'recoleccion', 1, 'SALE-T0W8G7A9G6V9O8J6D0R3B0-1', '', '2024-12-04', '09:18:00', '250.00', '0.00', '0.000', '250.00', '250.00', '0.00', 1, 1, 1, 2, 1, '2024-12-05 03:18:29'),
 (2, 'directa', 'recoleccion', 1, 'SALE-C7Y2X3J3P2B0B5H3B7V6H7-2', '', '2024-12-04', '09:22:00', '250.00', '0.00', '0.000', '250.00', '100.00', '150.00', 1, 1, 1, 1, 1, '2024-12-05 03:22:24'),
 (3, 'directa', 'recoleccion', 5, 'SALE-U7Y1B7U7W6Q7K8R0T4C3A5-3', '', '2024-12-04', '09:24:00', '250.00', '0.00', '0.000', '250.00', '0.00', '250.00', 1, 1, 1, 1, 0, '2024-12-05 03:24:14'),
 (4, 'directa', 'recoleccion', 1, 'SALE-A3A3F0M9X6B7Z4W9Z5R2K1-4', '', '2024-12-04', '09:25:00', '250.00', '0.00', '0.000', '250.00', '100.00', '150.00', 1, 1, 1, 1, 1, '2024-12-05 03:25:30'),
@@ -832,7 +847,7 @@ ALTER TABLE `movimiento_inventario`
 -- AUTO_INCREMENT de la tabla `notas`
 --
 ALTER TABLE `notas`
-  MODIFY `id_nota` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_nota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `pago`
@@ -850,7 +865,7 @@ ALTER TABLE `producto`
 -- AUTO_INCREMENT de la tabla `productos_notas`
 --
 ALTER TABLE `productos_notas`
-  MODIFY `id_detalle_nota` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_detalle_nota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `proveedor`
