@@ -26,9 +26,9 @@ class ModelNotas
     static public function mdlListarFormasPago($tipo_entrega)
     {
         if ($tipo_entrega == "recoleccion") {
-            $sWhere = "";
+            $sWhere = "WHERE id_metodo_pago NOT IN(5)";
         } else {
-            $sWhere = "WHERE id_metodo_pago != 1";
+            $sWhere = "WHERE id_metodo_pago NOT IN(1,5)";
         }
         $stmt = ConexionsBd::conectar()->prepare("SELECT * FROM metodopago $sWhere");
 
@@ -166,6 +166,16 @@ class ModelNotas
         $stmt->execute();
 
         return $stmt->fetchAll();
+
+        $stmt = null;
+    }
+    static public function mdlObtenerStockActual($id_producto)
+    {
+        $stmt = ConexionsBd::conectar()->prepare("SELECT prod.*,inven.stock_total FROM producto as prod INNER JOIN inventario as inven ON prod.cid_producto = inven.id_producto WHERE prod.cid_producto= '$id_producto'");
+
+        $stmt->execute();
+
+        return $stmt->fetch();
 
         $stmt = null;
     }

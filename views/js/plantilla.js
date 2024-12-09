@@ -306,7 +306,34 @@ function incrementar(idProducto) {
   var cantidad = Number.parseInt(actual) + 1;
   if (cantidad == 0) {
   } else {
-    $("#cantidad" + idProducto).val(cantidad);
+
+    var parametros = {
+      action: "stock_producto",
+      id_producto: idProducto,
+    };
+  
+    $.ajax({
+      url: "../ajax/notas.ajax.php",
+      data: parametros,
+      beforeSend: function (objeto) {},
+      success: function (data) {
+        var stock = JSON.parse(data);
+        if(stock["stock_total"] < cantidad){
+          Swal.fire({
+            title: "No hay existencia de las unidades solicitadas",
+            text: "Unidades disponibles "+stock["stock_total"]+"",
+            icon: "warning",
+            confirmButtonColor: "#B99654",
+            confirmButtonText: "Entendido",
+          });
+        }else{
+          $("#cantidad" + idProducto).val(cantidad);
+        }
+        
+      },
+    });
+
+
   }
 }
 function detalleProductosNota(codigoNota) {
@@ -461,19 +488,44 @@ function decrementarCarrito(token, precio_venta, porc_descuento) {
     );
   }
 }
-function incrementarCarrito(token, precio_venta, porc_descuento) {
+function incrementarCarrito(id_producto,token, precio_venta, porc_descuento) {
   var actual = $("#cantidadCarrito" + token).val();
 
   var cantidad = Number.parseInt(actual) + 1;
   if (cantidad == 0) {
   } else {
-    actualizarProductoCarrito(
-      cantidad,
-      precio_venta,
-      porc_descuento,
-      token,
-      codigoNota
-    );
+    var parametros = {
+      action: "stock_producto",
+      id_producto: id_producto,
+    };
+  
+    $.ajax({
+      url: "../ajax/notas.ajax.php",
+      data: parametros,
+      beforeSend: function (objeto) {},
+      success: function (data) {
+        var stock = JSON.parse(data);
+        if(stock["stock_total"] < cantidad){
+          Swal.fire({
+            title: "No hay existencia de las unidades solicitadas",
+            text: "Unidades disponibles "+stock["stock_total"]+"",
+            icon: "warning",
+            confirmButtonColor: "#B99654",
+            confirmButtonText: "Entendido",
+          });
+        }else{
+          actualizarProductoCarrito(
+            cantidad,
+            precio_venta,
+            porc_descuento,
+            token,
+            codigoNota
+          );
+        }
+        
+      },
+    });
+   
   }
 }
 function actualizarProductoCarrito(

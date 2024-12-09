@@ -80,4 +80,11 @@ class ControllerNotas
 
         return $respuesta;
     }
+    static public function ctrObtenerStockActual($id_producto)
+    {
+
+        $respuesta =  ModelNotas::mdlObtenerStockActual($id_producto);
+
+        return $respuesta;
+    }
 }

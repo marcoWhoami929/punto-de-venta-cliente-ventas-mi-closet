@@ -60,7 +60,7 @@ class notas extends ConexionsBd
         $id_cliente = $search['id_cliente'];
 
 
-        $sWhere = "vent.id_cliente = '" . $id_cliente . "' ";
+        $sWhere = "vent.id_cliente = '" . $id_cliente . "' and vent.codigo_nota != ''";
         if ($search["busqueda"] != "") {
 
             $sWhere .= "and vent.codigo LIKE '%" . $search['busqueda'] . "%' OR vent.codigo_nota LIKE '%" . $search['busqueda'] . "%'";

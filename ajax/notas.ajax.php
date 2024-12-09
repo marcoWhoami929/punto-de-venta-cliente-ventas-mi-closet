@@ -297,13 +297,13 @@ if ($action == 'detalle_nota') {
                                 <div class="form-group">
                                     <div class="input-group d-flex align-items-center">
                                         <div class="input-group-append">
-                                            <button class="btn btn-sm btn-info me-2" type="button" onclick="decrementar(<?= $row['cid_producto'] ?>)">
+                                            <button class="btn btn-sm btn-info me-2" type="button" onclick="decrementar(<?= $row['id_producto'] ?>)">
                                                 <i class="ti-minus"></i>
                                             </button>
                                         </div>
-                                        <input type="text" class="form-control" value="1" id="cantidad<?= $row['cid_producto'] ?>" readonly>
+                                        <input type="text" class="form-control" value="1" id="cantidad<?= $row['id_producto'] ?>" readonly>
                                         <div class="input-group-append">
-                                            <button class="btn btn-sm btn-info ms-2" type="button" onclick="incrementar(<?= $row['cid_producto'] ?>)">
+                                            <button class="btn btn-sm btn-info ms-2" type="button" onclick="incrementar(<?= $row['id_producto'] ?>)">
                                                 <i class="ti-plus"></i>
                                             </button>
                                         </div>
@@ -313,7 +313,7 @@ if ($action == 'detalle_nota') {
                             <div class="col-md-1 col-sm-1 col-lg-1">
                                 <div class="form-group">
                                     <label>Color</label>
-                                    <select class="form-select" id="color<?= $row['cid_producto'] ?>">
+                                    <select class="form-select" id="color<?= $row['id_producto'] ?>">
                                         <?php
 
                                         $colores = explode(",", $row['colores']);
@@ -328,7 +328,7 @@ if ($action == 'detalle_nota') {
                             <div class="col-md-1 col-sm-1 col-lg-1">
                                 <div class="form-group">
                                     <label>Talla</label>
-                                    <select class="form-select" id="talla<?= $row['cid_producto'] ?>">
+                                    <select class="form-select" id="talla<?= $row['id_producto'] ?>">
                                         <?php
 
                                         $tallas = explode(",", $row['tallas']);
@@ -346,7 +346,7 @@ if ($action == 'detalle_nota') {
                             </div>
 
                             <div class="col-md-1 col-sm-1 col-lg-1">
-                                <button class="btn btn-md btn-info mt-4" type="button" onclick="agregarProductoCarrito('<?= $row["cid_producto"] ?>','<?= $row["codigo"] ?>','<?= $row["descripcion"] ?>','<?= $row["porc_descuento"] ?>','<?= $row["precio_venta"] ?>','<?= $codigo ?>')">
+                                <button class="btn btn-md btn-info mt-4" type="button" onclick="agregarProductoCarrito('<?= $row["id_producto"] ?>','<?= $row["codigo"] ?>','<?= $row["descripcion"] ?>','<?= $row["porc_descuento"] ?>','<?= $row["precio_venta"] ?>','<?= $codigo ?>')">
                                     <i class="ti-shopping-cart" style="color:#ffffff"></i>Agregar
                                 </button>
                             </div>
@@ -396,7 +396,8 @@ if ($action == 'agregar_producto') {
             "colores" => $color,
             "tallas" => $talla,
             "total" => $total,
-            "descripcion" => $descripcion
+            "descripcion" => $descripcion,
+            "error" => ""
         ];
     }
     echo json_encode("agregado");
@@ -435,7 +436,7 @@ if ($action ==  'carrito_nota') {
                                             </div>
                                             <input type="text" class="form-control" value="<?= $producto['cantidad'] ?>" id="cantidadCarrito<?= $producto['token'] ?>" readonly>
                                             <div class="input-group-append">
-                                                <button class="btn btn-sm btn-info ms-2" type="button" onclick="incrementarCarrito('<?= $producto['token'] ?>','<?= $producto['precio_venta'] ?>','<?= $producto['porc_descuento'] ?>')">
+                                                <button class="btn btn-sm btn-info ms-2" type="button" onclick="incrementarCarrito('<?= $producto['id_producto'] ?>','<?= $producto['token'] ?>','<?= $producto['precio_venta'] ?>','<?= $producto['porc_descuento'] ?>')">
                                                     <i class="ti-plus"></i>
                                                 </button>
                                             </div>
@@ -576,11 +577,13 @@ if ($action == 'guardar_nota') {
             $forma_pago = strip_tags($_REQUEST['forma_pago']);
             $pagado = "0.00";
 
+
             $pagado = number_format($pagado, MONEDA_DECIMALES, '.', '');
             $total = number_format($_SESSION['total' . $codigo_nota], MONEDA_DECIMALES, '.', '');
             $subtotal = number_format($_SESSION['subtotal' . $codigo_nota], MONEDA_DECIMALES, '.', '');
             $descuento = number_format($_SESSION['descuento' . $codigo_nota], MONEDA_DECIMALES, '.', '');
             $porc_descuento = number_format($porc_descuento, MONEDA_DECIMALES, '.', '');
+            $pendiente = $total;
 
             $fecha_venta = date("Y-m-d");
             $hora_venta = date("H:i:s");
@@ -588,8 +591,7 @@ if ($action == 'guardar_nota') {
             $total_final = $total;
             $total_final = number_format($total_final, MONEDA_DECIMALES, '.', '');
 
-            $cambio = $total_final - $total_final;
-            $cambio = number_format($cambio, MONEDA_DECIMALES, '.', '');
+
             $tipo_venta = "nota";
             $id_cliente = $_SESSION["id"];
 
@@ -626,7 +628,7 @@ if ($action == 'guardar_nota') {
                 "descuento" => $descuento,
                 "total" => $total_final,
                 "pagado" => $pagado,
-                "cambio" => $cambio,
+                "pendiente" => $pendiente,
                 "id_usuario" => 1,
                 "id_cliente" => $id_cliente,
                 "id_caja" => 1,
@@ -635,32 +637,66 @@ if ($action == 'guardar_nota') {
                 "estatus_pago" => 0,
             ];
 
-            $generar_venta = $controlador->ctrGenerarVenta($datos_venta);
+            //$generar_venta = $controlador->ctrGenerarVenta($datos_venta);
+            $generar_venta = "ok";
 
             if ($generar_venta == "ok") {
+                $totalSubtotal = 0;
+                $totalDescuento = 0;
+                $totalVenta = 0;
+                $totalPendiente = 0;
                 foreach ($_SESSION['datos_producto_nota'][$codigo_nota] as $producto) {
-                    $productos_venta = [
-                        "id_producto" => $producto['id_producto'],
-                        "token" => $producto['token'],
-                        "descripcion" => $producto['descripcion'],
-                        "codigo" => $codigo_venta,
-                        "cantidad" => $producto['cantidad'],
-                        "color" => $producto['colores'],
-                        "talla" => $producto['tallas'],
-                        "precio_venta" => $producto['precio_venta'],
-                        "porc_descuento" => $producto['porc_descuento'],
-                        "descuento" => $producto['descuento'],
-                        "subtotal" => $producto['subtotal'],
-                        "total" => $producto['total'],
-                    ];
+
+                    $stock = $controlador->ctrObtenerStockActual($producto['id_producto']);
+                    $stock_total = $stock["stock_total"];
+                    if ($stock_total < $producto['cantidad']) {
+                        $subtotal = ($stock_total * $producto['precio_venta']);
+                        $descuento = (($producto['precio_venta'] * $stock_total * $producto['porc_descuento']) / 100);
+
+                        $productos_venta = [
+                            "id_producto" => $producto['id_producto'],
+                            "token" => $producto['token'],
+                            "descripcion" => $producto['descripcion'],
+                            "codigo" => $codigo_venta,
+                            "cantidad" => $stock_total,
+                            "color" => $producto['colores'],
+                            "talla" => $producto['tallas'],
+                            "precio_venta" => $producto['precio_venta'],
+                            "porc_descuento" => $producto['porc_descuento'],
+                            "descuento" => $producto['descuento'],
+                            "subtotal" => $producto['subtotal'],
+                            "total" => $producto['total'],
+                        ];
+                    } else {
+                        $productos_venta = [
+                            "id_producto" => $producto['id_producto'],
+                            "token" => $producto['token'],
+                            "descripcion" => $producto['descripcion'],
+                            "codigo" => $codigo_venta,
+                            "cantidad" => $producto['cantidad'],
+                            "color" => $producto['colores'],
+                            "talla" => $producto['tallas'],
+                            "precio_venta" => $producto['precio_venta'],
+                            "porc_descuento" => $producto['porc_descuento'],
+                            "descuento" => $producto['descuento'],
+                            "subtotal" => $producto['subtotal'],
+                            "total" => $producto['total'],
+                        ];
+
+                        $totalSubtotal += $producto['subtotal'];
+                        $totalDescuento += $producto['descuento'];
+                        $totalVenta += $producto['total'];
+                        $totalPendiente += $producto['total'];
+                    }
 
 
-                    $guardarProductoVenta = $controlador->ctrGuardarProductoVenta($productos_venta);
+
+                    //$guardarProductoVenta = $controlador->ctrGuardarProductoVenta($productos_venta);
                 }
-                unset($_SESSION["datos_producto_nota"][$codigo_nota]);
-                unset($_SESSION["subtotal" . $codigo_nota]);
-                unset($_SESSION["descuento" . $codigo_nota]);
-                unset($_SESSION["total" . $codigo_nota]);
+                //unset($_SESSION["datos_producto_nota"][$codigo_nota]);
+                //unset($_SESSION["subtotal" . $codigo_nota]);
+                //unset($_SESSION["descuento" . $codigo_nota]);
+                //unset($_SESSION["total" . $codigo_nota]);
                 echo json_encode("exito");
             } else {
                 echo json_encode("error");
@@ -1133,5 +1169,14 @@ if ($action == 'listado_estatus_notas') {
                 </div>
             </div>';
     }
+}
+if ($action == 'stock_producto') {
+    require_once "../models/notas.model.php";
+    $id_producto = strip_tags($_REQUEST['id_producto']);
+
+    $controlador = new ControllerNotas();
+
+    $stock = $controlador->ctrObtenerStockActual($id_producto);
+    echo json_encode($stock);
 }
 ?>
