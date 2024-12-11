@@ -22,6 +22,7 @@
             </li>
         </ul>
         <ul class="navbar-nav navbar-nav-right">
+            <!--
             <li class="nav-item dropdown">
                 <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-bs-toggle="dropdown">
                     <i class="icon-bell mx-0"></i>
@@ -64,6 +65,7 @@
                     </a>
                 </div>
             </li>
+-->
 
             <li class="nav-item nav-settings d-none d-lg-flex">
                 <a class="dropdown-item" href="<?= APP_URL_CLIENT ?>logout">

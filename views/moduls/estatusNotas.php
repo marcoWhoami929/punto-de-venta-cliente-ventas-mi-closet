@@ -17,14 +17,14 @@
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text"><i class="mdi mdi-barcode-scan"></i></span>
                                                     </div>
-                                                    <input type="text" class="form-control form-control-sm" placeholder="Buscar nota" id="busqueda" onkeyup="listadoNotas(1)">
+                                                    <input type="text" class="form-control form-control-sm" placeholder="Buscar nota" id="busqueda" onkeyup="listadoEstatusNotas(1)">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-md-2">
                                             <div class="form-group">
                                                 <label for="exampleFormControlSelect1">Ordenar Por</label>
-                                                <select class="form-select" id="campoOrden" onchange="listadoNotas(1)">
+                                                <select class="form-select" id="campoOrden" onchange="listadoEstatusNotas(1)">
                                                     <option value="fecha_venta">Notas Pagadas</option>
 
 
@@ -34,7 +34,7 @@
                                         <div class="col-md-2">
                                             <div class="form-group">
                                                 <label for="exampleFormControlSelect1">Orden</label>
-                                                <select class="form-select" id="orden" onchange="listadoNotas(1)">
+                                                <select class="form-select" id="orden" onchange="listadoEstatusNotas(1)">
                                                     <option value="asc">Asc</option>
                                                     <option value="desc">Desc</option>
 
@@ -44,7 +44,7 @@
                                         <div class="col-md-2">
                                             <div class="form-group">
                                                 <label for="exampleFormControlSelect1">Visualizar</label>
-                                                <select class="form-select" id="per_page" onchange="listadoNotas(1)">
+                                                <select class="form-select" id="per_page" onchange="listadoEstatusNotas(1)">
                                                     <option value="10">10</option>
                                                     <option value="50">50</option>
                                                     <option value="100">100</option>

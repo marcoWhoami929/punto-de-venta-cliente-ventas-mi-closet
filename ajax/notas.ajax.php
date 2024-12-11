@@ -575,15 +575,22 @@ if ($action == 'guardar_nota') {
             $porc_descuento = strip_tags($_REQUEST['porc_descuento']);
             $tipo_entrega = strip_tags($_REQUEST['tipo_entrega']);
             $forma_pago = strip_tags($_REQUEST['forma_pago']);
-            $pagado = "0.00";
+            $total = number_format($_SESSION['total' . $codigo_nota], MONEDA_DECIMALES, '.', '');
+            if ($tipo_entrega == "recoleccion") {
+                $pagado = "0.00";
+                $pendiente = $total;
+            } else {
+                $pagado = $total;
+                $pendiente = "0.00";
+            }
 
 
             $pagado = number_format($pagado, MONEDA_DECIMALES, '.', '');
-            $total = number_format($_SESSION['total' . $codigo_nota], MONEDA_DECIMALES, '.', '');
+
             $subtotal = number_format($_SESSION['subtotal' . $codigo_nota], MONEDA_DECIMALES, '.', '');
             $descuento = number_format($_SESSION['descuento' . $codigo_nota], MONEDA_DECIMALES, '.', '');
             $porc_descuento = number_format($porc_descuento, MONEDA_DECIMALES, '.', '');
-            $pendiente = $total;
+
 
             $fecha_venta = date("Y-m-d");
             $hora_venta = date("H:i:s");
@@ -600,18 +607,14 @@ if ($action == 'guardar_nota') {
             $controlador = new ControllerNotas();
 
             $ventas = $controlador->ctrIdVenta();
-            $ventas = count($ventas) + 1;
-
-
-            $codigo_venta = generarCodigoAleatorioNota('SALE', 10,  $ventas);
+            $ventas = $ventas["id_venta"] + 1;
+            $codigo_venta = generarCodigoAleatorioNota('SALE', 22,  $ventas);
             if ($tipo_entrega == "recoleccion") {
-                if ($forma_pago != 1) {
-                    $fecha_pago =  date("Y-m-d H:i:s", strtotime('+1 days'));
-                } else {
-                    $fecha_pago =  date("Y-m-d H:i:s", strtotime('+7 days'));
-                }
+                $fecha_pago =  date("Y-m-d H:i:s", strtotime('+7 days'));
+                $estatus_pago = 0;
             } else {
-                $fecha_pago =  date("Y-m-d H:i:s", strtotime('+1 days'));
+                $fecha_pago =  date("Y-m-d H:i:s", strtotime('+0 days'));
+                $estatus_pago = 1;
             }
 
 
@@ -634,17 +637,18 @@ if ($action == 'guardar_nota') {
                 "id_caja" => 1,
                 "estatus" => 1,
                 "fecha_pago" => $fecha_pago,
-                "estatus_pago" => 0,
+                "estatus_pago" => $estatus_pago,
             ];
 
-            //$generar_venta = $controlador->ctrGenerarVenta($datos_venta);
-            $generar_venta = "ok";
+
+            $generar_venta = $controlador->ctrGenerarVenta($datos_venta);
+            //$generar_venta = "ok";
 
             if ($generar_venta == "ok") {
                 $totalSubtotal = 0;
                 $totalDescuento = 0;
                 $totalVenta = 0;
-                $totalPendiente = 0;
+
                 foreach ($_SESSION['datos_producto_nota'][$codigo_nota] as $producto) {
 
                     $stock = $controlador->ctrObtenerStockActual($producto['id_producto']);
@@ -652,28 +656,38 @@ if ($action == 'guardar_nota') {
                     if ($stock_total < $producto['cantidad']) {
                         $subtotal = ($stock_total * $producto['precio_venta']);
                         $descuento = (($producto['precio_venta'] * $stock_total * $producto['porc_descuento']) / 100);
+                        $total = ($subtotal - $descuento);
+                        $cantidad = $stock_total;
 
                         $productos_venta = [
                             "id_producto" => $producto['id_producto'],
                             "token" => $producto['token'],
                             "descripcion" => $producto['descripcion'],
                             "codigo" => $codigo_venta,
-                            "cantidad" => $stock_total,
+                            "cantidad" => $cantidad,
+                            "cantidad_old" =>  $producto['cantidad'],
                             "color" => $producto['colores'],
                             "talla" => $producto['tallas'],
                             "precio_venta" => $producto['precio_venta'],
                             "porc_descuento" => $producto['porc_descuento'],
-                            "descuento" => $producto['descuento'],
-                            "subtotal" => $producto['subtotal'],
-                            "total" => $producto['total'],
+                            "descuento" => $descuento,
+                            "subtotal" => $subtotal,
+                            "total" => $total,
+                            "error" => 'stock',
                         ];
+
+                        $totalSubtotal += $subtotal;
+                        $totalDescuento += $descuento;
+                        $totalVenta += $total;
                     } else {
+                        $cantidad = $producto['cantidad'];
                         $productos_venta = [
                             "id_producto" => $producto['id_producto'],
                             "token" => $producto['token'],
                             "descripcion" => $producto['descripcion'],
                             "codigo" => $codigo_venta,
-                            "cantidad" => $producto['cantidad'],
+                            "cantidad" => $cantidad,
+                            "cantidad_old" =>  0,
                             "color" => $producto['colores'],
                             "talla" => $producto['tallas'],
                             "precio_venta" => $producto['precio_venta'],
@@ -681,22 +695,123 @@ if ($action == 'guardar_nota') {
                             "descuento" => $producto['descuento'],
                             "subtotal" => $producto['subtotal'],
                             "total" => $producto['total'],
+                            "error" => "",
                         ];
 
                         $totalSubtotal += $producto['subtotal'];
                         $totalDescuento += $producto['descuento'];
                         $totalVenta += $producto['total'];
-                        $totalPendiente += $producto['total'];
                     }
+                    $guardarProductoVenta = $controlador->ctrGuardarProductoVenta($productos_venta);
+                    //$guardarProductoVenta = "ok";
+                    if ($guardarProductoVenta == "ok") {
+                        $datos_inventario = [
+
+                            "stock_total" => $stock_total - $cantidad,
+                            "id_producto" => $producto['id_producto'],
+
+                        ];
+                        $actualizar_inventario = $controlador->ctrActualizarInventarioProducto($datos_inventario);
 
 
+                        $datos_movimiento_inventario = [
 
-                    //$guardarProductoVenta = $controlador->ctrGuardarProductoVenta($productos_venta);
+                            "id_producto" => $producto['id_producto'],
+                            "tipo_movimiento" => 'salida',
+                            "documento" =>  $codigo_venta,
+                            "cantidad" => $cantidad,
+                            "descripcion" =>  'Venta de producto apartir de nota ' . $codigo_nota . ''
+
+                        ];
+                        $movimiento_inventario = $controlador->ctrGenerarMovimientoInventario($datos_movimiento_inventario);
+                    }
                 }
-                //unset($_SESSION["datos_producto_nota"][$codigo_nota]);
-                //unset($_SESSION["subtotal" . $codigo_nota]);
-                //unset($_SESSION["descuento" . $codigo_nota]);
-                //unset($_SESSION["total" . $codigo_nota]);
+                if ($tipo_entrega == "recoleccion") {
+
+                    $datos_venta = [
+
+                        "subtotal" => $totalSubtotal,
+                        "descuento" => $totalDescuento,
+                        "total" => $totalVenta,
+                        "pendiente" => $totalVenta,
+                        "pagado" => '0.00',
+                        "codigo" => $codigo_venta,
+                    ];
+                } else {
+                    $datos_venta = [
+
+                        "subtotal" => $totalSubtotal,
+                        "descuento" => $totalDescuento,
+                        "total" => $totalVenta,
+                        "pendiente" => '0.00',
+                        "pagado" => $totalVenta,
+                        "codigo" => $codigo_venta,
+                    ];
+                }
+
+
+                $actualizar_venta = $controlador->ctrActualizarVenta($datos_venta);
+
+                $sesion = $controlador->ctrConsultarSesionDisponible();
+                /***GENERACION DE PAGO **/
+                $pagos = $controlador->ctrIdPago();
+                $pagos = $pagos["id_pago"] + 1;
+                $codigo_pago = generarCodigoAleatorioNota('PAY', 22,  $pagos);
+
+                if ($tipo_entrega != "recoleccion") {
+                    $datos_pago = [
+                        "codigo_pago" => $codigo_pago,
+                        "codigo_venta" => $codigo_venta,
+                        "id_metodo_pago" => $forma_pago,
+                        "total_pago" => $totalVenta,
+                        "total_pagado" => $totalVenta,
+                        "total_cambio" => '0',
+                        "referencia" => ''
+
+                    ];
+                    $generar_pago = $controlador->ctrGenerarPago($datos_pago);
+
+                    switch ($forma_pago) {
+                        case '1':
+                            $campo_nombre = "efectivo";
+
+                            break;
+                        case '2':
+                            $campo_nombre = "transferencia";
+
+                            break;
+                        case '3':
+                            $campo_nombre = "tarjeta_credito";
+
+                            break;
+                        case '4':
+                            $campo_nombre = "tarjeta_debito";
+
+                            break;
+                    }
+                    $datos_sesion = [
+                        "campo_nombre" => $sesion[$campo_nombre] + $totalVenta,
+                        "codigo_sesion" =>  $sesion["codigo_sesion"],
+
+                    ];
+                    $actualizar_sesion = $controlador->ctrActualizarSesion($datos_sesion, $campo_nombre);
+                    $datos_movimiento_caja = [
+
+                        "sesion_caja" => $sesion["codigo_sesion"],
+                        "id_caja" => $sesion["id_caja"],
+                        "tipo_movimiento" => "ingreso",
+                        "monto" => $totalVenta,
+                        "descripcion" => $codigo_pago,
+
+                    ];
+                    $movimiento_caja = $controlador->ctrGuardarMovimientoCaja($datos_movimiento_caja);
+                }
+
+
+                unset($_SESSION["datos_producto_nota"][$codigo_nota]);
+                unset($_SESSION["subtotal" . $codigo_nota]);
+                unset($_SESSION["descuento" . $codigo_nota]);
+                unset($_SESSION["total" . $codigo_nota]);
                 echo json_encode("exito");
             } else {
                 echo json_encode("error");
@@ -882,9 +997,13 @@ if ($action ==  'carrito_venta') {
         $_SESSION['subtotal' . $codigoVenta] = 0;
         $_SESSION['descuento' . $codigoVenta] = 0;
         foreach ($datos as $key => $producto) {
-
+            if ($producto["error"] == "") {
+                $card_color  = "card-gray";
+            } else {
+                $card_color  = "card-red-light";
+            }
         ?>
-            <div class="card card-gray mb-2">
+            <div class="card <?= $card_color ?> mb-2">
                 <div class="card-body">
                     <div class="container">
                         <div class="row">

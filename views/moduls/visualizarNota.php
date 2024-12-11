@@ -25,18 +25,18 @@ if ($ventas != false) {
 
             if ($ventas["tipo_entrega"] == "recoleccion") {
                 $disabledPago = "disabled";
-                $disabledCancelar = "";
+                //$disabledCancelar = "";
                 $displayContador = "";
             } else {
                 $disabledPago = "";
-                $disabledCancelar = "";
+                //$disabledCancelar = "";
                 $displayContador = "";
             }
             $displayPagado = "display:none";
             $displaySinPagar = "";
         } else {
             $disabledPago = "disabled";
-            $disabledCancelar = "disabled";
+            //$disabledCancelar = "disabled";
             $displayContador = "display:none";
             $displayPagado = "";
             $displaySinPagar = "display:none";
@@ -85,25 +85,26 @@ if ($ventas != false) {
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="steps d-flex flex-wrap flex-sm-nowrap justify-content-between padding-top-2x padding-bottom-1x">
-                                            <div class="step <?php echo  $estatus1 ?>">
+
+                                            <div class="step <?= $estatus1 ?>">
                                                 <div class="step-icon-wrap">
                                                     <div class="step-icon" style="background:#00D1B2"><i class="ti-shopping-cart"></i></div>
                                                 </div>
                                                 <h4 class="step-title">Recibido</h4>
                                             </div>
-                                            <div class="step <?php echo  $estatus2  ?>">
+                                            <div class="step <?= $estatus2  ?>">
                                                 <div class="step-icon-wrap">
                                                     <div class="step-icon" style="background:#209CEE"><i class="ti-package"></i></div>
                                                 </div>
                                                 <h4 class="step-title">En Preparación</h4>
                                             </div>
-                                            <div class="step <?php echo  $estatus3  ?>">
+                                            <div class="step <?= $estatus3  ?>">
                                                 <div class="step-icon-wrap">
                                                     <div class="step-icon" style="background:#23D160"><i class="ti-truck"></i></div>
                                                 </div>
                                                 <h4 class="step-title">Enviado</h4>
                                             </div>
-                                            <div class="step <?php echo  $estatus4  ?>">
+                                            <div class="step <?= $estatus4  ?>">
                                                 <div class="step-icon-wrap">
                                                     <div class="step-icon" style="background:#FFDD57"><i class="ti-check-box"></i></div>
                                                 </div>
@@ -178,7 +179,7 @@ if ($ventas != false) {
                                                 <div class="form-group">
                                                     <label style="color:#B99654">Tipo Entrega</label>
 
-                                                    <h5 class="card-subtitle"><?= $ventas["tipo_entrega"] ?></h5>
+                                                    <h5 class="card-subtitle"><?= ucfirst($ventas["tipo_entrega"]) ?></h5>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-lg-6 col-sm-6 grid-margin stretch-card">
@@ -197,18 +198,34 @@ if ($ventas != false) {
                     <div class="col-md-12 col-lg-12 col-sm-12 grid-margin stretch-card ">
                         <div class="card ">
                             <div class="row mt-3 mb-3">
-
+                                <!--
                                 <div class="col-lg-6 col-md-6 col-sm-12 " style="display:grid">
                                     <button type="button" class="btn btn-danger mx-2 mb-3  btn-lg" style="justify-content: center;align-items: center;font-weight:bold;color:#ffffff;font-size:18px" <?= $disabledCancelar ?> onclick="cancelarVenta(' <?= $ventas["id_venta"] ?>','<?= $ventas["estatus"] ?>')">
                                         Cancelar Nota
                                     </button>
                                 </div>
-
+    -->
                                 <div class="col-lg-6 col-md-6 col-sm-12 " style="display:grid">
                                     <button type="button" class="btn btn-success mx-2 mb-3  btn-lg" style="justify-content: center;align-items: center;font-weight:bold;color:#ffffff;font-size:18px" <?= $disabledPago ?>>
 
                                         Pagar Nota
                                     </button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-lg-12 col-sm-12 grid-margin stretch-card ">
+                        <div class="card ">
+                            <div class="row mt-2 mb-1">
+
+                                <div class="col-lg-1 col-md-1 col-sm-1 " style="display:grid">
+
+                                    <button type="button" class="btn" style="background:#fdb3b3"></button>
+                                </div>
+                                <div class="col-lg-11 col-md-11 col-sm-11 " style="display:grid">
+
+                                    *Nota: si el producto se encuentra marcado en rojo, las unidades han sido actualizadas de acuerdo a la existencia del producto.
                                 </div>
 
                             </div>
@@ -252,7 +269,57 @@ if ($ventas != false) {
             })</script>';
         } else {
 
+            if ($ventas["estatus_pago"] == "0") {
 
+                if ($ventas["tipo_entrega"] == "recoleccion") {
+                    $disabledPago = "disabled";
+                    //$disabledCancelar = "";
+                    $displayContador = "";
+                } else {
+                    $disabledPago = "";
+                    //$disabledCancelar = "";
+                    $displayContador = "";
+                }
+                $displayPagado = "display:none";
+                $displaySinPagar = "";
+            } else {
+                $disabledPago = "disabled";
+                //$disabledCancelar = "disabled";
+                $displayContador = "display:none";
+                $displayPagado = "";
+                $displaySinPagar = "display:none";
+            }
+
+            switch ($ventas["estatus"]) {
+                case '1':
+                    $estatus1 = "completed";
+                    $estatus2 = "";
+                    $estatus3 = "";
+                    $estatus4 = "";
+                    //$color = 'style="background:#00D1B2"';
+                    break;
+                case '2':
+                    $estatus1 = "completed";
+                    $estatus2 = "completed";
+                    $estatus3 = "";
+                    $estatus4 = "";
+                    //$color = 'style="background:#00D1B2"';
+                    break;
+                case '3':
+                    $estatus1 = "completed";
+                    $estatus2 = "completed";
+                    $estatus3 = "completed";
+                    $estatus4 = "";
+                    //$color = 'style="background:#23D160"';
+                    break;
+                case '4':
+                    $estatus1 = "completed";
+                    $estatus2 = "completed";
+                    $estatus3 = "completed";
+                    $estatus4 = "completed";
+                    //$color = 'style="background:#FFDD57"';
+                    break;
+            }
         ?>
             <div class="main-panel">
                 <div class="content-wrapper">
@@ -374,12 +441,26 @@ if ($ventas != false) {
                                     <div class="col-lg-6 col-md-6 col-sm-12 " style="display:grid">
 
                                     </div>
-
+                                    <!--
                                     <div class="col-lg-6 col-md-6 col-sm-12 " style="display:grid">
                                         <button type="button" class="btn btn-danger mx-2 mb-3  btn-lg" style="justify-content: center;align-items: center;font-weight:bold;color:#ffffff;font-size:18px" disabled>
                                             Cancelar Nota
                                         </button>
                                     </div>
+        -->
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 col-lg-12 col-sm-12 grid-margin stretch-card ">
+                            <div class="card ">
+                                <div class="row mt-3 mb-3">
+
+                                    <div class="col-lg-6 col-md-6 col-sm-12 " style="display:grid">
+                                        *Nota: si el producto se encuentra marcado en rojo, las unidades han sido actualizadas de acuerdo a la existencia del producto.
+                                    </div>
+
 
                                 </div>
                             </div>

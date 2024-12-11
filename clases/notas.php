@@ -140,7 +140,8 @@ class notas extends ConexionsBd
         $per_page = $search['per_page'];
         $campoOrden =  $search["campoOrden"];
         $orden = $search['orden'];
-        $sWhere = "estatus != 0 ";
+        $id_cliente = $_SESSION["id"];
+        $sWhere = "estatus != 0 and id_cliente = '" . $id_cliente . "' and codigo_nota != ''";
         if ($search["busqueda"] != "") {
 
             $sWhere .= "AND codigo_nota LIKE '%" . $search['busqueda'] . "%' OR codigo LIKE '%" . $search['busqueda'] . "%'";
