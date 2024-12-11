@@ -13,6 +13,8 @@ $(function () {
     case "estatusNotas":
       listadoEstatusNotas(1);
       break;
+    case "inicio":
+      break;
   }
   if (ruta[3] != undefined) {
     switch (ruta[2]) {

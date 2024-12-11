@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 11-12-2024 a las 01:19:14
+-- Tiempo de generación: 12-12-2024 a las 00:58:37
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 7.4.33
 
@@ -57,7 +57,35 @@ INSERT INTO `bitacora` (`id_bitacora`, `accion`, `id_usuario`, `fecha`) VALUES
 (16, 'Salida de Inventario de 5 unidades de Sueter Mio Mio', 1, '2024-12-04 17:43:41'),
 (17, 'Entrada de Inventario de 10 unidades de Sueter Mio Mio', 1, '2024-12-04 17:50:39'),
 (18, 'Cierre de Caja Con N° de Sesion POS-F8B2R9Z6V9-6', 1, '2024-12-05 03:10:34'),
-(19, 'Salida de Inventario de 2 unidades de Pantalon Mezclilla', 1, '2024-12-05 03:34:47');
+(19, 'Salida de Inventario de 2 unidades de Pantalon Mezclilla', 1, '2024-12-05 03:34:47'),
+(20, 'COD12134', 1, '2024-12-11 17:24:40'),
+(21, 'COD12135', 1, '2024-12-11 17:24:40'),
+(22, 'COD12136', 1, '2024-12-11 17:24:40'),
+(23, 'COD12137', 1, '2024-12-11 17:24:40'),
+(24, 'COD12138', 1, '2024-12-11 17:24:40'),
+(25, 'COD12139', 1, '2024-12-11 17:24:40'),
+(26, 'COD12140', 1, '2024-12-11 17:24:40'),
+(27, 'COD12141', 1, '2024-12-11 17:24:40'),
+(28, 'COD12142', 1, '2024-12-11 17:24:40'),
+(29, 'COD12143', 1, '2024-12-11 17:24:40'),
+(30, 'COD12144', 1, '2024-12-11 17:24:41'),
+(31, 'COD12145', 1, '2024-12-11 17:24:41'),
+(32, 'COD12146', 1, '2024-12-11 17:24:41'),
+(33, 'COD12147', 1, '2024-12-11 17:24:41'),
+(34, 'COD12148', 1, '2024-12-11 17:24:41'),
+(35, 'COD12149', 1, '2024-12-11 17:24:41'),
+(36, 'COD12150', 1, '2024-12-11 17:24:41'),
+(37, 'COD12151', 1, '2024-12-11 17:24:41'),
+(38, 'Entrada de Inventario de 4 unidades de Adaptador HDMI HD 1080P a VGA', 1, '2024-12-11 18:45:36'),
+(39, 'Entrada de Inventario de 4.000 unidades de Adaptador HDMI HD 1080P a VGA Con Audio', 1, '2024-12-11 19:27:29'),
+(40, 'Entrada de Inventario de 4.000 unidades de Adaptador HDMI HD 1080P a VGA Con Audio', 1, '2024-12-11 19:28:11'),
+(41, 'Entrada de Inventario de 10 unidades de Adaptador HDMI HD 1080P a VGA Con Audio', 1, '2024-12-11 19:35:51'),
+(42, 'Entrada de Inventario de 10 unidades de Adaptador HDMI HD 1080P a VGA Con Audio', 1, '2024-12-11 19:39:41'),
+(43, 'Salida de Inventario de 1 unidades de Adaptador HDMI HD 1080P a VGA Con Audio', 1, '2024-12-11 19:40:42'),
+(44, 'Entrada de Inventario de 10 unidades de Adaptador HDMI HD 1080P a VGA Con Audio', 1, '2024-12-11 19:41:53'),
+(45, 'Entrada de Inventario de 10 unidades de Convertidor HDMI a VGA', 1, '2024-12-11 19:41:53'),
+(46, 'Entrada de Inventario de 10 unidades de Extension Electrica 20 Metros', 1, '2024-12-11 19:41:54'),
+(47, 'Salida de Inventario de 1 unidades de Extension Electrica 25 Metros', 1, '2024-12-11 19:41:54');
 
 -- --------------------------------------------------------
 
@@ -262,7 +290,26 @@ CREATE TABLE `inventario` (
 INSERT INTO `inventario` (`id_inventario`, `id_producto`, `stock_total`, `stock_minimo`, `stock_maximo`, `fecha_actualizacion`) VALUES
 (1, 1, '17.000', '1.000', '20.000', '2024-12-10 23:28:30'),
 (2, 2, '7.000', '1.000', '20.000', '2024-12-10 23:29:45'),
-(5, 3, '20.000', '1.000', '20.000', '2024-12-05 03:11:17');
+(5, 3, '20.000', '1.000', '20.000', '2024-12-05 03:11:17'),
+(10, 4, '22.000', '1.000', '20.000', '2024-12-11 23:06:34'),
+(11, 5, '14.000', '1.000', '20.000', '2024-12-11 23:06:35'),
+(12, 6, '15.000', '1.000', '20.000', '2024-12-11 23:06:35'),
+(13, 7, '7.000', '1.000', '20.000', '2024-12-11 23:06:35'),
+(14, 8, '7.000', '1.000', '20.000', '2024-12-11 23:06:35'),
+(15, 9, '5.000', '1.000', '20.000', '2024-12-11 23:06:35'),
+(16, 10, '3.000', '1.000', '20.000', '2024-12-11 23:06:35'),
+(17, 11, '5.000', '1.000', '20.000', '2024-12-11 18:19:50'),
+(18, 12, '4.000', '1.000', '20.000', '2024-12-11 18:19:50'),
+(19, 13, '9.000', '1.000', '20.000', '2024-12-11 18:19:50'),
+(20, 14, '5.000', '1.000', '20.000', '2024-12-11 18:19:51'),
+(21, 15, '4.000', '1.000', '20.000', '2024-12-11 18:19:51'),
+(22, 16, '5.000', '1.000', '20.000', '2024-12-11 18:19:51'),
+(23, 17, '4.000', '1.000', '20.000', '2024-12-11 18:19:51'),
+(24, 18, '4.000', '1.000', '20.000', '2024-12-11 18:19:51'),
+(25, 19, '4.000', '1.000', '20.000', '2024-12-11 18:19:51'),
+(26, 20, '5.000', '1.000', '20.000', '2024-12-11 18:19:51'),
+(27, 21, '4.000', '1.000', '20.000', '2024-12-11 18:19:51'),
+(28, 22, '3.000', '1.000', '20.000', '2024-12-11 23:06:34');
 
 -- --------------------------------------------------------
 
@@ -350,7 +397,40 @@ INSERT INTO `movimiento_inventario` (`id_movimiento_inventario`, `id_producto`, 
 (19, 1, 'salida', 'SALE-G9O1P0Z8F1G6N0C7G6L5T4-7', '1.000', 'Venta de producto apartir de nota NOT-HBXZSNIUGDEQXCYSUW67WJ', '2024-12-10 19:54:57'),
 (20, 2, 'salida', 'SALE-N3Y8Q9R0H9S0O3O2L0N9R5-10', '1.000', 'Venta de producto apartir de nota NOT-HBXZSNIUGDEQXCYSUW67WJ', '2024-12-10 20:11:46'),
 (21, 1, 'salida', 'SALE-G5J0L1S1U7N4T9D7P3Z8R6-11', '1.000', 'Venta de producto apartir de nota NOT-HBXZSNIUGDEQXCYSUW67WJ', '2024-12-10 23:28:30'),
-(22, 2, 'salida', 'SALE-G5J0L1S1U7N4T9D7P3Z8R6-11', '5.000', 'Venta de producto apartir de nota NOT-HBXZSNIUGDEQXCYSUW67WJ', '2024-12-10 23:28:30');
+(22, 2, 'salida', 'SALE-G5J0L1S1U7N4T9D7P3Z8R6-11', '5.000', 'Venta de producto apartir de nota NOT-HBXZSNIUGDEQXCYSUW67WJ', '2024-12-10 23:28:30'),
+(26, 4, 'entrada', NULL, '4.000', 'Entrada Inicial', '2024-12-11 18:08:31'),
+(28, 5, 'entrada', NULL, '5.000', 'inventario inicial', '2024-12-11 18:19:50'),
+(29, 6, 'entrada', NULL, '6.000', 'inventario inicial', '2024-12-11 18:19:50'),
+(30, 7, 'entrada', NULL, '9.000', 'inventario inicial', '2024-12-11 18:19:50'),
+(31, 8, 'entrada', NULL, '8.000', 'inventario inicial', '2024-12-11 18:19:50'),
+(32, 9, 'entrada', NULL, '6.000', 'inventario inicial', '2024-12-11 18:19:50'),
+(33, 10, 'entrada', NULL, '4.000', 'inventario inicial', '2024-12-11 18:19:50'),
+(34, 11, 'entrada', NULL, '5.000', 'inventario inicial', '2024-12-11 18:19:50'),
+(35, 12, 'entrada', NULL, '4.000', 'inventario inicial', '2024-12-11 18:19:50'),
+(36, 13, 'entrada', NULL, '9.000', 'inventario inicial', '2024-12-11 18:19:51'),
+(37, 14, 'entrada', NULL, '5.000', 'inventario inicial', '2024-12-11 18:19:51'),
+(38, 15, 'entrada', NULL, '4.000', 'inventario inicial', '2024-12-11 18:19:51'),
+(39, 16, 'entrada', NULL, '5.000', 'inventario inicial', '2024-12-11 18:19:51'),
+(40, 17, 'entrada', NULL, '4.000', 'inventario inicial', '2024-12-11 18:19:51'),
+(41, 18, 'entrada', NULL, '4.000', 'inventario inicial', '2024-12-11 18:19:51'),
+(42, 19, 'entrada', NULL, '4.000', 'inventario inicial', '2024-12-11 18:19:51'),
+(43, 20, 'entrada', NULL, '5.000', 'inventario inicial', '2024-12-11 18:19:51'),
+(44, 21, 'entrada', NULL, '4.000', 'inventario inicial', '2024-12-11 18:19:51'),
+(45, 22, 'entrada', NULL, '4.000', 'inventario inicial', '2024-12-11 18:45:36'),
+(46, 4, 'entrada', NULL, '10.000', 'Entrada de inventario', '2024-12-11 19:39:40'),
+(47, 4, 'salida', NULL, '1.000', 'Salida de inventario', '2024-12-11 19:40:42'),
+(48, 4, 'entrada', NULL, '10.000', 'Entrada de inventario', '2024-12-11 19:41:53'),
+(49, 5, 'entrada', NULL, '10.000', 'Entrada de inventario', '2024-12-11 19:41:53'),
+(50, 6, 'entrada', NULL, '10.000', 'Entrada de inventario', '2024-12-11 19:41:54'),
+(51, 7, 'salida', NULL, '1.000', 'Salida de inventario', '2024-12-11 19:41:54'),
+(52, 22, 'salida', 'SALE-L3P7Q6N7X5G4N4M3I3M8Z6-12', '1.000', 'Venta de producto apartir de nota NOT-RQLKXH6UN5GPODTUP9NQ1Y', '2024-12-11 23:06:34'),
+(53, 4, 'salida', 'SALE-L3P7Q6N7X5G4N4M3I3M8Z6-12', '1.000', 'Venta de producto apartir de nota NOT-RQLKXH6UN5GPODTUP9NQ1Y', '2024-12-11 23:06:34'),
+(54, 5, 'salida', 'SALE-L3P7Q6N7X5G4N4M3I3M8Z6-12', '1.000', 'Venta de producto apartir de nota NOT-RQLKXH6UN5GPODTUP9NQ1Y', '2024-12-11 23:06:35'),
+(55, 6, 'salida', 'SALE-L3P7Q6N7X5G4N4M3I3M8Z6-12', '1.000', 'Venta de producto apartir de nota NOT-RQLKXH6UN5GPODTUP9NQ1Y', '2024-12-11 23:06:35'),
+(56, 7, 'salida', 'SALE-L3P7Q6N7X5G4N4M3I3M8Z6-12', '1.000', 'Venta de producto apartir de nota NOT-RQLKXH6UN5GPODTUP9NQ1Y', '2024-12-11 23:06:35'),
+(57, 8, 'salida', 'SALE-L3P7Q6N7X5G4N4M3I3M8Z6-12', '1.000', 'Venta de producto apartir de nota NOT-RQLKXH6UN5GPODTUP9NQ1Y', '2024-12-11 23:06:35'),
+(58, 9, 'salida', 'SALE-L3P7Q6N7X5G4N4M3I3M8Z6-12', '1.000', 'Venta de producto apartir de nota NOT-RQLKXH6UN5GPODTUP9NQ1Y', '2024-12-11 23:06:35'),
+(59, 10, 'salida', 'SALE-L3P7Q6N7X5G4N4M3I3M8Z6-12', '1.000', 'Venta de producto apartir de nota NOT-RQLKXH6UN5GPODTUP9NQ1Y', '2024-12-11 23:06:35');
 
 -- --------------------------------------------------------
 
@@ -375,7 +455,11 @@ CREATE TABLE `notas` (
 --
 
 INSERT INTO `notas` (`id_nota`, `codigo`, `titulo_nota`, `fecha_publicacion`, `fecha_expiracion`, `porc_descuento`, `qr`, `estatus`, `fecha`) VALUES
-(1, 'NOT-HBXZSNIUGDEQXCYSUW67WJ', 'Prueba', '2024-12-05 18:00:00', '2024-12-10 18:00:00', '0.00', 'http://localhost/pos2/detalleNota/NOT-HBXZSNIUGDEQXCYSUW67WJ', 1, '2024-12-06 00:12:18');
+(1, 'NOT-HBXZSNIUGDEQXCYSUW67WJ', 'Prueba', '2024-12-05 18:00:00', '2024-12-10 18:00:00', '0.00', 'http://localhost/pos2/detalleNota/NOT-HBXZSNIUGDEQXCYSUW67WJ', 1, '2024-12-06 00:12:18'),
+(2, 'NOT-8OLR2WDXQYKCBNJTVXZNES', 'Muestra', '2024-12-11 13:00:00', '2024-12-12 12:00:00', '0.00', 'http://localhost/pos2/detalleNota/NOT-8OLR2WDXQYKCBNJTVXZNES', 1, '2024-12-11 22:50:05'),
+(3, 'NOT-C1PFHRFDEIU8MCSLN39KYW', 'Prueba', '2024-12-11 12:00:00', '2024-12-12 13:00:00', '0.00', 'http://localhost/pos2/detalleNota/NOT-C1PFHRFDEIU8MCSLN39KYW', 1, '2024-12-11 22:52:00'),
+(4, 'NOT-YZ9D3IHWC06MOGCVZJNILK', 'sdfdf', '2024-12-11 12:00:00', '2024-12-13 12:00:00', '0.00', 'http://localhost/pos2/detalleNota/NOT-YZ9D3IHWC06MOGCVZJNILK', 1, '2024-12-11 23:03:59'),
+(5, 'NOT-RQLKXH6UN5GPODTUP9NQ1Y', 'asdas', '2024-12-11 12:00:00', '2024-12-13 14:00:00', '0.00', 'http://localhost/pos2/detalleNota/NOT-RQLKXH6UN5GPODTUP9NQ1Y', 1, '2024-12-11 23:05:18');
 
 -- --------------------------------------------------------
 
@@ -416,10 +500,10 @@ INSERT INTO `pago` (`id_pago`, `codigo_pago`, `codigo_venta`, `id_metodo_pago`, 
 CREATE TABLE `producto` (
   `id_producto` int(20) NOT NULL,
   `cid_producto` int(20) NOT NULL,
-  `out_stock` text NOT NULL,
+  `out_stock` text CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `id_categoria` int(11) NOT NULL,
   `id_proveedor` int(11) NOT NULL,
-  `codigo` varchar(77) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `codigo` text CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `nombre` varchar(100) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `descripcion` text CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `tipo_unidad` varchar(20) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
@@ -442,7 +526,26 @@ CREATE TABLE `producto` (
 INSERT INTO `producto` (`id_producto`, `cid_producto`, `out_stock`, `id_categoria`, `id_proveedor`, `codigo`, `nombre`, `descripcion`, `tipo_unidad`, `precio_compra`, `precio_venta`, `marca`, `modelo`, `colores`, `tallas`, `estado`, `foto`, `fecha_ceacion`, `fecha_actualizacion`) VALUES
 (1, 1, '0', 1, 0, '00123456789', 'Sueter Mio Mio', '', 'Pieza', '250.00', '350.00', '', '', 'Azul,Gris,Verde', '32,38,40', 1, '', '2024-11-21 17:23:00', '2024-11-21 17:23:00'),
 (2, 2, '0', 2, 0, '00023456789', 'Pantalon Mezclilla', '', 'Pieza', '150.00', '250.00', '', '', '', '', 1, '00023456789_61.jpg', '2024-11-21 17:24:38', '2024-12-03 19:50:56'),
-(5, 3, '0', 4, 0, '100123456789', 'Vestido Largo Moda', '', 'Pieza', '150.00', '200.00', '', '', '', '', 1, '', '2024-11-21 18:35:58', '2024-12-03 19:50:54');
+(5, 3, '0', 4, 0, '100123456789', 'Vestido Largo Moda', '', 'Pieza', '150.00', '200.00', '', '', '', '', 1, '', '2024-11-21 18:35:58', '2024-12-03 19:50:54'),
+(10, 4, '0', 5, 0, 'COD12134', 'Adaptador HDMI HD 1080P a VGA Con Audio', '', 'Pieza', '45.31', '130.00', '', '', '', '', 1, '', '2024-12-11 18:19:50', '2024-12-11 18:19:50'),
+(11, 5, '0', 5, 0, 'COD12135', 'Convertidor HDMI a VGA', '', 'Pieza', '30.00', '120.00', '', '', '', '', 1, '', '2024-12-11 18:19:50', '2024-12-11 18:19:50'),
+(12, 6, '0', 5, 0, 'COD12136', 'Extension Electrica 20 Metros', '', 'Pieza', '72.00', '150.00', '', '', '', '', 1, '', '2024-12-11 18:19:50', '2024-12-11 18:19:50'),
+(13, 7, '0', 5, 0, 'COD12137', 'Extension Electrica 25 Metros', '', 'Pieza', '80.01', '190.00', '', '', '', '', 1, '', '2024-12-11 18:19:50', '2024-12-11 18:19:50'),
+(14, 8, '0', 5, 0, 'COD12138', 'Juego de Luces para Bicicleta Recargable', '', 'Pieza', '32.46', '100.00', '', '', '', '', 1, '', '2024-12-11 18:19:50', '2024-12-11 18:19:50'),
+(15, 9, '0', 5, 0, 'COD12139', 'Kit Lancetas y Tiras Reactivas', '', 'Pieza', '71.53', '130.00', '', '', '', '', 1, '', '2024-12-11 18:19:50', '2024-12-11 18:19:50'),
+(16, 10, '0', 5, 0, 'COD12140', 'Lampara de Emergencia 2 Modos', '', 'Pieza', '72.00', '160.00', '', '', '', '', 1, '', '2024-12-11 18:19:50', '2024-12-11 18:19:50'),
+(17, 11, '0', 5, 0, 'COD12141', 'Medidor de Glucosa', '', 'Pieza', '108.00', '200.00', '', '', '', '', 1, '', '2024-12-11 18:19:50', '2024-12-11 18:19:50'),
+(18, 12, '0', 5, 0, 'COD12142', 'Medidor de Presion Arterial Brazo', '', 'Pieza', '56.05', '180.00', '', '', '', '', 1, '', '2024-12-11 18:19:50', '2024-12-11 18:19:50'),
+(19, 13, '0', 5, 0, 'COD12143', 'Medidor de Presion Arterial Muñeca', '', 'Pieza', '92.96', '200.00', '', '', '', '', 1, '', '2024-12-11 18:19:50', '2024-12-11 18:19:50'),
+(20, 14, '0', 5, 0, 'COD12144', 'Mini Báscula Electrónica', '', 'Pieza', '37.53', '100.00', '', '', '', '', 1, '', '2024-12-11 18:19:51', '2024-12-11 18:19:51'),
+(21, 15, '0', 5, 0, 'COD12145', 'Mini Camara Wifi A9', '', 'Pieza', '42.31', '120.00', '', '', '', '', 1, '', '2024-12-11 18:19:51', '2024-12-11 18:19:51'),
+(22, 16, '0', 5, 0, 'COD12146', 'Pistola de Temperatura', '', 'Pieza', '52.07', '120.00', '', '', '', '', 1, '', '2024-12-11 18:19:51', '2024-12-11 18:19:51'),
+(23, 17, '0', 5, 0, 'COD12147', 'Rasuradora Inalámbrica Recargable', '', 'Pieza', '34.08', '100.00', '', '', '', '', 1, '', '2024-12-11 18:19:51', '2024-12-11 18:19:51'),
+(24, 18, '0', 5, 0, 'COD12148', 'Soporte Giratorio Para Celular Color Blanco', '', 'Pieza', '15.00', '80.01', '', '', '', '', 1, '', '2024-12-11 18:19:51', '2024-12-11 18:19:51'),
+(25, 19, '0', 5, 0, 'COD12149', 'Soporte Giratorio Para Celular Color Negro', '', 'Pieza', '15.00', '80.01', '', '', '', '', 1, '', '2024-12-11 18:19:51', '2024-12-11 18:19:51'),
+(26, 20, '0', 5, 0, 'COD12150', 'Soporte Plegable Para Celular Blanco', '', 'Pieza', '20.00', '50.00', '', '', '', '', 1, '', '2024-12-11 18:19:51', '2024-12-11 18:19:51'),
+(27, 21, '0', 5, 0, 'COD12151', 'Termómetro Digital Axilar', '', 'Pieza', '23.72', '50.00', '', '', '', '', 1, '', '2024-12-11 18:19:51', '2024-12-11 18:19:51'),
+(28, 22, '0', 5, 0, 'COD1213415', 'Adaptador HDMI HD 1080P a VGA', '', 'Pieza', '45.31', '130.00', '', '', '', '', 1, '', '2024-12-11 18:45:36', '2024-12-11 18:45:36');
 
 -- --------------------------------------------------------
 
@@ -470,7 +573,24 @@ CREATE TABLE `productos_notas` (
 
 INSERT INTO `productos_notas` (`id_detalle_nota`, `codigo_nota`, `id_producto`, `codigo`, `descripcion`, `precio_venta`, `limite_nota`, `colores`, `tallas`, `estatus`, `fecha`) VALUES
 (1, 'NOT-HBXZSNIUGDEQXCYSUW67WJ', 2, '00023456789', 'Pantalon Mezclilla', '250.00', 14, '', '', 1, '2024-12-06 00:12:18'),
-(2, 'NOT-HBXZSNIUGDEQXCYSUW67WJ', 1, '00123456789', 'Sueter Mio Mio', '350.00', 20, 'Azul,Gris,Verde', '32,38,40', 1, '2024-12-06 00:12:18');
+(2, 'NOT-HBXZSNIUGDEQXCYSUW67WJ', 1, '00123456789', 'Sueter Mio Mio', '350.00', 20, 'Azul,Gris,Verde', '32,38,40', 1, '2024-12-06 00:12:18'),
+(4, 'NOT-8OLR2WDXQYKCBNJTVXZNES', 22, 'COD1213415', 'Adaptador HDMI HD 1080P a VGA', '130.00', 4, '', '', 1, '2024-12-11 22:50:05'),
+(6, 'NOT-8OLR2WDXQYKCBNJTVXZNES', 5, 'COD12135', 'Convertidor HDMI a VGA', '120.00', 15, '', '', 1, '2024-12-11 22:50:05'),
+(11, 'NOT-8OLR2WDXQYKCBNJTVXZNES', 10, 'COD12140', 'Lampara de Emergencia 2 Modos', '160.00', 4, '', '', 1, '2024-12-11 22:50:05'),
+(12, 'NOT-C1PFHRFDEIU8MCSLN39KYW', 22, 'COD1213415', 'Adaptador HDMI HD 1080P a VGA', '130.00', 4, '', '', 1, '2024-12-11 22:52:00'),
+(14, 'NOT-C1PFHRFDEIU8MCSLN39KYW', 5, 'COD12135', 'Convertidor HDMI a VGA', '120.00', 15, '', '', 1, '2024-12-11 22:52:00'),
+(19, 'NOT-C1PFHRFDEIU8MCSLN39KYW', 10, 'COD12140', 'Lampara de Emergencia 2 Modos', '160.00', 4, '', '', 1, '2024-12-11 22:52:00'),
+(20, 'NOT-YZ9D3IHWC06MOGCVZJNILK', 22, 'COD1213415', 'Adaptador HDMI HD 1080P a VGA', '130.00', 4, '', '', 1, '2024-12-11 23:03:59'),
+(22, 'NOT-YZ9D3IHWC06MOGCVZJNILK', 5, 'COD12135', 'Convertidor HDMI a VGA', '120.00', 15, '', '', 1, '2024-12-11 23:03:59'),
+(27, 'NOT-YZ9D3IHWC06MOGCVZJNILK', 10, 'COD12140', 'Lampara de Emergencia 2 Modos', '160.00', 4, '', '', 1, '2024-12-11 23:03:59'),
+(28, 'NOT-RQLKXH6UN5GPODTUP9NQ1Y', 22, 'COD1213415', 'Adaptador HDMI HD 1080P a VGA', '130.00', 4, '', '', 1, '2024-12-11 23:05:18'),
+(29, 'NOT-RQLKXH6UN5GPODTUP9NQ1Y', 4, 'COD12134', 'Adaptador HDMI HD 1080P a VGA Con Audio', '130.00', 23, '', '', 1, '2024-12-11 23:05:18'),
+(30, 'NOT-RQLKXH6UN5GPODTUP9NQ1Y', 5, 'COD12135', 'Convertidor HDMI a VGA', '120.00', 15, '', '', 1, '2024-12-11 23:05:18'),
+(31, 'NOT-RQLKXH6UN5GPODTUP9NQ1Y', 6, 'COD12136', 'Extension Electrica 20 Metros', '150.00', 16, '', '', 1, '2024-12-11 23:05:18'),
+(32, 'NOT-RQLKXH6UN5GPODTUP9NQ1Y', 7, 'COD12137', 'Extension Electrica 25 Metros', '190.00', 8, '', '', 1, '2024-12-11 23:05:18'),
+(33, 'NOT-RQLKXH6UN5GPODTUP9NQ1Y', 8, 'COD12138', 'Juego de Luces para Bicicleta Recargable', '100.00', 8, '', '', 1, '2024-12-11 23:05:18'),
+(34, 'NOT-RQLKXH6UN5GPODTUP9NQ1Y', 9, 'COD12139', 'Kit Lancetas y Tiras Reactivas', '130.00', 6, '', '', 1, '2024-12-11 23:05:18'),
+(35, 'NOT-RQLKXH6UN5GPODTUP9NQ1Y', 10, 'COD12140', 'Lampara de Emergencia 2 Modos', '160.00', 4, '', '', 1, '2024-12-11 23:05:18');
 
 -- --------------------------------------------------------
 
@@ -591,7 +711,8 @@ INSERT INTO `venta` (`id_venta`, `tipo_venta`, `tipo_entrega`, `forma_pago`, `co
 (6, 'directa', 'recoleccion', 1, 'SALE-V9R9W6U5T1J8F4O9M5C0B8-6', '', '2024-12-09', '01:33:00', '600.00', '0.00', '0.000', '600.00', '0.00', '0.00', 1, 7, 1, 1, 1, NULL, '2024-12-09 19:33:37'),
 (9, 'nota', 'recoleccion', 1, 'SALE-G9O1P0Z8F1G6N0C7G6L5T4-7', 'NOT-HBXZSNIUGDEQXCYSUW67WJ', '2024-12-10', '13:54:56', '600.00', '0.00', '0.000', '600.00', '0.00', '600.00', 1, 7, 1, 1, 0, '2024-12-17 13:54:56', '2024-12-10 19:54:56'),
 (10, 'nota', 'envio', 2, 'SALE-N3Y8Q9R0H9S0O3O2L0N9R5-10', 'NOT-HBXZSNIUGDEQXCYSUW67WJ', '2024-12-10', '14:11:46', '250.00', '0.00', '0.000', '250.00', '250.00', '0.00', 1, 7, 1, 2, 1, '2024-12-10 14:11:46', '2024-12-10 20:11:46'),
-(11, 'nota', 'recoleccion', 1, 'SALE-G5J0L1S1U7N4T9D7P3Z8R6-11', 'NOT-HBXZSNIUGDEQXCYSUW67WJ', '2024-12-10', '17:28:30', '1600.00', '0.00', '0.000', '1600.00', '0.00', '1600.00', 1, 7, 1, 1, 0, '2024-12-17 17:28:30', '2024-12-10 23:28:30');
+(11, 'nota', 'recoleccion', 1, 'SALE-G5J0L1S1U7N4T9D7P3Z8R6-11', 'NOT-HBXZSNIUGDEQXCYSUW67WJ', '2024-12-10', '17:28:30', '1600.00', '0.00', '0.000', '1600.00', '0.00', '1600.00', 1, 7, 1, 1, 0, '2024-12-17 17:28:30', '2024-12-10 23:28:30'),
+(12, 'nota', 'recoleccion', 1, 'SALE-L3P7Q6N7X5G4N4M3I3M8Z6-12', 'NOT-RQLKXH6UN5GPODTUP9NQ1Y', '2024-12-11', '17:06:34', '1110.00', '0.00', '0.000', '1110.00', '0.00', '1110.00', 1, 7, 1, 1, 0, '2024-12-18 17:06:34', '2024-12-11 23:06:34');
 
 -- --------------------------------------------------------
 
@@ -634,7 +755,15 @@ INSERT INTO `venta_detalle` (`id_detalle`, `id_producto`, `token`, `descripcion`
 (12, 1, 'Y6T4W4X3', 'Sueter Mio Mio', 'SALE-G9O1P0Z8F1G6N0C7G6L5T4-7', 1, 0, 'Azul', '32', '0.00', '350.00', '0.00', '0.00', '350.00', '350.00', '', '2024-12-10 19:54:57'),
 (13, 2, 'P6O8J7E5', 'Pantalon Mezclilla', 'SALE-N3Y8Q9R0H9S0O3O2L0N9R5-10', 1, 0, '', '', '0.00', '250.00', '0.00', '0.00', '250.00', '250.00', '', '2024-12-10 20:11:46'),
 (14, 1, 'F0L0G9C8', 'Sueter Mio Mio', 'SALE-G5J0L1S1U7N4T9D7P3Z8R6-11', 1, 0, 'Azul', '32', '0.00', '350.00', '0.00', '0.00', '350.00', '350.00', '', '2024-12-10 23:28:30'),
-(15, 2, 'W9Y9P0W3', 'Pantalon Mezclilla', 'SALE-G5J0L1S1U7N4T9D7P3Z8R6-11', 5, 12, '', '', '0.00', '250.00', '0.00', '0.00', '1250.00', '1250.00', 'stock', '2024-12-10 23:28:30');
+(15, 2, 'W9Y9P0W3', 'Pantalon Mezclilla', 'SALE-G5J0L1S1U7N4T9D7P3Z8R6-11', 5, 12, '', '', '0.00', '250.00', '0.00', '0.00', '1250.00', '1250.00', 'stock', '2024-12-10 23:28:30'),
+(16, 22, 'B8A1H4Q2', 'Adaptador HDMI HD 1080P a VGA', 'SALE-L3P7Q6N7X5G4N4M3I3M8Z6-12', 1, 0, '', '', '0.00', '130.00', '0.00', '0.00', '130.00', '130.00', '', '2024-12-11 23:06:34'),
+(17, 4, 'T9H5F3M4', 'Adaptador HDMI HD 1080P a VGA Con Audio', 'SALE-L3P7Q6N7X5G4N4M3I3M8Z6-12', 1, 0, '', '', '0.00', '130.00', '0.00', '0.00', '130.00', '130.00', '', '2024-12-11 23:06:34'),
+(18, 5, 'P6D4M8Z1', 'Convertidor HDMI a VGA', 'SALE-L3P7Q6N7X5G4N4M3I3M8Z6-12', 1, 0, '', '', '0.00', '120.00', '0.00', '0.00', '120.00', '120.00', '', '2024-12-11 23:06:34'),
+(19, 6, 'R4F3G2R5', 'Extension Electrica 20 Metros', 'SALE-L3P7Q6N7X5G4N4M3I3M8Z6-12', 1, 0, '', '', '0.00', '150.00', '0.00', '0.00', '150.00', '150.00', '', '2024-12-11 23:06:35'),
+(20, 7, 'V9N7W1N0', 'Extension Electrica 25 Metros', 'SALE-L3P7Q6N7X5G4N4M3I3M8Z6-12', 1, 0, '', '', '0.00', '190.00', '0.00', '0.00', '190.00', '190.00', '', '2024-12-11 23:06:35'),
+(21, 8, 'B9K1T5Y4', 'Juego de Luces para Bicicleta Recargable', 'SALE-L3P7Q6N7X5G4N4M3I3M8Z6-12', 1, 0, '', '', '0.00', '100.00', '0.00', '0.00', '100.00', '100.00', '', '2024-12-11 23:06:35'),
+(22, 9, 'L7D3X3B9', 'Kit Lancetas y Tiras Reactivas', 'SALE-L3P7Q6N7X5G4N4M3I3M8Z6-12', 1, 0, '', '', '0.00', '130.00', '0.00', '0.00', '130.00', '130.00', '', '2024-12-11 23:06:35'),
+(23, 10, 'Y6Z3V0V9', 'Lampara de Emergencia 2 Modos', 'SALE-L3P7Q6N7X5G4N4M3I3M8Z6-12', 1, 0, '', '', '0.00', '160.00', '0.00', '0.00', '160.00', '160.00', '', '2024-12-11 23:06:35');
 
 --
 -- Índices para tablas volcadas
@@ -748,8 +877,7 @@ ALTER TABLE `producto`
 -- Indices de la tabla `productos_notas`
 --
 ALTER TABLE `productos_notas`
-  ADD PRIMARY KEY (`id_detalle_nota`),
-  ADD KEY `id_producto` (`id_producto`);
+  ADD PRIMARY KEY (`id_detalle_nota`);
 
 --
 -- Indices de la tabla `proveedor`
@@ -793,7 +921,7 @@ ALTER TABLE `venta_detalle`
 -- AUTO_INCREMENT de la tabla `bitacora`
 --
 ALTER TABLE `bitacora`
-  MODIFY `id_bitacora` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id_bitacora` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT de la tabla `caja`
@@ -847,7 +975,7 @@ ALTER TABLE `empresa`
 -- AUTO_INCREMENT de la tabla `inventario`
 --
 ALTER TABLE `inventario`
-  MODIFY `id_inventario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_inventario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT de la tabla `metodopago`
@@ -865,13 +993,13 @@ ALTER TABLE `movimiento_caja`
 -- AUTO_INCREMENT de la tabla `movimiento_inventario`
 --
 ALTER TABLE `movimiento_inventario`
-  MODIFY `id_movimiento_inventario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id_movimiento_inventario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- AUTO_INCREMENT de la tabla `notas`
 --
 ALTER TABLE `notas`
-  MODIFY `id_nota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_nota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `pago`
@@ -883,13 +1011,13 @@ ALTER TABLE `pago`
 -- AUTO_INCREMENT de la tabla `producto`
 --
 ALTER TABLE `producto`
-  MODIFY `id_producto` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_producto` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT de la tabla `productos_notas`
 --
 ALTER TABLE `productos_notas`
-  MODIFY `id_detalle_nota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_detalle_nota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT de la tabla `proveedor`
@@ -913,13 +1041,13 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `venta`
 --
 ALTER TABLE `venta`
-  MODIFY `id_venta` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id_venta` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `venta_detalle`
 --
 ALTER TABLE `venta_detalle`
-  MODIFY `id_detalle` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id_detalle` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- Restricciones para tablas volcadas
@@ -956,12 +1084,6 @@ ALTER TABLE `pago`
 --
 ALTER TABLE `producto`
   ADD CONSTRAINT `product_ibfk_1` FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id_categoria`);
-
---
--- Filtros para la tabla `productos_notas`
---
-ALTER TABLE `productos_notas`
-  ADD CONSTRAINT `productos_notas_ibfk_2` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id_producto`);
 
 --
 -- Filtros para la tabla `usuario`
