@@ -37,6 +37,7 @@ require_once "config/app.php";
 	<script type="text/javascript" src="<?php echo APP_URL_CLIENT; ?>views/js/plantilla.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<script type="text/javascript" src="<?php echo APP_URL_CLIENT; ?>views/vendors/font-awesome/js/all.min.js"></script>
+	<script src="https://sdk.mercadopago.com/js/v2"></script>
 
 
 </head>

@@ -1,5 +1,94 @@
 <?php
-error_reporting(0);
+
+/**
+ * Integración avanzada de Checkout Pro de Mercado Pago
+ * usando el SDK versión 3 para PHP y el SDK JS versión 2
+ *
+ * @author mroblesdev
+ */
+
+// Desactiva la notificación de errores deprecados en PHP
+error_reporting(~E_DEPRECATED);
+
+// Carga el autoload de Composer para gestionar dependencias
+require_once 'vendor/autoload.php';
+
+// Importa las clases necesarias del SDK de MercadoPago
+use MercadoPago\Client\Preference\PreferenceClient;
+use MercadoPago\MercadoPagoConfig;
+
+// Agrega credenciales ACCESS_TOKEN
+MercadoPagoConfig::setAccessToken("APP_USR-5989808524245743-121311-53589ed4cf179ed2d356c43555e7eb60-2144285800");
+
+// Crea una instancia del cliente de preferencias de MercadoPago
+$client = new PreferenceClient();
+
+// Define las URLs de retorno para los diferentes estados de pago
+$backUrls = [
+    "success" => "https://occhimarket.com.mx/mercado-pago/success",
+    "failure" => "https://occhimarket.com.mx/mercado-pago/failure",
+    "pending" => "https://occhimarket.com.mx/mercado-pago/pending"
+];
+
+// Crea una preferencia de pago con los detalles del producto y otras configuraciones
+$preference = $client->create([
+    "items" => [
+        [ // Primer producto
+            "id" => "DEP-0001",
+            "title" => "Balon de Futbol",
+            "description" => "Balon para jugar futbol", // Opcional
+            "picture_url" => "https://codigosdeprogramacion.com/contact/images/paquete.jpg",  // Opcional
+            "category_id" => "Deportes",  // Opcional
+            "quantity" => 1,
+            "currency_id" => "MXN", // Opcional
+            "unit_price" => 100
+        ],
+        [ // Segundo producto
+            "id" => "DEP-0002",
+            "title" => "Tenis deportivo",
+            "quantity" => 1,
+            "unit_price" => 120
+        ]
+    ],
+
+    // URLs de retorno configuradas anteriormente
+    "back_urls" => $backUrls,
+    // Configura la redirección automática en caso de que el pago sea aprobado
+    "auto_return" => "approved",
+    // Modo binario de pago (true significa que solo se aceptan pagos completos y no se permite un estado pendiente)
+    "binary_mode" => true,
+    // Referencia externa para identificar la transacción en el sistema del vendedor
+    "external_reference" => "CDP001",
+    // Descripción que aparecerá en el extracto de la tarjeta del comprador
+    "statement_descriptor" => "MI TIENDA CDP",
+    // Configuración de métodos de pago
+    "payment_methods" => [
+        // Métodos de pago excluidos (por ejemplo, American Express)
+        "excluded_payment_methods" => [
+            [
+                "id" => "amex"
+            ]
+        ],
+        // Tipos de pago excluidos (por ejemplo, transferencia bancaria)
+        //
+        /*
+        "excluded_payment_types" => [
+            [
+                "id" => "bank_transfer"
+            ]
+        ],
+        */
+        // Número máximo de cuotas permitido
+        "installments" => 12
+    ],
+    // Configuración de envíos
+    "shipments" => [
+        "cost" => 250,
+        "mode" => "not_specified",
+    ],
+]);
+
+
 require_once "controllers/notas.controller.php";
 $url = explode("/", $_GET['ruta']);
 $url = $url[1];
@@ -127,9 +216,12 @@ if ($notas != false) {
                                                     <div class="col-md-6 col-lg-6 col-sm-6 grid-margin stretch-card">
                                                         <div class="form-group">
                                                             <label style="color:#B99654">Forma de Pago</label>
+                                                            <div id="wallet_container"></div>
+                                                            <!--
                                                             <select id="forma_pago_nota" class="form-select form-select-lg">
 
                                                             </select>
+            -->
                                                         </div>
                                                     </div>
                                                 </div>
@@ -244,3 +336,24 @@ if ($notas != false) {
         color: #B99654;
     }
 </style>
+
+<script>
+    // Inicializa el objeto MercadoPago con el PUBLIC_KEY
+    const mp = new MercadoPago('APP_USR-bfdf0cd3-a019-41dc-a359-e244547669b6', {
+        locale: 'es-MX'
+    });
+
+    // Crea un componente de billetera de MercadoPago en el contenedor con id "wallet_container"
+    mp.bricks().create("wallet", "wallet_container", {
+        initialization: {
+            preferenceId: '<?php echo $preference->id; ?>',
+            redirectMode: 'self'
+        },
+        customization: {
+            texts: {
+                action: "pay",
+                valueProp: 'security_safety',
+            },
+        },
+    });
+</script>

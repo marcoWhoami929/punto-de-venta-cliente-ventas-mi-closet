@@ -270,6 +270,7 @@ if ($action == 'detalle_nota') {
     } else {
         $numrows = 0;
     }
+    $per_page = 100;
     $total_pages = ceil($numrows / $per_page);
 
 

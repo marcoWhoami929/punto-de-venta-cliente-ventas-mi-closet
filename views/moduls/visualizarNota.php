@@ -73,6 +73,7 @@ if ($ventas != false) {
                 break;
         }
 
+
 ?>
         <div class="main-panel">
 
