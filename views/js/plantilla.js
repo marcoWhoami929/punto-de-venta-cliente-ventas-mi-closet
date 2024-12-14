@@ -14,6 +14,7 @@ $(function () {
       listadoEstatusNotas(1);
       break;
     case "inicio":
+      
       break;
   }
   if (ruta[3] != undefined) {

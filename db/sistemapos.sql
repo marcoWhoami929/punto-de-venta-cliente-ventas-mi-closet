@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 12-12-2024 a las 00:58:37
+-- Tiempo de generación: 14-12-2024 a las 20:33:13
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 7.4.33
 
@@ -637,7 +637,8 @@ CREATE TABLE `sesiones_caja` (
 --
 
 INSERT INTO `sesiones_caja` (`id_sesion`, `codigo_sesion`, `id_usuario`, `id_caja`, `notas_apertura`, `fecha_apertura`, `saldo_inicial`, `efectivo`, `tarjeta_debito`, `tarjeta_credito`, `transferencia`, `saldo_final`, `diferencia`, `observaciones`, `fecha_cierre`, `estado`) VALUES
-(1, 'POS-N0G3D1T4M3-1', 1, 1, 'apertura de caja', '2024-12-05 03:15:29', '100.00', '600.00', '0.00', '0.00', '250.00', '0.00', '0.00', NULL, NULL, 'abierta');
+(1, 'POS-N0G3D1T4M3-1', 1, 1, 'apertura de caja', '2024-12-05 03:15:29', '100.00', '600.00', '0.00', '0.00', '250.00', '0.00', '0.00', NULL, NULL, 'abierta'),
+(2, 'POS-R2L1P3H6G1-2', 3, 2, 'apertura inicial', '2024-12-14 18:39:22', '50.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', NULL, NULL, 'abierta');
 
 -- --------------------------------------------------------
 
@@ -666,7 +667,7 @@ CREATE TABLE `usuario` (
 INSERT INTO `usuario` (`id_usuario`, `nombre`, `email`, `usuario`, `password`, `foto`, `perfil`, `id_caja`, `fecha_alta`, `codigo_sesion`, `estatus`) VALUES
 (1, 'Administrador', '', 'Administrador', '$2y$10$Jgm6xFb5Onz/BMdIkNK2Tur8yg/NYEMb/tdnhoV7kB1BwIG4R05D2', '', 'Administrador', 1, '2024-12-03 03:28:58', 'POS-N0G3D1T4M3-1', 1),
 (2, 'Cajero 2', '', 'cajero2', '$2y$10$9zt9trw18J9i8I5NDYVTPOhyLEZ95l./tnhVC/kbcR9/FarK2Poni', 'Marco_Antonio_Lopez_Perez_18.png', 'Caja', 4, '2024-12-03 03:39:36', NULL, 1),
-(3, 'Cajero 1', '', 'cajero1', '$2y$10$skfgnFM/v//X9b1QiAWAxePh2Xx/AK20jJR64MiHk0afyStaT0Kwe', '', 'Caja', 2, '2024-12-03 03:39:36', 'POS-H3R5U9M8W0-3', 1);
+(3, 'Cajero 1', '', 'cajero1', '$2y$10$skfgnFM/v//X9b1QiAWAxePh2Xx/AK20jJR64MiHk0afyStaT0Kwe', '', 'Caja', 2, '2024-12-03 03:39:36', 'POS-R2L1P3H6G1-2', 1);
 
 -- --------------------------------------------------------
 
@@ -1029,7 +1030,7 @@ ALTER TABLE `proveedor`
 -- AUTO_INCREMENT de la tabla `sesiones_caja`
 --
 ALTER TABLE `sesiones_caja`
-  MODIFY `id_sesion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_sesion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
