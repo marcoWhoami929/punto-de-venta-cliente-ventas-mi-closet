@@ -55,7 +55,7 @@ class ControllerUser
 
                         echo '<script>
                            
-                                window.location = "inicio";
+                                window.location = "listaNotas";
                               
     
                             </script>';

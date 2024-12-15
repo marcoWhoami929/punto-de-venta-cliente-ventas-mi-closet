@@ -8,12 +8,14 @@
                 </span>
             </a>
         </li>
+        <!--
         <li class="nav-item">
             <a class="nav-link" href="<?= APP_URL_CLIENT ?>inicio">
                 <i class="icon-grid menu-icon"></i>
                 <span class="menu-title">Tablero</span>
             </a>
         </li>
+-->
         <li class="nav-item">
             <a class="nav-link" href="<?= APP_URL_CLIENT ?>listaNotas">
                 <i class="mdi mdi-book-open menu-icon"></i>
